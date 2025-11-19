@@ -1,6 +1,5 @@
 ---
-title: "Weighted Least Squares Example"
-subtitle: "M/STAT 501: Fall 2022"
+title: "M/STAT 501: Weighted Least Squares Activity"
 output: pdf_document
 ---
 
@@ -42,34 +41,23 @@ the constant variance assumption? Explain why or why not.
 be the response vector for this data set with variance-covariance matrix
 Var$(\mathbf{Y}) = \sigma^2 \boldsymbol{\Omega}$. Write out the elements in the first four
 rows and first four columns of $\boldsymbol{\Omega}$, i.e., report the $4 \times 4$
-matrix that consists of elements in rows $1-4$ and columns $1-4$.
+matrix that consists of elements in rows 1-4 and columns 1-4.
 
 4. Generate plots to investigate the distributions and relationships
 between the three variables of interest.
-```{r}
-hist(Rateprof$quality, breaks=15, col="gray", 
-   xlab="Average quality rating", 
-   main ="Histogram of Average quality rating", ylim=c(0,45))
-hist(Rateprof$helpfulness, breaks=15, col="gray", 
-   xlab="Average helpfulness rating", 
-   main ="Histogram of Average helpfulness rating", ylim=c(0,45))
-hist(Rateprof$easiness, breaks=15, col="gray", 
-   xlab="Average easiness rating", 
-   main ="Histogram of Average easiness rating", ylim=c(0,45))
-plot(Rateprof[,c(8,9,11)])
-cor(Rateprof[,c(8,9,11)])
-```
+    ```{r}
+    # Add code here
+    ```
 
 5. Fit the weighted least squares model. Write the equation of
 the fitted model, and interpret each of the three fitted coefficients
 in context of the problem.
-```{r}
-mod <- lm(quality ~ easiness + helpfulness, weights = numRaters, data = Rateprof)
-summary(mod)
-```
+    ```{r}
+    # Add code here
+    ```
 
 6. Fit the ordinary least squares fit to these data. How do the coefficients
 change? How does the residual standard error change? Why?
-```{r}
-mod.OLS <- lm(quality ~ easiness + helpfulness, data = Rateprof)
-summary(mod.OLS)
+    ```{r}
+    # Add code here
+    ```
