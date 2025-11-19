@@ -1,0 +1,62 @@
+\usepackage{graphicx, verbatim}
+\usepackage{amssymb,amsmath,amsthm}
+\usepackage{wrapfig}
+\usepackage{multicol}
+\usepackage{xcolor}
+\usepackage{enumerate}
+%\pagenumbering{gobble}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor= blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+\setlength{\topmargin}{-1 in}
+\setlength{\textheight}{9.6 in}
+\setlength{\oddsidemargin}{-.15in}
+\setlength{\evensidemargin}{-.15in}
+\setlength{\textwidth}{6.8in}
+
+\def\Xb{\overline X}
+\def\xb{\overline x}
+\def\Yb{\overline Y}
+\def\yb{\overline y}
+\def\fs{\footnotesize}
+\def\sig2{\sigma^2}
+\def\rs{X_1, X_2, \hdots, X_n}
+\def\bs{\boldsymbol}
+\newcounter{alistctr}
+\newenvironment{alist}{\begin{list}{\Alph{alistctr}.\ }
+      {\usecounter{alistctr}}} {\end{list}}
+\usepackage[utf8]{inputenc}
+
+\usepackage[linewidth=1pt]{mdframed} 
+\usepackage{tikz} 
+\usetikzlibrary{trees} 
+\newcommand\mybox[2][]{\tikz[overlay]\node[fill=blue!20,inner sep=2pt, anchor=text, rectangle, rounded corners=1mm,#1] {#2};\phantom{#2}}
+
+\usepackage{fancyhdr}
+\renewcommand{\headrulewidth}{0pt}
+\pagestyle{fancy}
+\fancyhf{}
+\rfoot{\thepage}
+\lfoot{\color{gray}{\tiny{Notes created by S. Hancock for STAT 501: Fall 2022}}}
+\rhead{}
+\lhead{}
+
+\newcommand{\vs}{\vspace{2mm}}
+
+\newcommand{\floor}[1]{{\left\lfloor #1 \right\rfloor}}
+\newcommand{\ceil}[1]{{\left\lceil #1 \right\rceil}}
+
+\newcommand{\bm}{\mathbf}
+\newcommand{\R}{\mathbb{R}}
+
+\theoremstyle{definition}
+\newtheorem{mydef}{Definition}
+\newtheorem{myresult}{Result}
+

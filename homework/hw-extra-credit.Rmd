@@ -1,0 +1,22 @@
+---
+title: "M/STAT 501 Fall 2022: Homework Extra Credit"
+subtitle: Due Wednesday, Oct 26 by 5:00pm in Gradescope
+output: pdf_document
+urlcolor: blue
+---
+
+<!-- Material covered: Sections 3.1-3.6 -->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Directions**: 
+
+**Introduction to Maximum Likelihood Estimation**. If you take STAT 502, you will learn about _maximum likelihood estimators_ in detail. This problem serves as an introduction to that topic and also demonstrates the subtle differences between the Binomial and Negative Binomial distributions.  
+
+    _Background_: In practice, we observe data, then use those data to produce an estimate of some unknown parameter value in our assumed model. Consider the simple case where our data consists of just one measurement, $X$, and the probability model we assume for $X$ only involves one parameter, $\theta$. That is, $X$ has pmf/pdf $f_X(x|\theta)$, and we observe one realization from this model: $X = x$. (Reminder: Capital $X$ is the notation for the random variable itself---think of this as the potential data point before it is observed---whereas lowercase $x$ represents an observed value of $X$.) We want to use $x$ to estimate $\theta$. One method for deriving an estimator is to maximize the _likelihood function_, which as the same exact form as $f_X(x|\theta)$, but is treated as a function of $\theta$ rather than a function of $x$:
+    $$
+    L(\theta | x) = f_X(x | \theta)
+    $$
+    

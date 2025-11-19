@@ -1,0 +1,47 @@
+---
+title: "M/STAT 501 Fall 2025: Homework 8"
+subtitle: Complete by Friday, Dec 5
+output: 
+   pdf_document:
+      includes:
+            in_header: preamble.tex
+urlcolor: blue
+---
+
+<!-- Material covered: multivariate distributions -->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Directions**: This homework only consists of _Practice Problems_. Solutions will be posted in Canvas, and you should check and compare your work to these problems by Friday, Dec. 5. 
+
+## Practice Problems (do not turn in, solutions posted in Canvas)
+
+1. Let $\mathbf{x}= (X_1, X_2)'$ be bivariate normal with $\bs{\mu}_{X} = \begin{pmatrix} 1 \cr 2\end{pmatrix}$ and $\bs{\Sigma}_X = \begin{pmatrix} 2 & 1 \\1 &2 \end{pmatrix}$, and let  
+\begin{align*}
+\mathbf{y} | \mathbf{x} \sim N_2\left(\bs{\mu}_{\mathbf{y} | \mathbf{x}} = \begin{pmatrix} x_1 \\ x_1 + x_2\end{pmatrix}, \bs{\Sigma}_{\mathbf{y} | \mathbf{x}} = \begin{pmatrix} 1 & 0 \\0 &1 \end{pmatrix}\right)
+\end{align*}
+    a. Denoting $\bm{y} = (Y_1, Y_2)'$, what is the distribution of $Y_2 | Y_1 = y_1$? (Note that this is a univariate distribution.)
+    b. What is the distribution of $\mathbf{w} = \mathbf{x} - \mathbf{y}$? (Note that this is a bivariate distribution.)  
+
+2. Let $\mathbf{y}_i \sim Multinoulli(\mathbf{p})$, $i = 1, \cdots, n$, where $\sum_{j = 1}^K p_j = 1$.  The Multinoulli pmf is given as:
+    \[
+    f(\mathbf{y}) = \begin{cases}\begin{array}{ll}
+     \prod_{j = 1}^K p_j^{y_j} & \mathbf{y} \in \left\{\mathbf{v} \in \{0,1\}^K : \sum_{i = 1}^K v_i = 1\right\}\\
+    0 & \text{else}
+    \end{array}\end{cases}
+    \]
+and let $\mathbf{x} = \mathbf{y}_1 + \cdots + \mathbf{y}_n$.
+    a. Show that $\mathbf{x} \sim Multinomial(n, \mathbf{p})$.
+    b. Find the joint moment generating function of $\mathbf{x}$.  
+
+3. Consider the vector form of a multivariate normal pdf with mean $\boldsymbol{\mu}$ and variance-covariance matrix $\boldsymbol{\Sigma}$:
+$$
+f(\bm{y}) = \frac{\exp\left\{-\frac{1}{2}(\bm{y} - \bs{\mu})'\bs{\Sigma}^{-1}(\bm{y} - \bs{\mu})\right\}}{|\bs{\Sigma}|^{\frac{1}{2}}(2\pi)^{\frac{n}{2}}}.
+$$
+Show that, for $n = 2$, this pdf reduces to the form given in Definition 4.5.10 on p.\ 175 of our textbook.
+
+4. Let $Y$ be a positive (univariate) random variable.  (Assume that the expectations below exist).  Show that:
+    a. $E[Y^\alpha] \leq (E[Y])^\alpha$ when $0 \leq \alpha \leq 1$
+    b. $\frac{E[Y^{\alpha-1}]}{E[Y^\alpha]} \leq E[1/Y]$ for $0 < \alpha < 1$

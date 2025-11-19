@@ -1,0 +1,1239 @@
+---
+title: 'STAT 501 Fall 2025 Course Notes'
+date: "Chapter 4: Multiple Random Variables"
+output: 
+  pdf_document: 
+      includes: 
+        in_header: ../header.tex
+fontsize: 12 pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+```
+
+<!-- Need to add section on conditional independence! (Not in Casella and Berger) -->
+<!-- Add in definition of conditional variance after defn of conditional expectation -->
+
+
+__Motivation:__ $Y$ is a RV that denotes a random numerical outcome of an "experiment". A random variable was defined to be a function from a sample space $S$ into the real numbers. Often we are interested _simultaneously_ in two or more outcomes of a random experiment like... 
+
+- $Y_1$ = the number of eggs in a hen Mallard's nest, AND $Y_2$ = the number of eggs that survive and hatch 
+- $Y_1$ = GRE, AND $Y_2$ = GPA of a prospective graduate student
+- A 501 student's $Y_1 =$ number of hours spent on extra practice problems, AND $Y_2 =$ final exam score
+
+In each of these situations, we are interested in the 2-dimensional _random vector_ $(Y_1, Y_2)$. A natural extension of this is to more than two dimensions. In fact, consider taking a random sample of $n$ MSU students who live in the dorms and measure whether or not they are registered to vote (1 = yes, 0 = no; assume 18+ years old), define  
+
+\vspace{3mm}
+$Y_i =$
+\vspace{3mm}
+
+Then, taken together, we have an _n-dimensional_ random vector of voter registrations
+
+\vspace{3mm}
+$\textbf{Y} =$
+\vspace{3mm}
+
+and the observed values as, 
+
+\vspace{3mm}
+$\textbf{y} =$
+\vspace{3mm}
+
+How could we represent the collection of these outcomes as an event? 
+
+\vspace{.3in}
+
+Another way to write the intersection of $n$ events is: 
+
+\vspace{.2in}
+
+or even more simply as, \vspace{.3in}
+
+We can use _multivariate probability distributions_ as models for random samples to make inference about the population from which the sample was drawn. \vspace{.05in}
+
+\newpage
+
+# 4.1 Joint and Marginal Distributions
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{DEF 4.1.1 (\emph{n}-dimensional random vector)} An \textit{n-dimensional random vector} is a function from a sample space $S$ into $\mathbb{R}^n$, $n$-dimensional Euclidean Space.
+\end{mdframed}
+
+For simplicity, we'll first focus on _bivariate random variables_, denoted $(X,Y)$.  
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{DEF p.\ 147 (Bivariate cdf)} Let $X$ and $Y$ be two random variables. The joint cumulative distribution function (\textbf{bivariate cdf}) of $X$ and $Y$ is
+
+\vspace{0.2in}
+$F_{XY}(x,y) = $
+\vspace{0.3in}
+
+This extends to $n$-dimensional vectors $\mathbf{X}=(X_1,\ldots, X_n)$:
+
+\vspace{0.2in}
+$F_{\mathbf{X}}(x_1,\dots, x_n) = $
+\vspace{0.3in}
+
+\end{mdframed}
+
+__Bivariate Die-roll Example__ Suppose we roll two 6-sided fair dice and let $(X, Y)$ be the random vector of the two outcomes. The visualization of the cdf, $F_{X, Y}(x, y)$, below helps provide some intuition about properties of bivariate cdfs.  
+
+```{r, message=FALSE, warning=FALSE, results = "hide", out.width="0.99\\linewidth", fig.pos="center", echo = FALSE, eval = FALSE}
+# The bivariate and intoo packages were removed from CRAN.
+# Use the following to install: 
+# install.packages("https://cran.r-project.org/src/contrib/Archive/kubik/kubik_0.3.0.tar.gz", repos = NULL, type = "source")
+# install.packages("https://cran.r-project.org/src/contrib/Archive/barsurf/barsurf_0.7.0.tar.gz", repos = NULL, type = "source")
+# install.packages("https://cran.r-project.org/src/contrib/Archive/bivariate/bivariate_0.7.0.tar.gz", type = "source")
+# install.packages("https://cran.r-project.org/src/contrib/Archive/intoo/intoo_0.4.0.tar.gz", repos=NULL, type="source")
+library(intoo)
+library(bivariate)
+library(MASS)
+par(mfrow = c(1,2))
+plot(dubvcdf(1,6,1,6), T)
+plot(dubvcdf(1,6,1,6), T, xlim = c(0,10), ylim = c(0,10))
+```
+
+
+\includegraphics[width=\textwidth]{img/bivariate-die-roll}
+
+\newpage
+
+
+
+\textbf{Bivariate cdf properties}: The function $F_{XY}(x,y)$ is a bivariate cdf \emph{iff} the following four conditions are met. 
+\vspace{-.05in}
+\begin{enumerate}
+  \item \emph{If $a \leq b$ and  $c \leq d$, then $F_{XY}(b,d) - F_{XY}(a,d) - F_{XY}(b,c) + F_{XY}(a,c) \geq 0$.}
+  
+  Write this expression as a probability:
+  
+  
+\vspace{2in}
+  \item \emph{$F_{XY}(x,y)$ is right continuous in each variable, i.e., $\lim_{h\rightarrow 0^+}F_{XY}(x + h, y) = \lim_{h\rightarrow 0^+}F_{XY}(x, y +h) = F_{XY}(x, y)$ for all $x$, $y$.}
+  
+  \vspace{2in}
+  \item  \emph{$\lim_{x \rightarrow -\infty, y \rightarrow -\infty}F_{XY}(x,y) = \lim_{x \rightarrow -\infty} F_{XY}(x,y) = \lim_{y \rightarrow -\infty} F_{XY}(x,y) =$}
+  \vspace{5mm}
+  \item \emph{$\lim_{x \rightarrow \infty, y \rightarrow \infty}F_{XY}(x,y) = \hspace{0.5in}; \displaystyle \lim_{x \rightarrow \infty} F_{XY}(x,y) = \hspace{1in}; \lim_{y \rightarrow \infty} F_{XY}(x,y) =$}
+\end{enumerate}
+
+\vspace{3in}
+
+\newpage
+## Bivariate Discrete Random Variables    
+\vspace{3mm}
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{DEF 4.1.3 (Joint/Bivariate pmf)} Let $(X,Y)$ be a discrete bivariate random vector. Then the function $f_{XY}(x,y)$ from $\mathbb{R}^2$ to $\mathbb{R}$ defined by $f_{XY}(x,y) = P(X = x, Y = y)$ is called the \emph{joint probability mass function} --- \textbf{joint pmf} --- of $(X,Y)$. 
+\end{mdframed}
+
+__Note:__ A joint pmf can be used to compute the probability of any event in terms of $(X,Y)$. Let $A$ be any subset of $\mathbb{R}^2$. Then, $$P((X,Y) \in A) = \sum_{\{(x,y): \hspace{1mm} (x,y) \in A,\hspace{1mm} f_{XY}(x,y) > 0\}} f_{XY}(x,y) \hspace{3in}$$
+
+__Properties of a Joint pmf:__
+
+1. \hspace{1in}
+\vspace{0.35in}
+2. \hspace{1in}
+\vspace{0.4in}
+
+__Recall:__ How do we use a univariate _pmf_ to find a univariate _cdf_? 
+
+
+Joint _pmf_ and _cdf_ relationship: If $X$ and $Y$ are jointly distributed discrete random variables, then the support, $\{(x_1,y_1), (x_2,y_2),...\}$, is countable,  and $$F_{XY}(x,y) = \hspace{5in}$$
+
+where $f_{XY}(x,y)$ is a joint (bivariate) pmf. 
+
+## Bivariate Continuous Random Variables    
+\vspace{3mm}
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{DEF 4.1.10 (Joint/Bivariate pdf)} A function $f_{XY}(x,y)$ from $\mathbb{R}^2$ to $\mathbb{R}$ is called a \emph{joint probability density function} -- \textbf{joint pdf} --- of the continuous bivariate random vector $(X,Y)$ if, for every $A\subset \mathbb{R}^2$, $$P((X,Y)\in A) = {\int\int}_A f_{XY}(x,y)$$. 
+\end{mdframed}
+
+__Note__ The notation $\displaystyle {\int\int}_A$ means that the limits of integration are set so that the function is integrated over all $(x,y) \in A$. 
+
+__Properties of a Joint pdf:__
+
+1. \hspace{1in}
+\vspace{0.35in}
+2. \hspace{1in}
+\vspace{0.4in}
+
+
+__Example (Bivariate Normal Distribution)__ Let ($X$,$Y$) $\sim$ $\displaystyle \mathcal{N}\left(\boldsymbol{\mu} = [0,0]',\boldsymbol{\Sigma} = \left[\begin{matrix} 1 & 0\\ 0 & 1 \end{matrix}\right]\right)$. A (3-D) plot of the _pdf_, $f_{XY}(x, y)$, a (2-D) plot of a random sample of 500 $(x, y)$ pairs, and a (3-D) plot of the _cdf_, $F_{XY}(x, y)$, are shown below.
+\vspace{.7in}
+
+```{r, message=FALSE, warning=FALSE, results = "hide", fig.width=10, fig.height=6, out.width="0.99\\linewidth", fig.pos="center", echo = FALSE, eval = FALSE}
+# consider (X,Y) such that X is independent of Y and they both have 
+# standard normal distributions (i.e., X ~ N(0,1), Y ~ N(0,1))
+par(mfrow = c(1,2))
+# make a 3d density plot
+plot(nbvpdf(0, 0, 1,1, cor = 0))
+# compare to 2d view
+plot(x = rnorm(10, 0, 1), y = rnorm(10, 0, 1), pch = 20, 
+     xlim = c(-3,3), ylim = c(-3,3), xlab = "x", ylab = "y", 
+     col = rgb(0.1,0.1,0.1, alpha = 0.5))
+# and see 500 realizations from this distribution 
+points(x = rnorm(500, 0, 1), y = rnorm(500, 0,1), pch = 20, 
+       col = rgb(0.1,0.1,0.1, alpha = 0.5))
+```
+
+\includegraphics[width=\textwidth]{img/bivariate-normal-pdf}
+
+
+```{r, message=FALSE, warning=FALSE, results = "hide", fig.width=10, fig.height=6, out.width="0.99\\linewidth", fig.pos="center", echo = FALSE, eval = FALSE}
+# What do you expect the cdf to look like? 
+par(mfrow = c(1,2))
+plot(nbvcdf(0, 0, 1,1, cor = 0), use.plot3d = TRUE)
+plot(nbvcdf(0, 0, 1,1, cor = 0), 
+     xlim = c(-10, 10), ylim = c(-10,10), use.plot3d = TRUE)
+```
+
+\includegraphics[width=\textwidth]{img/bivariate-normal-cdf}
+
+\newpage 
+
+__Recall:__ How do we use a univariate _pdf_ to find a univariate _cdf_? How do we use a univariate _cdf_ to find a univariate _pdf_? 
+
+Joint _pdf_ and _cdf_ relationship: If $X$ and $Y$ are jointly distributed (absoulutely) continuous random variables, then  $$F_{XY}(x,y) = \hspace{5in}$$
+
+where $f_{XY}(x,y)$ is a joint (biviariate) pdf. 
+
+From the bivariate Fundamental Theorem of Calculus, this implies that  $$f_{XY}(x,y) = \hspace{5in}$$
+
+### Example
+Let $X$ and $Y$ have a joint density function given by $\displaystyle f_{XY}(x,y) = \begin{cases} kxy & 0\leq x\leq1, 0\leq y \leq 1\\ 0 & else \end{cases}$
+
+- Find $k$.
+\vspace{2.5in}
+- Find $P(X + Y \leq 1)$.
+
+\newpage
+
+__Example (cont)__
+
+- Find the joint cdf of $X$ and $Y$. Use this cdf to obtain $f_{XY}(x,y)$ given above. 
+\vfill
+
+
+
+## Marginal Distributions
+
+\vspace{3mm}
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{THM 4.1.6 (Discrete Marginal Distributions)} Let $X$ and $Y$ be jointly distributed discrete RVs with joint pmf $f_{XY}(x,y)$. Then, the \textbf{marginal pmfs} of $X$ and $Y$ are given by: \vspace{.2in}
+
+$f_X(x) =$
+
+\vspace{.2in}
+
+$f_Y(y) =$
+
+\vspace{.2in}
+\end{mdframed}
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{THM 4.1.6 (Continuous Marginal Distributions)} Let $X$ and $Y$ be jointly distributed continuous RVs with joint pdf $f_{XY}(x,y)$. Then, the \textbf{marginal pdfs} of $X$ and $Y$ are given by: \vspace{.2in}
+
+$f_X(x) =$
+
+\vspace{.2in}
+
+$f_Y(y) =$
+
+\vspace{.2in}
+\end{mdframed}
+\newpage
+
+__Notes:__
+
+- If we sum/integrate one of the RVs out of the bivariate joint \emph{pmf/pdf}, we are left with the \emph{pmf/pdf} of the other variable. Visually, we could "smash down onto a single axis or margin," which is where the term \textbf{marginal probability density function} comes from.
+
+\vspace{1in}
+
+- The marginal pmf/pdf of $X$ or $Y$ can be used to compute probabilities or expectations that involve only $X$ or $Y$. However, to compute a probability or an expectation that simultaneously involves both $X$ and $Y$, we must use the joint pmf/pdf of $X$ and $Y$. In general, a joint distribution often tells us additional information about the distribution of $X$ and $Y$ that is not found in the marginal distributions. Therefore, we can find a marginal distribution from a joint distribution, but the converse may not be true! 
+
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{DEF (Bivariate Expectations)} Suppose $g(x,y)$ is a real-valued function. If $X$ and $Y$ are random variables with joint pmf/pdf $f_{XY}(x,y)$, \vspace{.8in}
+
+$E[g(X,Y)] =$
+
+\vspace{.8in}
+
+\end{mdframed}
+
+### Example (cont)
+
+Let $X$ and $Y$ have a joint density function given by $\displaystyle f_{XY}(x,y) = \begin{cases} 4xy & 0\leq x\leq1, 0\leq y \leq 1\\ 0 & else \end{cases}$.
+
+- Find the marginal density functions (pdfs) of $X$ and $Y$. 
+
+\newpage
+
+__Example (cont)__
+
+- Find $E(X^2)$ using both $f_{XY}(x,y)$ and $f_X(x)$ to verify you get the same result! 
+
+\vspace{2in}
+
+
+### Example
+
+Let $X$ and $Y$ have a joint density function given by $\displaystyle f_{XY}(x,y) = \begin{cases} e^{-y} & 0 < x < y < \infty\\ 0 & \mbox{else} \end{cases}$
+
+- Find $E(X^2Y)$. 
+
+\newpage
+
+__Example (cont)__
+
+- Find $P(X + Y \geq 1)$. 
+
+
+\newpage 
+
+### Example
+
+Let $X$ and $Y$ have a joint probability mass function given by     
+$$
+f_{XY}(x,y) = \begin{cases}\begin{array}{ll}
+\binom{y}{x}p^x(1-p)^{y-x}\dfrac{e^{-\lambda}\lambda^y}{y!} & y = 0,1,2,...; x = 0,...,y\\ 
+0 & else 
+\end{array}\end{cases}
+$$
+where $0 < p < 1$ and $\lambda > 0$.
+
+- Use the joint _pmf_ to show that $Y \sim Poisson(\lambda)$ and $X \sim Poisson(p\lambda)$.
+
+\newpage 
+
+__Example (cont)__
+
+- Find $E(XY)$.
+
+\newpage
+
+# 4.2 Conditional Distributions and Independence
+
+Often, when two random variables are observed, the values of the two variables are related. For example, a randomly chosen person's height is typically related to that person's weight---we would think it more likely that a randomly selected person's weight is more than 200 pounds if we were told the person is 73 inches tall than if we were told the person is 41 inches tall. Knowledge about the value of a randomly chosen person's height, $X$, gives us some information about the value of that person's weight, $Y$, even if it doesn't tell us the exact value. In such cases, we are often interested in the conditional probability of $Y$  given knowledge that $X = x$.
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt] 
+\textbf{DEF 4.2.1 (Conditional pmf)} Let $(X,Y)$ be a discrete bivariate random vector with joint pmf $f_{XY}{(x,y)}$ and marginal pmfs $f_X(x)$ and $f_Y(y).$ For any $x$ such that $P(X = x) = f_X(x) > 0$, the \emph{conditional pmf} of $Y$ given that $X = x$ is the function of $y$ denoted by $f_{Y|X}(y|x)$ and defined by
+
+\vspace{.2in}
+
+$f_{Y|X}(y|x) =$
+
+\vspace{.3 in}
+
+For any $y$ such that $P(Y = y) > 0$, the \emph{conditional pmf} of $X$ given that $Y = y$ is the function of $x$ denoted by $f_{X|Y}(x|y)$ and defined by
+
+\vspace{.3in}
+
+$f_{X|Y}(x|y) =$
+
+\vspace{.3in}
+
+\end{mdframed}
+
+\vspace{.2in}
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt] 
+\textbf{DEF 4.2.2 (Conditional pdf)} Let $(X,Y)$ be a continuous bivariate random vector with joint pmf $f_{XY}{(x,y)}$ and marginal pmfs $f_X(x)$ and $f_Y(y).$ For any $x$ such that $f_X(x) > 0$, the \emph{conditional pdf} of $Y$ given that $X = x$ is the function of $y$ denoted by $f_{Y|X}(y|x)$ and defined by
+
+\vspace{.3in}
+
+$f_{Y|X}(y|x) =$
+
+\vspace{.2in}
+
+For any $y$ such that $f_Y(y) > 0$, the \emph{conditional pdf} of $X$ given that $Y = y$ is the function of $x$ denoted by $f_{X|Y}(x|y)$ and defined by
+
+\vspace{.3in}
+
+$f_{X|Y}(x|y) =$
+
+\vspace{.3in}
+
+\end{mdframed}
+\newpage 
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt] 
+\textbf{DEF p.\ 150 (Conditional Expectation)} Let $X$ and $Y$ be two random variables. If $g(Y)$ is a function of $Y$, then the conditional expected value of $g(Y)$ given $X = x$ is, \vspace{.2in}
+
+$E(g(Y)|X = x) =$
+\vspace{.2in}
+\end{mdframed}
+
+<!-- Add in definition of conditional variance -->
+
+### Example
+
+Consider the joint pdf $\displaystyle f_{XY}(x,y) = \begin{cases} e^{-y} & 0 < x < y < \infty \\ 0 & \text{else}\end{cases}$. We can show the marginal pdfs of $X$ and $Y$ are $\displaystyle f_{X}(x) = \begin{cases} e^{-x} & 0 < x < \infty \\ 0 & \text{else}\end{cases}$ and $\displaystyle f_{Y}(y) = \begin{cases} ye^{-y} & 0 < y < \infty \\ 0 & \text{else}\end{cases}$, respectively. (_This is left as extra practice for you._)
+
+
+a. For $x > 0$, find the conditional pdf of $Y|X =x$. 
+\vspace{1.8in}
+b. For $y > 0$, find the conditional pdf of $X|Y =y$. 
+\vspace{1.8in}
+c. Find $E(X|Y = y)$ and $Var(X|Y=y)$. 
+
+\newpage 
+
+
+Sometimes the conditional distribution of $Y$ given that $X = x$ is different for different values of $x$ (i.e., $Y|X=x$ depends on $x$). However, in some situations, the knowledge that $X = x$ doesn't give us any more information about $Y$ than what we already had. This important relationship between $X$ and $Y$ is called ___independence___. 
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{DEF 4.2.5 (Independence)} Let $(X,Y)$ be a bivariate random vector with joint pdf or pmf $f_{XY}(x,y)$ and marginal pdfs or pmfs $f_X(x)$ and $f_Y(y)$. Then $X$ and $Y$ are independent random variables if, for every $x \in \mathbb{R}$ and $y \in \mathbb{R}$\vspace{.2in}
+$$
+f_{XY}(x,y) = \hspace{4in}
+$$
+\vspace{.3in}
+
+\end{mdframed}
+
+\underline{Note:} _If $X$ and $Y$ are independent random variables, then_ $$f_{Y|X}(y|x) = \hspace{.1in}$$ 
+_regardless of the value of $x$. Similarly,_ $f_{X|Y}(x|y)$ = \hspace{.1in} 
+
+### Example
+
+Let $X$ and $Y$ be jointly distributed random variables with joint pdf
+$$
+f_{XY}(x,y) = \begin{cases}\begin{array}{ll}
+2x & 0<x<1; x \leq y \leq x+1\\
+0 & \mbox{else}
+\end{array}\end{cases}
+$$
+
+a. Are $X$ and $Y$ independent? Explain why or why not.   
+\vspace{.8in}
+b. Find $E(e^Y | X = x)$.  
+\vspace{1.2in}
+c. For what values of $X$ does the expectation in part b.\ hold?
+\vspace{.8in}
+
+\newpage
+## Independence---Revisited
+\vspace{.1in}
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{Lemma 4.2.7 (AKA "Factorization THM")} Let $(X,Y)$ be a bivariate random vector with joint pdf or pmf $f_{XY}(x,y)$. Then $X$ and $Y$ are independent random variables if and only if there exist two functions $g(x)$ and $h(y)$ such that, for every $x \in \mathbb{R}$ and $y \in \mathbb{R}$, 
+
+\vspace{1.5in}
+\end{mdframed}
+
+\underline{Note:} _$g$ and $h$ do not necessarily need to be pdfs or pmfs_
+
+__Proof:__ On your own (see p. 153). 
+
+
+### Examples
+
+For each of the following joint distributions, determine whether or not   $X$ and $Y$ are independent. Explain why or why not.
+
+1. $\displaystyle f_{XY}(x,y) = \begin{cases} e^{-y} & 0 < x < y < \infty \\ 0 & \text{else}\end{cases}$.
+
+\vspace{1in}
+
+2. $\displaystyle f_{XY}(x,y) = \begin{cases} 4xy & 0 \leq x \leq 1; 0\leq y \leq 1 \\ 0 & \text{else}\end{cases}$
+
+\vfill
+
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt] 
+\textbf{THM 4.2.10 (Using Independence)} Let $X$ and $Y$ be independent random variables.
+\begin{itemize} 
+  \item For any $A \subset \mathbb{R}$ and $B \subset \mathbb{R}$, $P(X \in A, Y \in B) = P(X \in A)P(Y     \in B)$.     
+  \item Let $g(x)$ be a function only of $x$ and $h(y)$ a function only of $y$. Then 
+  $$E(g(X)h(Y)) =\hspace{5in}$$  \vspace{.1in}
+\end{itemize}
+\end{mdframed}
+
+\underline{Proof:} On your own (see p. 155). 
+
+\newpage 
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt] 
+\textbf{THM 4.2.12 (Using Independence in MGFs)} Let $X$ and $Y$ be independent random variables with moment generating functions $M_X(t)$ and $M_Y(t)$. Then the moment generating function of the random variable $Z = X + Y$ is given by
+$$
+M_Z(t) = \hspace{5in}
+$$
+\vspace{.2in}
+\end{mdframed}
+\underline{Proof:} On your own (see p. 155). 
+
+Theorems 4.2.10 and 4.2.12 extend to $n$ independent random variables (see Theorems 4.6.6 and 4.6.7). That is, if $X_1,\ldots, X_n$ are mutually independent random variables with mgfs $M_{X_1}(t),\ldots, M_{X_n}(t)$, and $g_1,\ldots, g_n$ are real-valued functions such that $g_i(x_i)$ is a function only of $x_i$, $i = 1,\ldots, n$, then
+\begin{itemize}
+\item $E\left[\prod_{i=1}^n g_i(X_i)\right] = \prod_{i=1}^n E(g_i(X_i))$, and
+\item $M_{\sum_{i=1}^nX_i}(t) = \prod_{i=1}^n M_{X_i}(t)$.
+\end{itemize}
+
+### Example
+
+Let $X_1,\ldots, X_n \overset{iid}{\sim} Bernoulli(p)$ ("iid" = independent and identically distributed), and define $Y = \sum_{i=1}^nX_i$. What distribution does $Y$ have? Find the mgf of $Y$.
+
+\newpage
+
+# 4.4 Hierarchical Models and Mixture Distributions 
+
+Through the use of conditional distributions, we can often model complicated processes by a sequence of relatively simple models placed in a hierarchy.
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{DEF 4.4.4 (Mixture Distribution)} A random variable $X$ is said to have a \emph{mixture distribution} if the distribution of $X$ depends on a quantity that also has a distribution.
+\end{mdframed}
+
+
+#### Example (Random Sum)
+
+An insect lays a large number of eggs, each surviving with probability $p$. Suppose the number of eggs laid by the insect, denoted by $Y$, follows a Poisson distribution with mean $\lambda$ and assume that each egg's survival is independent of the others. Let $X$ be a random variable denoting the number of survivors. Why is this a mixture distribution?
+
+
+\vspace{1.5in}
+
+How could we find $E(X)$ and $Var(X)$?
+
+\vspace{1.5in}
+
+At times, finding the mean and variance of a random variable in this manner may be difficult and/or tedious. Sometimes, such calculations can be greatly simplified using the following theorems:
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{THM 4.4.3 (Conditional Mean Identity)} For any two random variables $X$ and $Y$,
+$$
+E(X) = \hspace{2in}\mbox{and}\hspace{.2in} E(Y) = \hspace{2in}
+$$
+
+\vspace{.2in}
+
+provided the expectations exist. 
+\end{mdframed}
+
+__Proof:__ 
+
+<!-- Add more space here -->
+
+\vspace{4in}
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{THM 4.4.7 (Conditional Variance Identity)} For any two random variables $X$ and $Y$, 
+$$
+Var(X) = \hspace{5in}
+$$
+\vspace{.2in}
+
+provided the expectations exist. 
+\end{mdframed}
+
+__Proof:__
+
+\vspace{2in}
+
+#### Example (Revisited)
+
+An insect lays a large number of eggs, each surviving with probability $p$. Suppose the number of eggs laid by the insect, denoted by $Y$ follows a Poisson distribution with mean $\lambda$ and assume the each egg's survival is independent of the others. Let $X$ be a random variable denoting the number of survivors. Earlier, we stated $X|Y \sim Binomial(Y, p)$, where $Y \sim Poisson(\lambda)$. Use this information to find $E(X)$ and $Var(X)$. 
+
+\vfill 
+
+Recall: Earlier in the notes (pg. 11), we used the following joint pmf $$f_{XY}(x,y) = \begin{cases} \binom{y}{x}p^x(1-p)^{y-x}\frac{e^{-\lambda}\lambda^y}{y!} & y = 0,1,2,...; x = 0,...,y\\ 0 & else \end{cases}$$ to show that $Y \sim Poisson(\lambda)$ and $X \sim Poisson(\lambda p)$. We could use this to also show that $X|Y \sim Binomial(Y, p)$. This turns out to be the same mixture distribution that we used above! Use the marginal pmf of $X$ to find $E(X)$ and $Var(X)$ and compare to the results above.
+
+\newpage 
+
+#### Example (Revisited)
+
+Consider a generalization of the previous example, where instead of one mother insect, there are a large number of mothers and one mother is chosen at random. We are still interested in the number of survivors, but the number of eggs laid does not follow the same Poisson distribution for each mother, i.e., assume the rate at which eggs are laid for a randomly selected insect, $\Lambda$, follows an exponential distribution with mean $\beta > 0$. Let $X$ be a random variable denoting the number of survivors, and let $Y$ be a random variable denoting the number of eggs laid. 
+\vspace{1.5in} 
+
+a. Use this information to find $E(X)$, $E(Y)$, and $Var(Y)$.  
+\vspace{2in}
+b. Show that  $Y \sim Geometric^*\left(\frac{1}{1+\beta}\right)$^[The asterisk denotes that we are modeling the number of "failures" until the first success rather than the number of trials.] and use this result to find $E(Y)$ and $Var(Y)$.
+
+\newpage 
+
+# 4.5 Covariance and Correlation 
+
+How can we measure the _linear_ association between two RVs? Consider the following figures, dashed lines represent the the true mean values ($\mu_X$ and $\mu_Y$) for $X$ and $Y$, respectively.
+
+```{r, echo = FALSE, out.width = "75%", fig.align="center", fig.width=8, fig.height=3}
+par(mfrow = c(1,3))
+x <- rnorm(20)
+y <- 4 + 1.6*x + rnorm(20, mean = 0, sd = 0.5)
+plot(y ~x, xlab = "x", ylab = "y", pch = 20)
+# abline(a = 4, b = 1.6)
+ abline(h = 4, v = 0, lty = 4)
+# abline(h = mean(y), v = mean(x), lty = 2, col = "magenta", lwd = 2)
+y <- rnorm(20)
+plot(y ~x, xlab = "x", ylab = "y", pch = 20)
+# abline(a = 4, b = 1.6)
+abline(h = 0, v = 0, lty = 4)
+# abline(h = mean(y), v = mean(x), lty = 2, col = "magenta", lwd = 2)
+```
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{DEF 4.5.1 and THM 4.5.3 (Covariance)} Let $X$ and $Y$ be bivariate random variables with $E(X) = \mu_X$, $E(Y) = \mu_Y$, $Var(X) = \sigma^2_X$ and $Var(Y) = \sigma^2_Y$. The \emph{covariance} between $X$ and $Y$ is
+
+\vspace{0.1in}
+
+$Cov(X,Y) =$
+
+\vspace{1.5in}
+Note: $Cov(X,Y) = Cov(Y,X)$. And $Cov(X,X) = $
+\vspace{.2in}
+\end{mdframed}
+\underline{Proof:} On own, (see pg 170 in text).
+
+- What does a large covariance imply? \vspace{.2in}
+
+- What does a small covariance imply? \vspace{.2in}
+
+- How about a covariance of $\approx 0$? \vspace{.2in}
+
+- Are covariances easy to compare? (i.e, $Cov(X,Y)$ vs. $Cov(U,V)$) \vspace{.2in}
+
+
+
+\newpage 
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{DEF 4.5.2 (Correlation)} The correlation between $X$ and $Y$ is given by, 
+
+
+
+\vspace{0.1in}
+
+$\rho_{XY} =$
+
+\vspace{0.2in}
+
+Where $\rho_{XY}$ is also called the correlation coefficient. 
+\end{mdframed}
+
+- __Covariance__ is a measure of direction of linear association between two quantitative RVs, whereas __correlation__ measures the direction _and_ strength of the linear association between two quantitative random variables. 
+
+#### Example
+
+Consider the joint pdf $\displaystyle f_{XY} = \begin{cases} e^{-y} & 0 < x < y < \infty\\ 0 & \text{else}\end{cases}$. The marginal pdfs of $X$ and $Y$ are $\displaystyle f_{X}(x) = \begin{cases} e^{-x} & 0 < x < \infty \\ 0 & \text{else}\end{cases}$ and $\displaystyle f_{Y}(y) = \begin{cases} ye^{-y} & 0 < y < \infty \\ 0 & \text{else}\end{cases}$, respectively. Find $Corr(X,Y)$.
+\newpage 
+
+__Facts about Correlation, $\rho_{X,Y}$, (THM 4.5.7)__ For any random variables $X$ and $Y$, 
+
+- \vspace{.2in}
+- $|\rho_{XY}| = 1$ if and only if there exists numbers $a\neq 0$ and $b$ such that $P(Y = aX + b) = 1$. If $\rho_{XY} = 1$, then $a > 0$ and if $\rho_{XY}= -1$, then $a < 0$. 
+
+The second property states that if there is a line $Y = aX + b$ with $a \neq 0$ such that the values of $(X,Y)$ have a high probability of being near this line, then the correlation between $X$ and $Y$ will be near 1 or -1. But, if no such line exists, the correlation will be near 0. 
+
+\underline{Proof:} See text 172--173 (on own). 
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{THM 4.5.5 (Independence)} If $X$ and $Y$ are independent random variables, $Cov(X,Y) = 0 \implies Corr(X,Y) = 0$. 
+\end{mdframed}
+\underline{Proof:} \vspace{1.3in}
+
+
+- Is the converse true? That is does $Cov(X,Y) = \rho_{XY} = 0 \overset{?}{\implies}$ $X$ independent of $Y$? \vspace{.8in}
+
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{THM 4.5.6 (Variance of Linear Functions of Random Variables)} If $X$ and $Y$ are any two RVs and $a$ and $b$ are any two constants, then 
+
+\vspace{0.1in}
+
+$Var(aX + bY) =$
+
+\vspace{0.1in}
+
+If $X$ and $Y$ are independent RVs, then
+\vspace{0.1in}
+
+$Var(aX + bY) =$
+
+\vspace{0.1in}
+
+\end{mdframed}
+
+\underline{Note:} In addition, if $X$ and $Y$ are any two random variables and $a$ and $b$ are any two constants, then 
+
+\vspace{0.1in}
+
+$Cov(aX,bY) =$
+
+
+\vspace{0.1in}
+
+$Cov(X + a, Y + b) =$
+ 
+\vspace{0.1in}
+
+$Cov(X, aX + b) =$
+
+\vspace{0.05in}
+
+
+\underline{Proofs:} On own, see pg. 172 in text. 
+
+\newpage 
+
+#### Example (Revisited)
+
+Consider the joint pdf $\displaystyle f_{XY} = \begin{cases} e^{-y} & 0 < x < y < \infty\\ 0 & \text{else}\end{cases}$. The marginal pdfs of $X$ and $Y$ are $\displaystyle f_{X}(x) = \begin{cases} e^{-x} & 0 < x < \infty \\ 0 & \text{else}\end{cases}$ and $\displaystyle f_{Y}(y) = \begin{cases} ye^{-y} & 0 < y < \infty \\ 0 & \text{else}\end{cases}$, respectively. Find $Var(3X -4Y +2)$.
+\newpage 
+
+
+# 4.3 Bivariate Transformations
+
+Often, we are interested in finding the probability distribution of a function of two or more random variables and/or the joint distribution of functions of multiple random variables. For example, suppose two random variables $X$ and $Y$ have the joint distribution $f_{XY}(x,y)$. We are often interested in a new bivariate random vector $(U,V)$ defined by $U = g_1(X,Y)$ and $V = g_2(X,Y)$, where we want to find either the cdf/pdf/pmf of $U$ or $V$ or the joint distribution of $(U,V)$. In such instances, we can extend the methods used in the univariate case to the bivariate case.
+
+## Discrete Case
+
+Suppose two discrete random variables $X$ and $Y$ have the joint pmf $f_{XY}(x,y)$. To find the joint distribution of $U = g_1(X,Y)$ and $V = g_2(X,Y)$:
+
+1. Find the support for either    
+
+    - $U$ and $V|U = u$ or
+    - $V$ and $U|V =v$. 
+    
+2.	Rewrite the joint pmf of $(U,V)$ in terms of $(X,Y)$. 
+
+    - Recall: $f_{XY}(x,y) = P(X = x, Y = y)$
+    - No Jacobians!
+
+    Let $B \subset \mathbb{R}^2$, and define $A$ as the set $(x,y)$ where $(g_1(x,y), g_2(x,y)) \in B$:
+    \vspace{2mm}
+    $$
+    A = \hspace{4in}
+    $$
+    \vspace{2mm}
+    Then
+    \vspace{2mm}
+    $$
+    P((U, V) \in B) = \hspace{3.5in}
+    $$
+    \vspace{1mm}
+   
+_Note:_ Generally (in this class), $g_1$ and $g_2$ will be one-to-one. That is, given 
+$(u,v) \in \{(u,v): u = g_1(x,y), v = g_2(x,y) \text{  for some  } (x,y) \text{ such that } f_{XY}(x,y) > 0\},$
+the set $A_{UV} = \{(x,y): u = g_1(x,y), v = g_2(x,y)\}$ will be a singleton set. In this case, define $h_1$ and $h_2$ as the single-valued inverse mappings of $u = g_1(x,y)$ and $g_2(x,y)$. Then
+<!-- \begin{align*} -->
+<!-- f_{UV}(u,v) &= P(U = u, V = v) = P(g_1(X,Y) = u, g_2(X,Y) = v)\\ -->
+<!-- &= P(X = h_1(u,v), Y = h_2(u,v)) = f_{XY}(h_1(u,v), h_2(u,v)).\\ -->
+<!-- \end{align*} -->
+\vspace{1cm}
+
+$f_{UV}(u, v)$ = 
+
+\newpage
+
+#### Example
+
+Let $X \sim Pois(\theta)$ and $Y \sim Pois(\lambda)$ where $X$ and $Y$ are independent random variables. Define $U = X+ Y$ and $V = Y$. Find the distribution (pmf) of $U = X + Y$. 
+
+\newpage
+
+## Continuous Case
+
+Now, suppose $X$ and $Y$ are (absolutely) continuous random variables. If there is a one-to-one transformation from the support of $(X,Y)$ to the support of $(U,V)$, the Jacobian method discussed in the univariate case can be extended to find the joint distribution, $f_{UV}(u,v)$, in the bivariate case.
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{THM p. 158 (Bivariate transformations)}
+Suppose $X$ and $Y$ are (absolutely) continuous random variables with joint pdf $f_{XY}(x,y)$. Let $U = g_1(X,Y)$ and $V = g_2(X,Y)$. Also suppose that for all $(x,y)$ such that $f_{XY}(x,y) >0$, the transformation set $u = g_1(x,y)$ and $v = g_2(x,y)$ is one-to-one, and for each $(u,v)$ in the support of $(U,V)$, $x = h_1(u,v)$ and $y = h_2(u,v)$, where $h_1$ and $h_2$ are single-valued inverse mappings. If $x$ and $y$ have continuous partial derivatives with respect to $u$ and $v$ and \textbf{Jacobian}, 
+$$
+J = \left| \begin{matrix} \frac{\partial x}{\partial u} &  \frac{\partial x}{\partial v} \\ \frac{\partial y}{\partial u} &  \frac{\partial y}{\partial v}\end{matrix} \right| = \frac{\partial x}{\partial u}\frac{\partial y}{\partial v} -  \frac{\partial x}{\partial v}\frac{\partial y}{\partial u} \neq 0,
+$$
+then the joint pdf of $U$ and $V$ is  
+\vspace{5mm}
+
+$f_{UV}(u, v)$ = 
+\vspace{3cm}
+\end{mdframed}
+
+
+#### Example
+
+Let $X$ and $Y$ be independent exponential random variables, both with mean $\beta$. Let $U = \dfrac{X}{X + Y}$ and $V = X + Y$. Find the marginal pdf of $U$. 
+
+\newpage 
+
+#### Example (cont)
+
+\newpage
+
+#### Example
+
+Let the random variables $X$ and $Y$, respectively, denote the premium and claims of a randomly selected insurance policy. Assume $X$ and $Y$ are independent random variables, where $X\sim Gamma(2,5)$ and $Y \sim Exp(5)$. 
+
+a. What is the probability a randomly chosen claim will be more than the premium? 
+
+
+\newpage 
+
+b. Find the pdf of $Z  = X/Y$. How would you interpret this variable?
+
+
+\vfill 
+
+
+#### What if the transformations are not one-to-one?
+
+If the transformations are not one-to-one, we can proceed similar to how we did with univariate transformations. That is, we can divide the support of $(X,Y)$ into regions on which the transformations are one-to-one and sum those which have common support for $(U,V)$. For an example of how to use this approach, please see Example 4.3.6 on p. 162 of the text.
+
+In this situation, another option is to find the distribution of $(U,V)$ by rewriting the cdf $F_{UV}(u,v) = P(U \leq u,V \leq v)$ in terms of $X$ and $Y$.
+
+
+\newpage 
+
+
+# 4.6 Multivariate Distributions
+
+A (univariate) random variable is a function from a sample space $S$ into the real numbers, $\mathbb{R}$. In the bivariate case, we are interested in a two-dimensional random vector $(X,Y)$; that is, a function from a sample space $S$ into $\mathbb{R}^2$. In this section, we will consider \emph{$n$-dimensional random vectors}, or random vectors with more than two random variables, in more detail. 
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{DEF 4.1.1 (\emph{n}-dimensional random vector)} An \textit{n-dimensional random vector} is a function from a sample space $S$ into $\mathbb{R}^n$, $n$-dimensional Euclidean Space.
+\end{mdframed}
+
+In this case, many of the concepts discussed earlier---marginal and conditional distributions, independence, and so on---generalize from the bivariate to the multivariate setting.    
+
+### Multivariate cdf  
+
+The joint **cumulative distribution function** of $\mathbf{X} = (X_1, X_2, ..., X_n)'$ on $\mathbb{R}^n$ is defined as,  
+
+<!-- $$F_{\mathbf{X}}(\mathbf{x}) = P(X_1 \leq x_1, X_2 \leq x_2,..., X_n \leq x_n)$$ -->
+\vspace{5mm}
+$F_{\mathbf{X}}(\mathbf{x}) =$
+\vspace{1cm}
+
+### Multivariate pmf (Eqn 4.6.1)
+
+If $\mathbf{X} = (X_1, X_2, ..., X_n)'$ is a discrete random vector (the sample space is countable), then the __joint pmf__ is the function  
+
+<!-- $$f_{\mathbf{X}}(\mathbf{x}) = P(X_1 = x_1, X_2 = x_2,..., X_n = x_n) \: \text{  for each  } (x_1,...,x_n) \in \mathbb{R}^n.$$ -->
+\vspace{5mm}
+$f_{\mathbf{X}}(\mathbf{x}) =$
+\vspace{1cm}
+
+Then for any $A \in \mathbb{R}^n$, $P(\mathbf{X} \in A) = \sum_{A}f_{\mathbf{X}}(\mathbf{x})$.
+
+
+### Multivariate pdf (Eqn 4.6.2)
+
+If $\mathbf{X}=(X_1, X_2, ..., X_n)'$ is an (absolutely) continuous random vector, then the **joint pdf** is the function $f_{\mathbf{X}}(\mathbf{x})$ that, for any $A \in \mathbb{R}^n$, satisfies  
+
+<!-- $$P(\mathbf{X} \in A) = \int \int ...\int_Af_{\mathbf{X}}(\mathbf{x})d{\mathbf{x}} = \int \int ...\int_Af(x_1,x_2,...,x_n)dx_1...dx_n$$  -->
+\vspace{5mm}
+$P(\mathbf{X} \in A) =$
+
+\vfill
+
+_Note:_ These integrals are $n$-fold integrals with limits of integration set so that the integration is over all points $\mathbf{x} \in A$.
+
+\newpage
+
+### Marginal Distributions (Equations 4.64 & 4.65)
+
+The marginal pdf or pmf of any subset of the coordinates of $\mathbf{X} = (X_1,\ldots,X_n)'$ can be computed by integrating or summing the joint pdf or pmf over all possible values of the other coordinates.
+
+
+_Continuous case_: If $\mathbf{X} = (X_1, X_2,...,X_k, X_{k+1},...,X_n)'$ is an (absolutely) continuous random vector, then the **marginal pdf** of  $(X_1, X_2,...,X_k)'$ is
+$$
+f(x_1,...,x_k) = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}...\int_{-\infty}^{\infty} f(x_1,...,x_n)dx_{k+1}dx_{k+2}...dx_{n}
+$$
+for every $(x_1,...,x_k)' \in \mathbb{R}^{k}$. That is, if we integrate $n-k$ ($k < n$) continuous random variables out of the multivariate _pdf_, we are left with the marginal _pdf_ of the other $k$ variable(s).  
+
+For example, the marginal pdf of the random variable $X_j$ is
+<!-- $$ -->
+<!-- f_{X_j}(x_j) = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}...\int_{-\infty}^{\infty} f(x_1,...,x_n)dx_{1}dx_{2}...dx_{j-1}dx_{j+1}...dx_{n} -->
+<!-- $$ -->
+\vspace{3mm}
+
+$f_{X_j}(x_j)$ = 
+\vspace{1cm}
+
+
+for every $x_j \in \mathbb{R}$.  
+\vspace{1mm}
+
+_Discrete case_: Similarly, we can get the marginal pmf of a discrete random variable by summing the other random variables out of the joint pmf.
+If $\mathbf{X} = (X_1, X_2,...,X_k, X_{k+1},...,X_n)'$ is discrete random vector, then the **marginal pmf** of $(X_1, X_2,...,X_k)'$ is
+$$
+f(x_1,...,x_k) = \sum_{(x_{k+1},x_{k+2},...,x_{n})\in \mathbf{R}^{n-k}}f(x_1,...,x_n)
+$$
+for every $(x_1,...,x_k) \in \mathbb{R}^{k}$. 
+
+For example, the marginal pmf of the random variable $X_j$ is
+<!-- $$ -->
+<!-- f_{X_j}(x_j) = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}...\int_{-\infty}^{\infty} f(x_1,...,x_n)dx_{1}dx_{2}...dx_{j-1}dx_{j+1}...dx_{n} -->
+<!-- $$ -->
+\vspace{3mm}
+
+$f_{X_j}(x_j)$ = 
+\vspace{1cm}
+
+
+for every $x_j \in \mathbb{R}$.  
+\vspace{1mm}
+
+### Multivariate Expectations (Eqn 4.6.3)
+
+Suppose $g(\mathbf{x}) = g(x_1,...,x_n)$ is a real-valued function defined on the sample space of $\mathbf{X}=(X_1,...,X_n)'$. That is, $g: \mathcal{X} \rightarrow \mathbb{R}$, where $\mathcal{X} \subset \mathbb{R}^n$ is the support of $\mathbf{X}$. Then the expected value of $g(\mathbf{X})$ is
+
+_Continuous case_: If $f_{\mathbf{X}}(\mathbf{x})$ is the pdf of $\mathbf{X}$, then
+$$
+E(g(\mathbf{X})) = E\left(g(X_1,..,X_n)\right) = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}...\int_{-\infty}^{\infty} g(x_1,...,x_n)f_{\mathbf{X}}(x_1,...,x_n)dx_1,..,dx_n.
+$$
+
+_Discrete case_: If $f_{\mathbf{X}}(\mathbf{x})$ is the pmf of $\mathbf{X}$, then
+$$
+E(g(\mathbf{X})) = E\left(g(X_1,..,X_n)\right) = \sum_{\mathcal{X}\in\mathbb{R}^n} g(x_1,...,x_n)f_{\mathbf{X}}(x_1,...,x_n).
+$$
+
+
+\vspace{5mm}
+
+
+### Conditional Distributions (Eqn 4.6.6)
+
+The **conditional pdf or pmf** of a subset of the coordinates of $\mathbf{X}=(X_1,...,X_n)'$ given the values of the remaining coordinates is obtained by dividing the joint pdf or pmf by the marginal pdf or pmf of the remaining coordinates. For example, if $f(x_1,x_2...,x_k) > 0$, the conditional pdf or pmf of $(X_{k + 1}, ..., X_n)$ given $(X_1,...,X_{k})$ is defined by
+
+$$f(x_{k + 1}, ..., x_n|x_1,...,x_k) = \frac{f(x_1,...,x_n)}{f(x_1,...,x_k)}.$$
+
+#### Example
+
+Let $X_1,X_2,X_3$ be continuous random variables with joint pdf $$\displaystyle f(x_1,x_2,x_3) = \begin{cases} c & 0 < x_1 < x_2 < x_3 < 1\\ 0 & else \end{cases}$$ 
+
+a. Find $c$.
+b. What is the marginal pdf of $X_3$?
+c. Find $f_{X_1X_2}(x_1, x_2)$. 
+d. Find $E(X_1X_2X_3)$. 
+e. Find the conditional pdf $f_{X_1X_2|X_3}(x_1, x_2|x_3)$. 
+f. Find the conditional pdf $f_{X_3|X_1X_2}(x_3|x_1, x_2)$. 
+
+\newpage 
+
+
+## Independence of Random Vectors
+
+The concept of independence can also be extended from the bivariate case to the multivariate case.
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{DEF 4.6.5 (Mutual Independence)} Let $\mathbf{X} = (X_1,...,X_n)'$ be an $n$-dimensional random vector with joint pdf or pmf $f_{\mathbf{X}}(x_1,...,x_n)$ and marginal pdfs or pmfs for each $X_i$ denoted by $f_{X_i}(x_i)$. Then $X_1,...,X_n$ are \textbf{\emph{mutually} independent random variables} if, for every $(x_1,...,x_n)' \in \mathbb{R}^n$, 
+
+$$f(x_1,x_2,...,x_n) = f_{X_1}(x_1)...f_{X_n}(x_n) = \prod_{i = 1}^nf_{X_i}(x_i).$$
+
+\end{mdframed}
+
+_Note:_ Mutual independence implies that any pair of random variables is **pairwise independent**. However, the converse is not true---pairwise independence does not imply mutual independence!
+
+#### Example
+
+Suppose you flip a fair coin twice. Define the random vector $\mathbf{X} = (X_1, X_2, X_3)'$ as the trio of indicator variables,
+
+* $X_1 =$ 1 if head on the first toss; 0 otherwise
+* $X_2 =$ 1 if head on the second toss; 0 otherwise
+* $X_3 =$ 1 if same outcome on both tosses; 0 otherwise
+
+Are $X_1, X_2$, and $X_3$ pairwise independent? mutually independent?
+
+\newpage
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{THM 4.6.11 (Generalization of Lemma 4.2.7---Factorization THM; Random Variable Version)} Let $\mathbf{X}=(X_1,...,X_n)'$ be an $n$-dimensional random vector with joint pdf or pmf $f_{\mathbf{X}}(x_1,...,x_n)$. Then, $X_1,...,X_n$ are mutually independent random variables \emph{if and only if} there exist functions $g_i(x_i)$ such that, for every $\mathbf{x}=(x_1,x_2,...,x_n)' \in \mathbb{R}^n$, the joint pdf or pmf of $\mathbf{X} = (X_1,...,X_n)'$ can be written as
+$$
+f_{\mathbf{X}}(x_1,x_2,...,x_n) = g_1(x_1)g_2(x_2)...g_n(x_n).
+$$
+\end{mdframed}
+
+_Note:_ $g_i$ are not necessarily pdfs or pmfs, and the supports must also factor! 
+
+
+### Properties of Mutually Independent Random Variables
+
+Mutually independent random variables have many nice properties! These properties are particularly helpful when working with random samples from a large population, where $X_1, \ldots, X_n$ are independent and identically distributed according to some probability model.
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{THM 4.6.12 (Generalization of THM 4.3.5---Random Variable Version)}
+Let $X_1,...,X_n$ be independent random variables, and let $g_i(x_i)$ be a function of $x_i$ only. Then the random variables $U_i = g_i(X_i)$ are mutually independent.
+\end{mdframed}
+
+### Variance of Linear Functions of Random Variables
+
+Let $(X_1,...,X_n)$ be an $n$-dimensional random vector, and let $a_1,\ldots, a_n$ and $b_1,\ldots, b_n$ be real-valued constants. In general, 
+
+$$
+Var\left(\sum_{i = 1}^n a_iX_i + b_i\right) = \hspace{5in}
+$$
+
+<!-- \sum_{i = 1}^{n}a_i^2Var(X_i) + 2\sum\sum_{i < j}a_ia_jCov(X_i, X_j). -->
+\vspace{.1in}
+
+However, if $X_1,...,X_n$ are _mutually independent_ random variables, then 
+
+$$
+Var\left(\sum_{i = 1}^n a_iX_i + b_i\right) = \hspace{5in}
+$$
+\vspace{.1in}
+
+### Multivariate Expectations---Mutually Independent Random Variables
+
+\hfill
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{THM 4.6.6 (Generalization of THM 4.2.12)} Let $X_1,...,X_n$ be mutually independent random variables, and let $g_i(x_i)$ be real-valued functions such that $g_i(x_i)$ is a function of $x_i$ only. Then
+$$
+E(g_1(X_1)g_2(X_2)...g_n(X_n)) = \hspace{5in}
+$$ 
+\vspace{.2in}
+\end{mdframed}
+
+## Multivariate Transformations for Continuous Random Variables (One-to-One Version)    
+\hfill
+Suppose $X_1,...,X_n$ are (absolutely) continuous random variables with joint pdf $f_{X_1...X_n}(x_1,...,x_n)$. Let $A = \{\mathbf{x}: f_{\mathbf{X}}(\mathbf{x}) > 0\}$ be the support of $\mathbf{X}$. Consider the random vector $(U_1,...,U_n)$, defined by $U_i = g_i(X_1,...,X_n)$. Suppose that the transformation $(U_1,...,U_n) = (g_1(\mathbf{X}), ...,g_n(\mathbf{X}))$ is a one-to-one transformation from $A$ to $B = \{\mathbf{u}: (u_1,...,u_n) = (g_1(\mathbf{x}),...,g_n(\mathbf{x})) \text{ for some } \mathbf{x}\}$. Then, for each $i$, if the $i^{th}$ inverse exists, $x_i = h_i(u_1,...,u_n)$, $i = 1,...,n$, and if $x_1,x_2,...,x_n$ have continuous partial derivatives with respect to $u_1,u_2,...,u_n$ and Jacobian, $$J = \left| \begin{matrix} \frac{\partial x_1}{\partial u_1} &  \frac{\partial x_1}{\partial u_2} & ... & \frac{\partial x_1}{\partial u_n}\\ 
+\frac{\partial x_2}{\partial u_1} &  \frac{\partial x_2}{\partial u_2} & ... & \frac{\partial x_2}{\partial u_n}\\
+\vdots &  \vdots & \ddots & \vdots\\
+\frac{\partial x_n}{\partial u_1} &  \frac{\partial x_n}{\partial u_2} & \dots & \frac{\partial x_n}{\partial u_n}\\
+\end{matrix} \right| \neq 0,$$ 
+
+then the joint pdf of $\mathbf{U}=(U_1,U_2,\ldots,U_n)$ is,  
+
+$$f_{U_1\dots U_n}(\mathbf{u}) = \begin{cases} f_{X_1\dots X_n}(h_1(\mathbf{u}), \dots h_n(\mathbf{u}))|J| & \mathbf{u} \in B\\
+0 & else\end{cases}.$$ 
+
+Although we can use this approach, we are often interested in obtaining the distribution of $Y = \sum_{i = 1}^{n} X_i$. In some of these instances, moment generating functions can be very helpful.
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{DEF: Multivariate Moment Generating Function} Suppose $X_1,...,X_n$ are random variables with joint pdf $f_{X_1,...,X_n}(x_1,...,x_n)$. The \textbf{multivariate moment generating function} of $X_1,...,X_n$ is, 
+
+$$
+M_{X_1,\ldots, X_n}(t_1,\ldots, t_n) = \hspace{5in}
+$$
+\vspace{1in}
+
+for all $t_i$ near zero $(|t_i| < h_i, i = 1,2,...n)$ where the expectation exists. 
+\end{mdframed}
+
+Multivariate MGFs can be used to...
+
+\underline{Find moments:}
+
+\vspace{.1in}    
+$E(X_i^k)$ = \vspace{.25in} 
+
+\newpage
+
+- Example: \vspace{.1in}    
+$\frac{\partial}{\partial t_1}M_{X_1,...,X_n}(\mathbf{t})\Big|_{\mathbf{t}=\boldsymbol{0}}$ = \vspace{.5in} 
+
+- Example: \vspace{.1in}    
+$\frac{\partial^2}{\partial t_1^2}M_{X_1,...,X_n}(\mathbf{t})\Big|_{\mathbf{t}=\boldsymbol{0}}$ = \vspace{.5in} 
+
+- Example: \vspace{.1in}    
+$\frac{\partial^2}{\partial t_1t_3}M_{X_1,...,X_n}(\mathbf{t})\Big|_{\mathbf{t}=\boldsymbol{0}}$ = \vspace{.25in} 
+
+\underline{Find univariate MGFs:}
+
+\vspace{.1in}    
+$M_{X_1,...,X_n}(t_1 = t,t_2= 0,...,t_n = 0)$ =
+\vspace{.2in}
+
+\underline{Conduct transformations:}
+
+Suppose $\mathbf{X}=(X_1,...,X_n)'$ is an $n$-dimensional random vector. Often, we are interested in the distribution of $Y = \mathbf{X}'\cdot \boldsymbol{1}=\sum_{i = 1}^{n}X_i = X_1 + X_2 + X_3 + ... + X_n$. In this case, the MGF of the transformed RV, $Y$ is \vspace{.1in}  
+$M_Y(t)$ = 
+\vspace{1in}
+
+__THM 4.6.7:__ In the case where $X_1,...,X_n$ are **mutually independent**,     
+\vspace{.1in}  
+$M_Y(t)$ = 
+\vspace{1in}
+
+__THM 4.6.7:__ In the very special case where $X_1,...,X_n$ are **independent and identically distributed (iid)**, 
+\vspace{.1in}  
+$M_Y(t)$ = 
+
+\newpage
+
+#### Example
+
+Suppose $X_1,...,X_n$ are independent random variables where $X_i \sim Poisson(\lambda_i)$. Use mgfs to find the distribution of $Y = \sum_{i = 1}^{n} X_i$.
+
+\vspace{4in}
+
+
+#### Example
+
+Suppose $X_1,...,X_n$ are independent and identically distributed random variables where $X_i \sim Normal(\mu, \sigma^2)$ Use mgfs to find the distribution of $\overline{X} = \frac{1}{n}\sum_{i = 1}^{n} X_i$.
+
+
+\newpage
+
+
+
+## Special Multivariate Distributions
+
+In the next part, we explore two different multivariate distributions: the bivariate normal distribution (Section 4.5) and the multinomial distribution (Section 4.6). The multivariate normal distribution is the foundation for most modern statistical theory. In general, the multivariate normal distribution is defined for $n$ continuous random variables, $X_1,...,X_n$. Because of its complexity, we look only at the bivariate normal distribution.
+
+### Bivariate Normal Distribution
+
+\hfill
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{DEF 4.5.10 (Bivariate Normal Distribution)} Let $-\infty < \mu_X < \infty$, $-\infty < \mu_Y < \infty$, $0< \sigma_X$, $0 < \sigma_Y$, and $-1 < \rho_{XY}< 1$ be five real numbers. The \textbf{bivariate normal pdf} with means $\mu_X$ and $\mu_Y$, variances $\sigma^2_X$ and $\sigma^2_Y$ and correlation $\rho_{XY}$ is the bivariate pdf given by,
+
+\begin{align*}
+f_{XY}(x,y) = & \left(2\pi\sigma_X\sigma_Y\sqrt{1-\rho^2_{XY}}\right)^{-1} \times \\
+& \exp\left\{\frac{-1}{2(1-\rho^2_{XY})}\left[
+\left(\frac{x-\mu_X}{\sigma_X}\right)^2 - 2\rho_{XY}\left(\frac{x-\mu_X}{\sigma_X}\right)\left(\frac{y-\mu_Y}{\sigma_Y}\right) + \left(\frac{y-\mu_Y}{\sigma_Y}\right)^2\right]\right\}
+\end{align*}
+
+for $-\infty < x < \infty$ and $-\infty < y < \infty$. We denote this as $(X, Y) \sim N_2(\mu_X, \mu_Y, \sigma^2_X, \sigma^2_Y, \rho_{XY})$, or, in matrix notation,
+$$
+\begin{pmatrix} X \cr Y \end{pmatrix} \sim 
+N_2\left(\begin{pmatrix}\mu_X \cr \mu_Y\end{pmatrix}, 
+\begin{pmatrix} \sigma^2_X & \rho_{XY}\sigma_X\sigma_Y \cr \rho_{XY}\sigma_X\sigma_Y & \sigma^2_Y\end{pmatrix}\right).
+$$
+\end{mdframed}
+
+### Properties of the Bivariate Normal Distribution
+
+Suppose the random vector $(X, Y)$ has a bivariate normal distribution with means $\mu_X$ and $\mu_Y$, variances $\sigma^2_X$ and $\sigma^2_Y$ and correlation $\rho_{XY}$. Then the following properties hold.
+
+1. $E(X) = \mu_X$, $E(Y) = \mu_Y$, $Var(X) = \sigma^2_X$, $Var(Y) = \sigma^2_Y$, and $Cor(X, Y) = \rho_{XY}$.
+
+2. $X$ and $Y$ both have marginal normal distributions: $X \sim N(\mu_X, \sigma_X^2)$ and $Y \sim N(\mu_Y, \sigma_Y^2)$.
+
+
+3. For any constants $a$, $b$, and $c$, the distribution of $aX + bY + c$ is normal:
+$$
+aX+bY+c \sim N\left(a\mu_X + b\mu_Y + c, a^2\sigma^2_X + b^2\sigma^2_Y + 2ab\rho_{XY}\sigma_X\sigma_Y\right).
+$$
+
+4. The conditional density of $Y|X = x$ is normal:
+$$
+Y | X = x \sim N\left(\mu_Y + \rho_{XY}\frac{\sigma_Y}{\sigma_X}(x - \mu_X), \sigma^2_Y(1-\rho^2_{XY})\right).
+$$
+
+_Note_: All of the normal marginal and conditional distributions are derived from the starting point of a bivariate normal distribution. The derivation does not go in the opposite direction---marginal normality does not imply joint normality!
+
+
+#### Proof:
+
+Show the conditional distribution of $Y|X = x$ is:
+$$
+Y | X = x \sim N\left(\mu_Y + \rho_{XY}\frac{\sigma_Y}{\sigma_X}(x - \mu_X), \sigma^2_Y(1-\rho^2_{XY})\right).
+$$
+\newpage
+
+
+
+#### Proof:
+
+Show $Cor(X,Y) = \rho_{XY} = \rho$.
+
+
+\vspace{5in}
+
+
+### Bivariate Normal Distribution---Independence
+
+For any random variables $X$ and $Y$, we have shown that if $X$ and $Y$ are independent, then $\rho_{XY} = Cor(X, Y) = 0$. However, this result does not go in the other direction---$\rho_{XY} = 0$ does _not_ imply that $X$ and $Y$ are independent... unless $(X, Y)$ has a bivariate normal distribution.
+
+Let $(X, Y)$ be a bivariate normal random vector and assume $\rho_{XY} = 0$. Show that $X$ and $Y$ are independent. 
+
+
+\vfill
+
+Summary of result: Assume $(X, Y)$ has a bivariate normal distribution where $\rho_{XY} = Cor(X, Y)$. Then $X$ and $Y$ are independent _if and only if_ $\rho_{XY}=0$!
+
+
+\newpage
+
+### Multinomial Distribution
+
+\hfill
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{DEF 4.6.2 (Multinomial Distribution)} Let $m$ and $n$ be positive integers, and let $p_1,\ldots, p_n$ be numbers satisfying $0 \leq p_i \leq 1$ for each $i = 1,\ldots, n$ and $\sum_{i=1}^n p_i = 1$. Then the random vector $\mathbf{X} = (X_1,\ldots, X_n)'$ has a \textbf{multinomial distribution} with $m$ trials and cell probabilities $p_1,\ldots, p_n$ if the joint pmf of $\textbf{X}$ is
+
+$$
+f_{\textbf{X}}(x_1,\ldots, x_n | p_1,\ldots, p_n) = \frac{m!}{x_1!x_2!\cdots x_n!}p_1^{x_1}p_2^{x_2}\cdots p_n^{x_n} I_A({\textbf{x}}) = \begin{pmatrix} m \cr x_1, x_2,\ldots, x_n\end{pmatrix}\prod_{i=1}^n p_i^{x_i}I_A({\textbf{x}}) ,
+$$
+where $A = \{\textbf{x} \in \mathbb{R}^n | x_i \in \{0, 1, \ldots, m\}, \sum_{i=1}^n x_i = m\}$. The quantity $ \begin{pmatrix} m \cr x_1, x_2,\ldots, x_n\end{pmatrix} = \dfrac{m!}{x_1!x_2!\cdots x_n!}$ is called a \textbf{multinomial coefficient}.
+\end{mdframed}
+
+The multinomial distribution models the following scenario:
+
+1. $m$ independent, identical trials.  
+2. Each trial results in one of $n$ possible outcomes.  
+3. An outcome of type $i$ has probability $p_i$, where $\sum_{i=1}^n p_i = 1$ and $p_i$ remains the same from trial to trial.  
+4. The random variables of interest are $X_1, \ldots, X_n$, where $X_i$ equals the number of trials that result in outcome $i$, so the sum $\sum_{i=1}^n X_i = m$.  
+
+Hmmm... this should sound vaguely familiar... Why?
+
+
+\vfill
+
+_Notes:_
+
+* This distribution is extremely useful for understanding the distribution of an order statistic.
+
+* Often, the number of possible outcomes per trial is more than two. For example, experiments that involve blood typing have at least four possible outcomes per trial. In addition, surveys might have multiple choices for a single question.
+
+\newpage
+
+#### Example
+
+When commercial aircraft are inspected, wing cracks are reported as nonexistent, detectable, or critical. The history of a particular fleet indicates that 70% of the planes inspected have no wing cracks, 25% have detectable wing cracks, and 5% have critical wing cracks. Five planes are randomly selected.
+
+* Find the probability that one has a critical crack, two have detectable cracks, and two have no cracks.
+
+\vspace{4in}
+
+* Find the probability that at least one plane has critical cracks.
+
+
+\newpage
+
+# 4.7 Inequalities
+
+In Section 3.6, we encountered probabilistic inequalities derived using probabilistic arguments (e.g., Chebychev’s Inequality). Now, we're going to discuss inequalities that apply to probabilities and expectations, but are based on arguments that use properties of functions and numbers.
+
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{THM 4.7.3 (Cauchy-Schwarz Inequality)} For any two random variables $X$ and $Y$,
+$$
+|E(XY)| \leq E[|XY|] \leq (E|X|^2)^{1/2}(E|Y|^2)^{1/2} = \sqrt{E(X^2)E(Y^2)}.
+$$
+\end{mdframed}
+
+_Note_: The Cauchy-Schwarz Inequality is a special case of Hölder's Inequality when $p = q = 2$. See Theorem 4.7.2 on p.\ 187 for the general version of this inequality.
+
+#### Example
+
+Suppose $X$ and $Y$ have means $\mu_X$ and $\mu_Y$ and variances $\sigma^2_X$ and $\sigma^2_Y$, respectively. Use the Cauchy-Schwarz Inequality to prove $0 \leq \rho_{XY}^2 \leq 1$.
+
+
+\newpage
+
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{THM 4.7.7 (Jensen's Inequality)} For any random variable $X$, if $g(x)$ is a convex function, then
+$$
+E(g(X)) \geq g(E(X)).
+$$
+On the other hand, if $g(x)$ is a concave function, then
+$$
+E(g(X)) \leq g(E(X)).
+$$
+\end{mdframed}
+
+_Recall_: A function $g(x)$ is **convex** if
+$$
+g(\lambda x_1 + (1-\lambda) x_2) \leq \lambda g(x_1) + (1-\lambda) g(x_2)
+$$
+for all $x_1$ and $x_2$, and $0 < \lambda < 1$. The function $g(x)$ is **concave** if $-g(x)$ is convex. Basically, this means a convex function lies above all of its tangent lines. To check whether $g(x)$ is convex, we can find the second derivative of $g(x)$, $g''(x)$. If $g''(x)\geq 0$ for all $x$, then $g(x)$ is convex; if $g''(x) \leq 0$ for all $x$, then $g(x)$ is concave.
+
+#### Examples
+
+* Consider the function $g(x) = x^2$. Is this function convex?
+\vspace{2in}
+
+* For $x > 0$, consider the function $g(x) = \dfrac{1}{x}$. Is this function convex over $\{x: x > 0\}$?

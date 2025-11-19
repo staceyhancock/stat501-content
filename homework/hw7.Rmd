@@ -1,0 +1,85 @@
+---
+title: "M/STAT 501 Fall 2025: Homework 7"
+subtitle: Due Wednesday, Nov 19 by 5:00pm in Gradescope
+output: 
+   pdf_document:
+      includes:
+            in_header: preamble.tex
+urlcolor: blue
+---
+
+<!-- Material covered: 4.3, 4.5, 4.6, 4.7: covariance and correlation, bivariate transformations, multivariate distributions, inequalities -->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Directions**: For this homework, there are three different types of problems: 1) _Graded for Accuracy Problems_, 2) _Graded for Completion Problems_, and 3) _Extra Practice Problems_. Please turn in your work for the _Graded for Accuracy Problems_ and the _Graded for Completion Problems_, as well as any _Sources Used_ by the due date via Gradescope. Show work and/or provide justification for credit---neatness counts! _The Extra Practice Problems_ do not need to be turned in, and the solutions will be posted for you to check and compare your work.
+
+You are encouraged to use R Markdown for your homework, but it is not required. However, **you must use R Markdown for any problems that require the use of R; include both your R code and the R output on the rendered pdf**.
+
+## Graded for Accuracy Problems (turn in)
+
+1. Recall the continuous random vector  $(X, Y)$ with joint pdf
+\[
+f(x, y) = \begin{cases}\begin{array}{ll}
+24 xy & 0 \leq x \leq 1, 0 \leq y \leq 1, 0 \leq x+y \leq 1\\
+0 & \mbox{else}
+\end{array}\end{cases}
+\]
+from the last homework. Find $Corr(X, Y)$.
+
+2. Suppose $X$ and $Y$ are independent Exponential random variables, both with mean $\theta$. Define $U = X-Y$.
+    a. Use the Jacobian method for transformations of continuous random variables (Equation (4.3.2) on p. 158) to find the marginal pdf of $U$.
+    b. Verify that you get the same answer if you find the moment generating function of $U$ and use it to determine the distribution of $U$.  
+    
+<!-- Larsen and Marx p. 220 Them 3.8.1(1) -->
+3. Assume $X$ and $Y$ are independent discrete random variables with pmfs $f_X(x)$ and $f_Y(y)$, and supports $\mathcal{X}$ and $\mathcal{Y}$, respectively. Let $W = X+Y$. Show that the pmf of $W$ is
+$$
+f_W(w) = \sum_{x\in\mathcal{X}, ~w-x\in\mathcal{Y}}f_X(x)f_Y(w-x).
+$$
+
+4. Two University of Missoula (UM) students are tasked with the reconnaissance activity of collecting survey data on MSU students to estimate the proportion of MSU students that plan on watching the Cat-Griz football game. Each collect a simple random sample of MSU students and ask each student in the sample whether they plan on watching. Assume UM student A collects a random sample of $n$ students, and UM student B collects a random sample of $m$ students. Let $X$ be the number of students in UM student A's sample that respond "yes", and $Y$ be the number of students in UM student B's sample that respond "yes."   
+    a. In the context of this problem, discuss what assumptions would need to be met in order for us to model $X$ and $Y$ as independent random variables with distributions $X \sim Bin(n, p)$ and $Y\sim Bin(m, p)$.
+    b. Assuming the model in part a., use the result in Problem 3 to find the distribution of $W = X+Y$. What is the name of this distribution and its parameters? _Hint_: Use the fact that the sum of a hypergeometric pmf is equal to 1 to evaluate the required sum.
+    
+
+    
+## Graded for Completion Problems (turn in)
+
+1. Let $X_1,\ldots, X_n$ and $Y_1,\ldots, Y_m$ be random variables, all of whose expectations and variances exist. Let $a_1,\ldots, a_n$, $b_1\ldots, b_n$, $c_1\ldots, c_m$, and $d_1,\ldots, d_m$ be constants not all equal to zero.
+    a. Show
+    $$
+    Cov\left(\sum_{i=1}^n (a_iX_i + b_i), \sum_{j=1}^m(c_jY_j + d_j)\right) = \sum_{i=1}^n \sum_{j=1}^m a_ic_j Cov(X_i, Y_j).
+    $$
+    b. Use the result in part a. to show that
+    \begin{eqnarray*}
+    Var(\sum_{i=1}^n (a_iX_i + b_i)) &=& \sum_{i=1}^n a_i^2 Var(X_i) + \sum\sum_{i\neq j}a_ia_jCov(X_i, X_j) \\
+    &=& \sum_{i=1}^n a_i^2 Var(X_i) + 2\sum\sum_{i< j}a_ia_jCov(X_i, X_j).
+    \end{eqnarray*}
+
+2. Recall the hypergeometric model: a population contains $N < \infty$ items, $M$ of which have a characteristic of interest (and $N-M$ do not), and we select a simple random sample of size $n$. For each of the items sampled, define
+$$
+X_i = \begin{cases}
+1 & \text{if the } i \text{th item has the characteristic}\\
+0 & \text{else}
+\end{cases}
+$$
+Then note that $Y = \sum_{i=1}^n X_i$ has a hypergeometric distribution. Use the result shown in the previous problem to derive $Var(Y)$.
+
+
+
+## Sources Used (turn in)
+
+At the end of your assignment, list and cite **all** sources used when working on this assignment, including individuals with whom you discussed the problems, old homework assignments you may have found, discussion boards, websites, etc.
+If you did not use any sources besides our textbook or the course notes, please note this.
+
+
+## Extra Practice Problems (do not turn in, solutions posted in Canvas)
+
+1. Let $X$ and $Y$ denote the values of two stocks at the end of a five-year period. $X$ is uniformly distributed on the interval $(0, 12)$. Given $X = x$, $Y$ is uniformly distributed on the interval $(0, x)$. Find the covariance and correlation between $X$ and $Y$.
+
+2. Let $X$ and $Y$ be two random variables with finite means and variances. Under what conditions are $X+Y$ and $X-Y$ uncorrelated?
+
+3. Casella and Berger book problems:  4.45, 4.46, 4.62, 4.64
+

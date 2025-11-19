@@ -1,0 +1,44 @@
+---
+title: 'Example:  Probability Integral Transform'
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+Generate a random sample from $F_X(x) = [1 - \exp^{-x}]I_{(0,\infty)}(x)$.
+Note: $X \sim Exp(\beta = 1)$.
+
+```{r}
+# Y = F_X(X) = 1 - exp(-X) <=> X = -ln(1-Y)
+# THM 2.1.10 => Y ~ Unif(0,1)
+# Plot the transformation on the support
+y_supp <- seq(from = 0, to = 1, length = 100)
+x_supp <- -log(1 - y_supp)
+plot(x_supp ~ y_supp, type = "l",
+     main = "Inverse Transformation from Y to X")
+```
+
+```{r}
+# Generate random sample from uniform distribution
+y <- runif(n = 500, min = 0, max = 1)
+# Probability integral transformation (PIT)
+x_samp <- -log(1-y)
+# Compare samples to actual exp(1) distribution
+hist(x_samp, nclass = 25, freq = F,
+     xlab = "x", ylab = expression(f[X](x)),
+     main = "500 draws from Exp(1) using PIT")
+curve(dexp(x, rate = 1/1), lwd = 2, add = T)
+legend("topright", bty = "n", lwd = 2, lty = 1,
+       legend = "Exp(1) density")
+```
+
+```{r}
+# qqplot to compare theoretical exp(1) dist to samples
+qqplot(qexp(ppoints(500), 1), x_samp,
+       xlab = "Exp(1) Quantiles", ylab = "Sample using PIT",
+       main = "QQ plot for sample using PIT")
+abline(a = 0, b = 1)
+```

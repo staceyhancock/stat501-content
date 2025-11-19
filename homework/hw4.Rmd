@@ -1,0 +1,97 @@
+---
+title: "M/STAT 501 Fall 2025: Homework 4"
+subtitle: Due Wednesday, Oct 8 by 5:00pm in Gradescope
+output: pdf_document
+urlcolor: blue
+---
+
+<!-- Material covered: Sections 2.1-2.3 -->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Directions**: For this homework, there are three different types of problems: 1) _Graded for Accuracy Problems_, 2) _Graded for Completion Problems_, and 3) _Extra Practice Problems_. Please turn in your work for the _Graded for Accuracy Problems_ and the _Graded for Completion Problems_, as well as any _Sources Used_ by the due date via Gradescope. Show work and/or provide justification for credit---neatness counts! _The Extra Practice Problems_ do not need to be turned in, and the solutions will be posted for you to check and compare your work.
+
+You are encouraged to use R Markdown for your homework, but it is not required. However, **you must use R Markdown for any problems that require the use of R; include both your R code and the R output on the rendered pdf**.
+
+## Graded for Accuracy Problems (turn in)
+
+1. The percentage of alcohol in a certain compound is a random variable $X$ with density function
+$$
+f_X(x) = 20x^3(1-x)I_{[0,1]}(x).
+$$
+Suppose that the compound's selling price depends on its alcohol content. Specifically, if $\frac{1}{3} < x < \frac{2}{3}$, the compound sells for $c_1$ dollars per gallon; otherwise it sells for $c_2$ dollars per gallon.  The production cost is $c_3$ dollars per gallon. Let $Y$ be the profit per gallon.
+
+    a. Find the probability function (pdf or pmf) of $Y$.  
+    b. Find the expected value of $Y$. Write a sentence interpreting this value in context of the problem when $c_1 = 40$, $c_2 = 30$, and $c_3 = 15$.  
+    c. Find the standard deviation of $Y$. Write a sentence interpreting this value in context of the problem when $c_1 = 40$, $c_2 = 30$, and $c_3 = 15$.
+
+\vspace{.1in}
+
+2. The failure of a circuit board interrupts work that utilizes a computing system until a new board is delivered. Let $Y$ be the delivery time (in days), and assume the moment generating function of $Y$ is
+$$
+M_Y(t) = \frac{e^{5t}-e^t}{4t}
+$$
+for all $t \neq 0$.  
+ 
+    a. Use the table of common distributions in the back of our textbook (p. 621--626) to identify the probability distribution of $Y$ by its mgf. (To completely specify the distribution of a random variable, you must give its name as well as values for its parameters.)   
+    b. Use the mgf to find $E(Y)$ and $E(Y^2)$. Then verify your answers using the mean and variance given in the table of common distributions. _Hint_: See additional notes on mgfs.  
+    c. Suppose the cost of a board failure and interruption is represented by $C = 500+100Y^2 - 25Y$. Find the expected cost associated with a single failed circuit board.  
+    d. Now suppose the cost associated with a single failed circuit board is changed and represented instead by $A = 500 + 60Y^2$. Find the variance of this new cost.
+
+\newpage
+
+3. Suppose $X$ has pdf
+$$
+f_X(x) = \frac{1}{2}\exp\left(-|x|\right)
+$$
+for all $-\infty < x < \infty$.  
+
+    a. Find $E(X)$.  
+    b. Find the pdf of $Y = |X|$.  
+    c. Find $E(Y)$ and compare it to your answer in part a.  
+    
+
+## Graded for Completion Problems (turn in)
+
+Suppose the random variable $X$ has pdf
+$$
+f_X(x) = \begin{cases}\begin{array}{ll}
+\dfrac{x-1}{2} & 1 < x < 3\\
+0 & \mbox{otherwise}
+\end{array}\end{cases}
+$$
+
+1. Find a monotone function $g(x)$ such that $Y = g(X)$ has a Uniform(0, 1) distribution.    
+2. In R, use a probability integral transformation to generate a random sample from the distribution of $X$. Create a plot to visualize how the distribution of these simulated values compares to $f_X(x)$. Interpret this plot, being sure to comment on how these two distributions compare to one another.
+
+## Sources Used (turn in)
+
+At the end of your assignment, list and cite all sources used when working on this assignment, including individuals with whom you discussed the problems.
+If you did not use any sources besides our textbook or the course notes, please note this.
+
+
+
+## Extra Practice Problems (do not turn in, solutions posted in D2L)
+
+1. Suppose $X$ has pdf  
+$$
+f_X(x) = \begin{cases}\begin{array}{ll}
+7e^{-7x}&  0 < x < \infty\\
+0 & \mbox{otherwise}
+\end{array}\end{cases}
+$$
+Find the pdf of $Y = 4X + 3$.
+
+\vspace{.1in}
+
+2. If $X$ is a nonnegative integer-valued random variable, show
+$$
+E(X) = \sum_{x=1}^{\infty} P(X \geq x).
+$$
+
+3. Show that the expected value of an indicator variable for event $A$ is just the probability of $A$. That is, $A \subset S$, and let $I_A = 1$ if $A$ occurs, 0 otherwise. Prove
+$$
+E(I_A) = P(A).
+$$

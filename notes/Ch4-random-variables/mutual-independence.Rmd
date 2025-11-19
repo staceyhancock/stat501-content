@@ -1,0 +1,35 @@
+---
+title: "Mutual Independence"
+output: 
+  pdf_document:
+      includes:
+            in_header: ../header-Hancock.tex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Recall the definition of _mutual independence_ among a set of $n$ random variables:
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\textbf{DEF 4.6.5 (Mutual Independence)} Let $\mathbf{X} = (X_1,...,X_n)'$ be an $n$-dimensional random vector with joint pdf or pmf $f_{\mathbf{X}}(x_1,...,x_n)$ and marginal pdfs or pmfs for each $X_i$ denoted by $f_{X_i}(x_i)$. Then $X_1,...,X_n$ are \textbf{\emph{mutually} independent random variables} if, for every $(x_1,...,x_n)' \in \mathbb{R}^n$, 
+
+$$f(x_1,x_2,...,x_n) = f_{X_1}(x_1)\cdots f_{X_n}(x_n) = \prod_{i = 1}^nf_{X_i}(x_i).$$
+
+\end{mdframed}
+
+Since the equation above holds for all $(x_1,...,x_n)' \in \mathbb{R}^n$, this definition implies that any subset of these random variables are also mutually independent. For example, let $k < n$ and consider the joint pdf/pmf of $(X_1,...,X_k)'$:
+
+\begin{align*}
+f(x_1,x_2,...,x_k) &= \int_{\infty}^{\infty}\cdots \int_{\infty}^{\infty} f(x_1,x_2,...,x_n) dx_{k+1}\cdots dx_n\\
+&= \int_{\infty}^{\infty}\cdots \int_{\infty}^{\infty} f_{X_1}(x_1)\cdots f_{X_n}(x_n) dx_{k+1}\cdots dx_n ~~~\text{by independence}\\
+&= f_{X_1}(x_1)\cdots f_{X_k}(x_k) \int_{\infty}^{\infty}\cdots \int_{\infty}^{\infty} f_{X_{k+1}}(x_{k+1})\cdots f_{X_n}(x_n) dx_{k+1}\cdots dx_n\\
+&= f_{X_1}(x_1)\cdots f_{X_k}(x_k) \int_{\infty}^{\infty}f_{X_n}(x_{n})\left(\int_{\infty}^{\infty}f_{X_{n-1}}(x_{n-1})\cdots \left(\int_{\infty}^{\infty}f_{X_{k+1}}(x_{k+1})dx_{k+1}\right)\cdots dx_{n-1}\right)dx_n\\
+&= f_{X_1}(x_1)\cdots f_{X_k}(x_k) \prod_{i=k+1}^n \left(\int_{\infty}^{\infty}f_{X_{i}}(x_{i})dx_i \right)\\
+&= f_{X_1}(x_1)\cdots f_{X_k}(x_k) ~~~\text{since each pdf integrates to 1}
+\end{align*}
+
+where integrals are replaced by sums in the discrete case.
+
+Therefore, if $X_1,...,X_n$ are mutually independent, then any subset $\{X_{j_1},\ldots, X_{j_m}\}$ of random variables are also mutually independent, where $m \in \{2,\ldots, n\}$ and $j_i \in \{1,\ldots, n\}$ for all $i = 1, \ldots, m$.

@@ -1,0 +1,101 @@
+---
+title: "M/STAT 501 Fall 2025: Homework 6"
+subtitle: Due Wednesday, Nov 5 by 5:00pm in Gradescope
+output: pdf_document
+urlcolor: blue
+---
+
+<!-- Material covered: 4.1–4.2, 4.4: joint and marginal distributions, conditional distributions and independence, hierarchical models and mixture distributions-->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Directions**: For this homework, there are three different types of problems: 1) _Graded for Accuracy Problems_, 2) _Graded for Completion Problems_, and 3) _Extra Practice Problems_. Please turn in your work for the _Graded for Accuracy Problems_ and the _Graded for Completion Problems_, as well as any _Sources Used_ by the due date via Gradescope. Show work and/or provide justification for credit---neatness counts! _The Extra Practice Problems_ do not need to be turned in, and the solutions will be posted for you to check and compare your work.
+
+You are encouraged to use R Markdown for your homework, but it is not required. However, **you must use R Markdown for any problems that require the use of R; include both your R code and the R output on the rendered pdf**.
+
+## Graded for Accuracy Problems (turn in)
+
+<!-- Stat 120A HW 8 and 9   -->
+1. Let $(X, Y)$ be a continuous random vector with joint pdf
+\[
+f(x, y) = \begin{cases}\begin{array}{ll}
+k xy & 0 \leq x \leq 1, 0 \leq y \leq 1, 0 \leq x+y \leq 1\\
+0 & \mbox{else}
+\end{array}\end{cases}
+\]
+
+    a. Show that $k = 24$.
+    a. Calculate $P(X > Y)$.
+    a. Find the marginal pdf of $X$, $f_X(x)$.
+    a. Find $E(X)$.
+    a. Find the conditional pdf of $Y$ given $X = x$, $f_{Y|X}(y | x)$.
+    a. Calculate $P(Y > 0.2 | X = 0.1)$.
+    a. Calculate $P(Y > 0.2 | X > 0.1)$.
+    a. Find the conditional pdf of $X$ given $Y = y$, $f_{X|Y}(x | y)$.
+    a. Calculate the conditional expected value of $X$ given $Y = y$, $E(X | Y=y)$.
+    a. Are $X$ and $Y$ independent? Justify your answer.
+    
+    
+    
+\vspace{2mm}
+2. Let $X$ be the number of customers arriving at a given minute at the drive-up window of a local bank. Let $Y$ be the number who make withdrawals in that same minute. Assume $X$ is Poisson with $E(X) = 3$, and that the conditional expectation and variance of $Y|X = x$ are $E(Y|X = x) = x/2$ and $Var(Y|X = x) = (x+1)/3$.
+    a. Find $E(Y)$.
+    b. Find $Var(Y)$.
+    c. Find $E(XY)$.
+    d. Name a probability distribution that would be a reasonable model for the conditional distribution of $Y | X = x$. Justify your answer.
+    
+    
+## Graded for Completion Problems (turn in)
+
+<!-- Steve Cherry Homework 5 Fall 2014 -->
+1. Let $X \sim Poisson(\mu)$. 
+    a. Find $P(X = x | X > 0)$. This distribution is called a \textbf{zero-truncated Poisson distribution}.  
+    b. Find an example of where a zero-truncated Poisson model is used in practice. Describe the example in a few sentences, and include the source of this example (i.e., full citation and link to webpage or article).
+  
+
+2. A group of hunters are waiting for ducks to fly by. When a flock of ducks flies overhead, the hunters fire at the same time, and each duck in the flock has a probability of 0.6 of being hit, independent of the other ducks in the flock. Assume that the number of ducks in a flock is a Poisson random variable with mean 6. Find the (a) expected number of ducks that are hit and (b) the standard deviation of ducks that are hit. (\textit{Hint:} Use Theorems 4.4.3 and 4.4.7.) (c) Write an interpretation of the standard deviation in context of the problem.
+
+
+       
+## Sources Used (turn in)
+
+At the end of your assignment, list and cite **all** sources used when working on this assignment, including individuals with whom you discussed the problems, old homework assignments you may have found, discussion boards, websites, etc.
+If you did not use any sources besides our textbook or the course notes, please note this.
+
+
+## Extra Practice Problems (do not turn in, solutions posted in D2L)
+
+1. A mountain rescue service studied the behavior of lost hikers so that more effective search strategies could be devised. They decided to determine both the direction traveled and the experience level of hikers. From this study, it is known that the joint probabilities of a hiker being experienced or not and of going uphill or downhill or remaining in the same place are shown in the table below.
+\begin{center}
+\begin{tabular}{lccc}
+& \multicolumn{3}{c}{Direction} \\
+& Uphill & Downhill & Remain in same place \\ \hline
+Novice & 0.10 & 0.25 & 0.25\\
+Experienced & 0.05 & 0.10 & 0.25
+\end{tabular}
+\end{center}
+Let $X$ be the random variable associated with experience and $Y$ be the random variable associated with direction.
+
+    a. Define the random variables $X$ and $Y$ in such a way that they meet the definition of a random variable.
+    b. Find the marginal distribution of the direction that a lost hiker travels.
+    c. Are $X$ and $Y$ independent? Justify your answer.
+
+<!-- Last year accuracy problem -->
+2. An environmental engineer measures the amount (by weight) of particulate pollution in air samples (of a certain volume) collected over the smokestack of a coal-fueled power plant. Let $X$ denote the amount of pollutant per sample when a certain cleaning device on the stack is not operating, and let $Y$ denote the amount of pollutants per sample when the cleaning device is operating under similar environmental conditions. It is observed that $X$ is always greater than $2Y$, and the joint distribution of $(X, Y)$ can be modeled as:
+    \[
+    f(x,y) = \begin{cases}\begin{array}{ll}
+     k & 0\leq x \leq 2, 0 \leq y \leq 1, 2y \leq x\\
+    0 & \text{else}
+    \end{array}\end{cases}
+    \]
+    a. Find the value of $k$ that makes this a probability density function.
+    b. Find the probability that the cleaning device will reduce the amount of pollutant by 1/3 or more.
+    c. Find the marginal probability density function of $X$.
+    d. Are $X$ and $Y$ independent? Justify your answer.
+    e. Find the conditional pdf of $Y$ given $X = x$, $f_{Y|X}(y|x)$.  
+
+\vspace{2mm}
+3. Casella and Berger book problems:  4.1, 4.4, 4.10, 4.32(a)
+

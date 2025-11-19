@@ -1,0 +1,485 @@
+---
+title: 'STAT 501 Fall 2025 Course Notes'
+date: "Chapter 2: Transformations and Expectations"
+output: 
+  pdf_document: 
+      includes: 
+        in_header: ../header.tex
+fontsize: 12 pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, height = 5, width = 5, out.width="0.5\\linewidth", fig.align="center")
+```
+
+When we are able to model phenomenon in terms of a random variable with a given CDF, we often want to also explore the behavior of functions of that random variable. This may include finding distributions of these functions and/or determining their average behavior. 
+
+## 2.1 Distributions of Functions of Random Variables
+
+For a random variable $X$ with known distribution function, $F_X(x)$ we are often interested in a function of that random variable $Y = g(X)$, which is also a random variable. Because this new random variable $Y$ is a function of $X$, its distribution depends on the functions $F_X$ and $g$. Formally, $y = g(x)$ defines a mapping from $\mathcal{X}$ (the original sample space of $X$) to a new sample space $\mathcal{Y}$ associated with $Y$. In general, for a random variable $X$ with _pmf_ or _pdf_ $f_X(x)$, the supports (sample spaces) of $X$ and $Y = g(X)$ are:
+
+\vspace{.5in}
+
+__Example (Discrete)__ Consider a game in which a fair 6-sided die is thrown. The player pays $5 to play, and earns $2 times the number of dots shown on the die roll. 
+
+- Let $X$ = \vspace{.1in}
+
+- Let $Y$ = \vspace{.1in}
+
+- What are $\mathcal{X}$, $\mathcal{Y}$?
+
+\vspace{.35in}
+
+
+__Example (Continuous)__ Let $X$ be a continuous RV with support, $\mathcal{X} = \{x: x\in [0,1]\}$. 
+
+- Let $Y = X^2$. What is $\mathcal{Y}$? \vspace{.75in} 
+- Let $Y = -\ln(X)$. What is $\mathcal{Y}$? \vspace{.75in}
+
+\newpage
+
+An inverse mapping $g$, denoted by $g^{-1}$, is a mapping from subsets of $\mathcal{Y}$ to subsets of $\mathcal{X}$, and is defined by $g^{-1}(A) = \{x \in \mathcal{X}: g(x) \in A\}$,
+
+\vspace{2in}
+
+__Note:__ Ideally, $g$ and $g^{-1}$ are 1--1 functions where $y = g(x) \iff g^{-1}(y) = x$. However, this need not be the case.
+
+Our goal is to find the _distribution_ of $Y$. For the random variable $Y = g(X)$, we can write for any set $A\subset \mathcal{Y}$, 
+
+$P_Y(Y \in A) =$
+\vspace{.35in}
+
+If $X$ is a discrete random variable, then $Y = g(X)$ is also discrete, because both $\mathcal{X}$ and $\mathcal{Y}$ are countable sets. From above, it follows that in the discrete cases, the _pmf_ for $Y$ is: 
+
+\newpage
+
+__Example (Discrete)__ Let $X$ be a discrete RV with the following _pmf_: 
+
+|  $x$|-2|-1|0|1|2|o.w.|
+|--:|--|--|--|--|--|
+|$f_X(x) = P(X = x)$|0.1|0.2|0.4|0.2|0.1|0|
+
+Let $Y = |X|$. What is the _pmf_ of $Y$? 
+
+\vspace{3in}
+
+__Example (Discrete)__ Let $X$ be a discrete RV that follows the Binomial distribution:    
+$$
+\displaystyle f_X(x) = \begin{cases}\binom{n}{x}p^x(1-p)^{n-x} & x = 0,1,2,..., n; p \in [0,1]\\0 &\mbox{otherwise}\end{cases}
+$$
+where $n$ is a positive integer. Let $\displaystyle Y = X/n$. What is the _pmf_ of $Y$? 
+
+\vspace{3in}
+
+\newpage 
+
+If $X$ and $Y$ are continuous random variables, then in some cases it is possible to find formulas for the CDF and _pdf_ of $Y$ in terms of the CDF and _pdf_ of $X$ and the function $g$. 
+
+__Examples (Continuous)__ Let $X$ be a continuous RV with the following pdf: $\displaystyle f_X(x) = \frac{1}{10}I_{[0,10]}(x).$ Find the CDFs of the following RVs: 
+
+- $Y = X^2$ \vspace{3in}
+
+- $W = -\ln(X)$ 
+
+\newpage
+
+\begin{mdframed}
+\textbf{THM 2.1.3 (CDF Method of Transformations for Monotone Functions)} Let $X$ be a continuous RV with CDF $F_X(x)$, let $Y = g(X)$, and let $\mathcal{X}$ and $\mathcal{Y}$, be the supports of $X$ and $Y$, respectively. 
+  \begin{enumerate}
+
+    \item If $g$ is an increasing function on $\mathcal{X}$, for $y \in \mathcal{Y}$, $F_Y(y) =$ \vspace{.2in} 
+
+    \item If $g$ is a decreasing function on $\mathcal{X}$, for $y \in \mathcal{Y}$, $F_Y(y) =$ \vspace{.25in} 
+  \end{enumerate}
+\end{mdframed}
+
+__Note:__ $F_Y(y)$ needs to be defined for all $y \in \mathbb{R}$ not just $y \in \mathcal{Y}$. 
+
+__BUT__ what if we really want $f_Y(y)?$ Assume $X$ is a continuous random variable with CDF $F_X(x)$ and let $Y = g(X)$. 
+
+- __Increasing case__: If $g$ is an increasing function on $\mathcal{X}$, $F_Y(y) = F_X(g^{-1}(y))$ for $y \in \mathcal{Y}$. \vspace{2in}
+
+- __Decreasing case__: If $g$ is an decreasing function on $\mathcal{X}$, $F_Y(y) = 1 - F_X(g^{-1}(y))$ for $y \in \mathcal{Y}$. \vspace{2in}
+
+
+\begin{mdframed}
+\textbf{THM 2.1.5 (Jacobian Method of Transformations for Monotone Functions)} Let $X$ be a continuous RV with \emph{pdf} $f_X(x)$ and let $Y = g(X)$, where $g$ is a \emph{monotone function}. Let $\mathcal{X}$ and $\mathcal{Y}$ be the supports of $X$ and $Y$, respectively. Suppose that $f_X(x)$ is continuous on $\mathcal{X}$ and that $g^{-1}(y)$ has a \emph{continuous derivative} on $\mathcal{Y}$. Then the \emph{pdf} of $Y$ is given by: \vspace{1.25in}
+
+\end{mdframed}
+
+__Examples__ Let $X$ be a random variable with pdf $f_X(x) = \frac{3}{2}x^2I_{(-1,1)}(x)$. Find the _pdf_ for each of the functions of $X$ below. 
+
+- $Y = 3X$
+
+\vspace{3in}
+
+- $Y = X^2$
+
+\newpage
+
+\begin{mdframed}
+
+\textbf{THM 2.1.8 (Jacobian Method of Transformations for Non-Monotone Functions)}: Let $X$ be a continuous RV with $pdf$ $f_X(x)$ and support $\mathcal{X}$. Consider the transformation $Y = g(X)$, and suppose there exists a partition $(A_0, A_1, ..., A_k)$ of $\mathcal{X}$ such that $P(X \in A_0) = 0$ and $f_X(x)$ is continuous on each $A_i$. Further suppose there exist functions $g_1(X), g_2(X),...,g_k(X)$ defined on $A_1,A_2, ..., A_k$, respectively, satisfying the following:
+
+\begin{enumerate}[i.]
+\item $g(X) =g_i(X)$ for $x \in A_i$  
+\item $g_i(X)$ is \underline{monotone} on each $A_i$  
+\item the set $\mathcal{Y} = \{y: y = g_i(x) \text{ for } x \in A_i\}$ is the same for each $i = 1,2,...,k$, and  
+\item $g_i^{-1}(y)$ has a continuous derivative on $\mathcal{Y}$ for each $i = 1,2,...,k$.
+\end{enumerate}
+
+Then, 
+\vspace{1in}
+\end{mdframed}
+
+__Note:__ Each $g_i(x)$ is a 1--1 function from $A_i$ onto $\mathcal{Y}$, and $g^{-1}(y)$ is a 1--1 function from $\mathcal{Y}$ onto $A_i$. $A_0$ is a technical device for dealing with endpoints of intervals, etc., and we can ignore it since $P(X\in A_0) = 0$. 
+
+__Example__ Let $X$ have the standard normal distribution, $f_X(x) = \frac{1}{\sqrt{2\pi}}e^{-x^2/2}I_{(-\infty, \infty)}(x).$ Show that $Y = X^2 \sim \chi^2_1$ (see tables in back of the book for distributions). 
+
+
+
+\newpage 
+
+__Example__ Let $X$ be a RV with _pdf_ $f_X(x) = \frac{1}{4}I_{(-1, 3)}(x).$ Find the _pdf_ of $Y = X^2$. 
+
+\vspace{3.5in}
+
+\begin{mdframed}
+\textbf{THM 2.1.10 (Probability Integral Transformation)} Let $X$ have continuous CDF, $F_X(x)$ and define the random variable $Y$ as $Y = F_X(X)$. Then $Y$ is uniformly distributed on (0,1). That is, 
+$$
+P(Y \leq y) = \begin{cases} 0 & y \leq 0\\ y & 0 < y < 1\\ 1 & y \geq 1\end{cases}
+$$. 
+\end{mdframed}
+
+__Proof (assuming strictly increasing CDF):__
+
+\vfill
+
+This theorem allows us to generate observations from a particular distribution. In fact, the real benefit of this theorem lies in its converse: If $Y$ is uniformly distributed on $(0,1)$, then $X = F_X^{-1}(Y)$ has CDF $F_X(x)$. 
+
+\newpage 
+
+__Example__ Generate a random sample from $F_X(x) = (1-e^{-x})I_{(0,\infty)}(x)$. _Note:_ $X \sim Exp(\beta = 1)$.
+
+\vspace{1.25in}
+
+```{r, fig.width=10, fig.height=5, out.width="0.85\\linewidth"}
+# Y = F_X(X) = 1 - exp(-X) <=> X = -ln(1-Y)
+# THM 2.1.10 => Y ~ unif(0,1)
+# plot the transformation on the support
+y_supp <- seq(from = 0, to = 1, length = 100)
+x_supp <- -log(1 - y_supp)
+par(mfrow = c(1,3))
+plot(x_supp ~ y_supp, type = "l",
+     main = "Inverse Transformation from Y to X")
+# generate random sample from uniform dist 
+y <- runif(n = 500, min = 0, max = 1)
+
+# probability integral transformation (PIT)
+x_samp <- -log(1 - y) # F^{-1}(y)
+
+# compare samples to actual exp(1) dist
+hist(x_samp, nclass = 25, freq = F, 
+     xlab = "x", ylab = expression(f[X](x)), 
+     main = "500 draws from Exp(1) using PIT")
+curve(dexp(x, rate = 1/1), lwd = 2, add = T)
+legend("topright", bty = "n", lwd = 2, lty = 1, 
+       legend = "Exp(1) density")
+#qqplot to compare to theoretical exp(1) dist
+qqplot(qexp(ppoints(500), 1), x_samp, 
+       xlab = "Exp(1) Quantiles", ylab = "Sample using PIT", 
+       main = "QQ plot for sample using PIT")
+```
+
+
+\newpage 
+
+## 2.2 Expected Values
+
+Ideally, we would know with certainty the outcome an experiment. However, this is often unrealistic, and we are instead left to deal with a random variable, i.e., a function from the sample space into the real numbers. By weighting the values of a random variable according to its probability distribution, we obtain what's known as the expected value, or expectation, of the random variable. This number is a measure of center that represents a "typical" value of the random variable, giving us an idea of what we might expect to happen in the long run.
+
+\vspace{.1in}
+
+\begin{mdframed}
+\textbf{DEF 2.2.1 (Expected Value)} The \emph{expected value} or mean of a random variable $g(X)$, denoted by $E(g(X))$, is 
+
+\vspace{1in}
+
+provided the sum or integral exists.
+\end{mdframed}
+
+__Note:__ $E(g(X))$ exists and is finite $\iff$ $E(|g(X)|) < \infty$. That is, if $E(|g(X)|) = \infty$, then $E(g(X))$ does not exist. 
+
+\vspace{0.2in}
+
+
+<!-- TODO: Add more space here. Give special case of $E(X)$, then talk about expected value as a weighted average and give example using average of finite population. -->
+
+__Examples__ 
+
+- Meaghan, the president of the student chapter of the American Statistical Association at MSU has a fundraising idea for her club. She proposes a game in which a fair die is thrown. The player will pay $5 to play and will win $2 for each dot that appears on their roll. Suppose Emmanuel wanders by Meaghan's Catapalooza booth and sees the opportunity to play the game. Is it worth it for Emmanuel to pay $5 to play? 
+
+\newpage 
+
+- A machine produces copper wire, and occasionally there is a flaw at some point along the wire. The length of wire (in meters) produced between successive flaws is a continuous random variable $X$ with _pdf_ $f_X(x) = 2(1+x)^{-3}I_{(0,\infty)}(x)$. What is the expected length of the wire produced between sucessive flaws? 
+
+\vspace{2.75in}
+
+- Let $f_X(x) = e^{-x}I_{[0,\infty)}(x)$. Find the expected value of $e^X$. 
+
+\vspace{2in}
+
+- An insurance policyholder's loss, $Y$, follows a distribution with density function: $f_Y(y) = 2y^{-3}I_{(1,\infty)}$. The insurance company reimburses a loss up to a benefit limit of 20. What is the expected value of the benefit paid under the insurer's policy?
+
+\newpage
+
+\begin{mdframed}
+\textbf{THM 2.2.5 (Properties of Expected Values)} Let $X$ be a random variable and let $a$, $b$, and $c$ be constants. Then, for any functions $g_1(x)$ and $g_2(x)$ whose expectations exist, 
+
+\begin{enumerate} 
+  \item $E(ag_1(X) + bg_2(X) + c) = aE(g_1(x)) + bE(g_2(x)) + c$. \vspace{.05in}
+  \item If $g_1(x) \geq 0$ for all $x$, then $E(g_1(x)) \geq 0$. \vspace{0.05in}
+  \item If $g_1(x) \geq g_2(x)$ for all $x$, then $E(g_1(x)) \geq E(g_2(x))$ \vspace{0.05in}
+  \item If $a \leq g_1(x) \leq b$ for all $x$, then $a \leq E(g_1(x)) \leq b$ \vspace{0.05in}
+\end{enumerate}
+\end{mdframed}
+
+__Proof:__ (of 1.\ for the continuous case) 
+
+Show $E(ag_1(X) + bg_2(X) + c) = aE(g_1(x)) + bE(g_2(x)) + c$.
+
+\vspace{3.5in}
+
+
+__Example (Revisited)__ 
+Consider a game in which a fair die is thrown. The player pays $5 to play and wins $2 for each dot that appears on the roll. Is it worth the $5 to enter? 
+\newpage 
+
+## 2.3 Moments and Moment Generating Functions
+
+The various moments of a distribution are an important class of expectations.
+\vspace{.1in}
+
+\begin{mdframed}
+\textbf{DEF 2.3.1 (Moments)} \\
+For each integer $n$, the $n^{th}$ \textbf{moment} of $X$ (or $F_X(x)$), $\mu_n'$ is  
+
+$\mu_n' =$
+\vspace{.2in}
+
+The $n^{th}$ \textbf{central moment} of $X$, $\mu_n$, is  
+
+$\mu_n =$  
+\vspace{.2in}
+
+where $\mu = \mu_1' = E(X)$.
+\vspace{.2in}
+\end{mdframed}
+
+\vspace{.1in}
+
+\begin{mdframed}
+\textbf{DEF 2.3.2 (Variance/Standard Deviation)} \\
+The \textbf{variance} of a random variable $X$ is its \emph{second central moment},  
+
+$Var(X) = \sigma^2_X =$  
+\vspace{.2in}
+
+The positive square root of $Var(X)$ is the \emph{standard deviation} of $X$:  
+
+$SD(X) = \sigma = $
+\vspace{.2in}
+\end{mdframed}
+
+__More Facts About the Variance and Standard Deviation__ 
+
+- The first moment of a random variable, $\mu_X = \mu_1' = E(X)$ must exist (i.e., be finite) in order for its second central moment, $Var(X) = \sigma_X^2$ to exist (i.e., be finite). In other words, $Var(X)$ can only exist if $E(X)$ exists. However, if $E(X)$ exists, $Var(X)$ does not necessarily exist. Therefore, $E(X)$ existing is a necessary, but not sufficient condition for $Var(X)$ existing.
+
+- The variance is the average _squared_ deviation from the mean, by definition. Since the standard deviation is the square root of the variance, it is often interpreted as an "average" distance from the mean, but note that the true average deviation from the mean is zero: $E(X-\mu) = E(X) - \mu = \mu - \mu = 0$. 
+
+\vspace{.1in}
+
+\begin{mdframed}
+\textbf{THM 2.3.4} If $X$ is a random variable with finite variance, then for any constants $a$ and $b$, 
+
+\vspace{.1in}
+
+$Var(aX + b) = $
+
+\vspace{.1in}
+
+(see pg. 60 for proof)
+\end{mdframed}
+
+- The following is an alternate formula for the variance of $X$: 
+
+\newpage 
+
+__Example (Revisited)__ Consider a game in which a fair die is thrown. The player pays $5 to play and wins $2 for each dot that appears on the roll. What is the variance of the net profit? The standard deviation? How would you interpret the standard deviation in context of the problem?
+
+\vspace{3.5in}
+
+__Example (Revisited)__ A machine produces copper wire, and occasionally there is a flaw at some point along the wire. The length of wire (in meters) produced between successive flaws is a continuous random variable $X$ with _pdf_, $f_X(x) = 2(1+x)^{-3}I_{(0,\infty)}(x)$. What is the variance of the length of wire produced between successive flaws?
+
+
+
+\newpage
+
+__Example__ A __Poisson__ random variable is a special discrete RV with _pmf_: 
+
+$$f_X(x) = \begin{cases} \dfrac{e^{-\lambda}\lambda^x}{x!} & x = 0,1,2,3,...\\ 0 & else \end{cases}$$
+
+The Poisson distribution "counts" things in a fixed amount of time space, volume, etc. For example, the number of accidents at an intersection in a week, the number of hits to a website each minute, and the number of plants of a particular species found in a 1 $m^2$ area are all examples of random variables that may be modeled by a Poisson distribution. The constant, $\lambda$, is a parameter of the distribution; it determines the numerical characteristics of the distribution. Find the expected value and variance of a Poisson random variable.
+
+\newpage 
+
+
+A special expected value that is quite useful is the moment generating function (mgf).
+
+\vspace{.1in}
+
+\begin{mdframed}
+\textbf{DEF 2.3.6 (Moment Generating Function)} Suppose there is an $h > 0$ such that $E(e^{tX})$ exists for all $-h < t < h$. (That is, $E(e^{tX})$ exists for $t$ in some neighborhood of zero.) For a random variable $X$ with CDF $F_X(x)$, this expectation is called the \emph{moment generating function (mgf)} of $X$, denoted by $M_X(t)$, and is found in the following manner:
+
+\vspace{2.5in}
+
+Note: For $t = 0$, $M_X(0) = E(e^{0X}) = 1$ for any random variable $X$. 
+\end{mdframed}
+
+\vspace{.1in}
+A moment generating function can be used to generate moments and to identify distributions.
+\vspace{.1in}
+
+\begin{mdframed}
+\textbf{THM 2.3.7 (Generating Moments)} If $X$ has mgf $M_X(t)$, then the $n^{th}$ moment is equal to the $n^{th}$ derivative of $M_X(t)$ evaluated at $t = 0$.  
+\end{mdframed}
+
+\vspace{1in}
+
+
+__Proof:__ (for a continuous random variable)
+
+\newpage 
+
+__Example__ Suppose $X$ is a Poisson random variable with _pmf_: $\displaystyle f_X(x) = \begin{cases} \frac{e^{-\lambda}\lambda^x}{x!} & x = 0,1,2,3,...\\ 0 & else \end{cases}$. Find the moment generating function of $X$ and use it to find the mean and variance of $X$.  
+
+\newpage 
+
+__Example__ Suppose $X$ is a Gamma random variable with parameters $\alpha$ and $\beta$. In this case, 
+$$
+\displaystyle f_X(x) = \frac{x^{\alpha -1} e^{-x/\beta}}{\Gamma(\alpha)\beta^\alpha}I_{(0,\infty)}(x).
+$$
+Find the moment generating function of $X$ and use it to find the mean and variance of $X$.  
+
+_Note:_ The gamma function is defined as $\Gamma(\alpha) = \int_{0}^{\infty} y^{\alpha -1}e^{-y}dy$. Also, $\Gamma(\alpha + 1) = \alpha\Gamma(\alpha)$ and if $\alpha$ is an integer, $\Gamma(\alpha) = (\alpha - 1)!$.
+
+\newpage 
+
+__Example__ Assume $X$, the lifetime of a randomly selected lightbulb, follows a Gamma distribution with a mean lifetime of 4 months and a standard deviation of 4 months. (You can verify that for this distribution, $\alpha = 1$ and $\beta = 4$). Assume $Y$, the low temperature on a randomly selected October day in Bozeman, follows a normal distribution with a mean of 4 degrees C and a standard deviation of 4 degrees C. How do the graphs of the pdfs compare to one another? 
+
+```{r, eval = TRUE, fig.width = 5, fig.height=3.5, out.width="0.5\\linewidth", fig.align = 'center'}
+# plot gamma and normal on same fig
+curve(dgamma(x, shape = 1, rate = 1/4), 
+      from = -20, to = 20, main = "Normal(4,16) vs. Gamma(1,4)", 
+      ylab = "", lwd = 2)
+curve(dnorm(x, mean = 4, sd = 4), add = T, 
+      lwd = 2, col = "darkgray")
+legend("topleft", lwd = c(2,2), col = c(1,"darkgray"), 
+       legend = c("Gamma(1,4)", "Normal(4,16)"), 
+       bty = "n")
+```
+
+
+### Other Moments
+
+In addition to the mean and variance of a random variable, there are other quantities that may be of interest. Two of these quantities are calculated from the 3rd and 4th central moments. Each of these central moments is normalized/standardized so that the quantities are dimensionless and represent the distribution independently of any linear change of scale.
+
+__Skewness:__ Measures lack of symmetry in a pdf and is defined by \vfill   
+
+_Note:_ Random variables which are right-skewed have positive values for the skewness. Left-skewed random variables have negative values for the skewness. Symmetric random variables have a value of zero for the skewness.
+
+\newpage
+
+__Kurtosis:__ Measures the peakedness/flatness or the heaviness of the tails of a pdf and is defined by \vspace{1.2in}    
+
+_Note:_ The normal distribution has a kurtosis of 3, and usually excess kurtosis (relative to the standard normal distribution) is calculated rather than kurtosis.
+
+### Using the MGF to Characterize Distributions
+
+Although moment generating functions may be used to calculate moments, the main use of the moment generating function is to identify distributions. In fact, if the moment generating function, $M_X(t)$ exists in a neighborhood of zero, it uniquely determines the distribution of $X$ and characterizes an infinite set of moments. However, an infinite set of moments does not uniquely determine a distribution, because there may be two distinct random variables that have the same moments (see Example 2.3.10). 
+
+This problem of uniqueness does not occur if the random variables have bounded support. If that is the case, then the infinite sequence of moments does uniquely determine the distribution. Furthermore, if the moment generating function exists in a neighborhood of zero, then the distribution is uniquely determined, no matter what its support.
+
+\vspace{.2in}
+
+\begin{mdframed}
+\textbf{THM 2.3.11 (Characterizing Distributions)}
+Let $F_X(x)$ and $F_Y(y)$ be two CDFs, all of whose moments exist.
+
+1.	If $X$ and $Y$ have bounded support, then $F_X(u) = F_Y(u)$ for all $u$ if and only if $E(X^r) = E(Y^r)$ for all integers $r = 0,1,2,...$ 
+
+2.	If the moment generating functions exist and $M_X(t) = M_Y(t)$ for all $t$ in some neighborhood of zero, then $F_X(u) = F_Y(u)$ for all $u$. 
+\end{mdframed}
+\vspace{.1in}
+
+THM 2.3.11 basically says that if two random variables have moment generating functions that exist and are equal, then they have the same distribution function. That is, when a moment generating function exists, it is unique. How can a moment generating function not exist? When the integral that must be evaluated to determine the moment generating function does not converge. In some cases, the moments will still exist, even when the moment generating function does not (e.g., lognormal distribution – Book Problems 2.35 and 2.36). There are also other distributions for which neither the moment generating function nor any moments exists (e.g., Cauchy distribution).
+
+\newpage
+__Example__ Suppose $Y$ is a random variable with moment generating function, $M_Y(t) = (1-2t)^{-1}$, $t < 1/2$. What is the distribution of $Y$? 
+
+\vspace{2in}
+
+\begin{mdframed}
+\textbf{THM 2.3.12 (Convergence of MGFs)} Suppose $\{X_i, i = 1,2,...\}$ is a sequence of random variables, each with moment generating function $M_{X_i}(t)$. Furthermore, suppose that $lim_{i \rightarrow \infty}M_{X_i}(t) = M_{X}(t)$ for all $t$ in a neighborhood of zero, and $M_X(t)$ is a moment generating function. Then there is a unique CDF, $F_X(x)$ whose moments are determined by $M_X(t)$ and, for all $x$ where $F_X(x)$ is continuous, we have $lim_{i \rightarrow \infty}F_{X_i}(x) = F_X(x)$ (convergence in distribution). That is, convergence, for $|t| <h$, of moment generating functions to a moment generating function implies convergence of CDFs.
+\end{mdframed}
+
+\vspace{.05in}
+__Note:__ Example 2.3.13 illustrates how, as $n \rightarrow \infty$, the moment generating functions for $Binomial(n,p)$ random variables converge to the moment generating function of a Poisson random variable with $\lambda = np$. Therefore, as $n$ gets large, a Poisson distribution may be used to approximate Binomial probabilities.
+
+
+Moment generating functions can also be useful when dealing with transformations. A special case of this is the linear transformation of a random variable, but we'll see examples of other types of transformations (including those for functions of multiple random variables) later this semester. 
+
+\vspace{.1in}
+\begin{mdframed}
+\textbf{THM 2.3.15 (MGF of Linear Function)} For any constants $a$ and $b$, the mgf of the random variable $Y = aX+b$ is given by  
+
+\vspace{.1in}
+$M_{Y}(t) = $
+\vspace{.1in}
+\end{mdframed}
+
+Proof: (on your own)
+
+
+__Example__ Suppose $Y$ is an Exponential random variable with parameter $\beta = 2$ and moment generating function, $M_Y(t) = (1-2t)^{-1}, t < 1/2$. What is the moment generating function of $U = 3Y + 10$? 
+
+\newpage
+
+
+## 2.4 Differentiating Under an Integral Sign (read on your own)
+
+Casella and Berger discuss conditions under which it is legal to interchange the order of differentiation and integration, as well as the order of differentiation and summation. Both of these situations occur frequently in theoretical statistics. You may read this section on your own.
+
+## 2.6.2 Other Generating Functions
+
+In addition to the moment generating function, there are a number of other generating functions available (e.g., factorial moment generating function, cumulant generating function, probability generating function). The characteristic function is often the most useful of these.
+
+__Characteristic Function__ 
+
+Definition: The _characteristic function_ of a random variable $X$ is defined by 
+$$
+\phi_X(t) =
+$$
+where $i$ is the complex number $\sqrt{-1}$.  
+
+__Notes:__ 
+
+-	Moments, if they exist, can be found by differentiating $\phi_X(t)$.   
+- Although the moment generating function does not always exist, the characteristic function always does. 
+- Characteristic functions are unique and completely determine a distribution. Therefore, every cdf has a unique characteristic function.
+- Finding the characteristic function requires complex integration.
+
+\newpage 
+
+
+

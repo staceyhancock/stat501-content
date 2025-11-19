@@ -1,0 +1,90 @@
+---
+title: "Weighted Least Squares Example"
+subtitle: "M/STAT 501: Fall 2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, out.width = "60%")
+```
+
+## Professor Ratings
+
+Bleske-Rechek and Fritsch (2011) analyzed a data set of the
+ratings of 366 instructors at one large campus in the Midwest.
+Each instructor in the data had at least 10 ratings over a several
+year period. Students provided ratings from 1 (worst) to 5 (best).
+These data are built into R in the `alr4` library.
+
+```{r, message = FALSE, warning=FALSE}
+library(alr4)
+data(Rateprof)
+```
+
+Let $Y_{ij}$ be the quality rating of the $i$th instructor by the $j$th student,
+$j = 1,\ldots, n_i$, and $\bar{Y}_i = \sum_{j=1}^{n_i} Y_{ij}/n_i$ be the mean quality
+rating for the $i$th instructor. Similarly, let $x_{1ij}$ and $x_{2ij}$ be the easiness
+and helpfulness ratings, respectively, of the $i$th instructor by the $j$th student,
+with mean easiness and mean helpfulness for the $i$th instructor denoted by
+$\bar{x}_{1i}$ and $\bar{x}_{2i}$. Note that the data set only reports
+mean ratings, not individual student's ratings.
+
+Do in class:
+
+1. Assume $E(Y_{ij} | X) = \beta_0 + \beta_1 x_{1ij} + \beta_2 x_{2ij}$ and
+$Var(Y_{ij} | X) = \sigma^2$. Derive the expression for $E(\bar{Y}_{i} | X)$
+and $Var(\bar{Y}_i | X)$.
+
+\begin{eqnarray*}
+E(\bar{Y}_{i} | X) &=& \frac{1}{n_i}\sum_{j=1}^{n_i} E(Y_{ij}|X)\\
+&=& \frac{1}{n_i}\sum_{j=1}^{n_i}(\beta_0 + \beta_1x_{1ij} + \beta_2 x_{2ij}) \\
+&=& \beta_0 + \beta_1 \bar{x}_{1i} + \beta_2 \bar{x}_{2i}
+\end{eqnarray*}
+
+2. If we fit a linear model to $E(\bar{Y}_{i} | X)$, would it meet
+the constant variance assumption? Explain why or why not.
+
+    _No. The variance of $Y_i$ depends on $n_i$. Assuming $Y_{ij}$ is independent of $Y_{ik}$ for $j \neq k$_,
+    $$
+    Var(\bar{Y}_i | X) = \frac{1}{n_i^2} \sum_{j=1}^{n_i} Var(Y_{ij} | X) = \frac{\sigma^2}{n_i}.
+    $$
+
+3. Let $\mathbf{Y} = \begin{pmatrix} \bar{Y}_1 & \bar{Y}_2 & \cdots & \bar{Y}_{366} \end{pmatrix}'$
+be the response vector for this data set with variance-covariance matrix
+Var$(\mathbf{Y}) = \sigma^2 \boldsymbol{\Omega}$. Write out the elements in the first four
+rows and first four columns of $\boldsymbol{\Omega}$, i.e., report the $4 \times 4$
+matrix that consists of elements in rows $1-4$ and columns $1-4$.
+
+\begin{eqnarray*}
+
+\end{eqnarray*}
+
+4. Generate plots to investigate the distributions and relationships
+between the three variables of interest.
+```{r}
+hist(Rateprof$quality, breaks=15, col="gray", 
+   xlab="Average quality rating", 
+   main ="Histogram of Average quality rating", ylim=c(0,45))
+hist(Rateprof$helpfulness, breaks=15, col="gray", 
+   xlab="Average helpfulness rating", 
+   main ="Histogram of Average helpfulness rating", ylim=c(0,45))
+hist(Rateprof$easiness, breaks=15, col="gray", 
+   xlab="Average easiness rating", 
+   main ="Histogram of Average easiness rating", ylim=c(0,45))
+plot(Rateprof[,c(8,9,11)])
+cor(Rateprof[,c(8,9,11)])
+```
+
+5. Fit the weighted least squares model. Write the equation of
+the fitted model, and interpret each of the three fitted coefficients
+in context of the problem.
+```{r}
+mod <- lm(quality ~ easiness + helpfulness, weights = numRaters, data = Rateprof)
+summary(mod)
+```
+
+6. Fit the ordinary least squares fit to these data. How do the coefficients
+change? How does the residual standard error change? Why?
+```{r}
+mod.OLS <- lm(quality ~ easiness + helpfulness, data = Rateprof)
+summary(mod.OLS)

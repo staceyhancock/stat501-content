@@ -1,0 +1,305 @@
+---
+title: "Expectations, Variances, and Distributions of Random Vectors"
+subtitle: "Supplement to Casella and Berger Section 4.6"
+output: 
+  pdf_document:
+      includes:
+            in_header: ../header-Hancock.tex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# A note on notation
+
+Typically, we denote a random variable by an uppercase letter (e.g., $X$, $Y$, $Z$), and a specific realization of that variable by a lowercase letter (e.g., $x$, $y$, $z$). However, when we move to random vectors, this convention conflicts with the notational convention in linear algebra of using lowercase letters for vectors (e.g., $\vec{x}$ or $\bm{x}$), and uppercase letters for matrices (e.g., $\bm{X}$). Thus, some textbooks adopt the lowercase notation for random vectors from linear algebra. We will adopt this convention here.
+
+Note that Casella and Berger, on the other hand, continue to use uppercase letters for random vectors and lowercase letters for realizations of those random vectors, but in boldface. 
+
+All vectors will be assumed to be column vectors, unless otherwise specified.
+
+# Expectation of random vectors
+
+Let $y_1, y_2,\ldots, y_n$ be a set of random variables, and define the random vector $\bm{y}$ as
+\[
+\bm{y} = \begin{pmatrix} y_1 \cr y_2 \cr \vdots \cr y_n \end{pmatrix}.
+\]
+Note that Casella and Berger leave random vectors in vector notation, $\bm{y} = (y_1, y_2, \ldots, y_n)$, rather than matrix notation, but matrix notation will be more clear for our purposes.
+
+\begin{mydef}
+Suppose that $E(y_i) = \mu_i$ for $i = 1,\ldots, n$, and define the $n \times 1$ vector $\bs{\mu} = \{\mu_i\}$, where the set notation denotes the elements of the vector, i.e.,
+\[
+\bs{\mu} = \begin{pmatrix} \mu_1 \cr \mu_2 \cr \vdots \cr \mu_n \end{pmatrix}.
+\]
+Then the \textbf{expected value of $\bm{y}$} is defined as the vector of expected values of its elements:
+\[
+E(\bm{y}) = \bs{\mu} = \begin{pmatrix} \mu_1 \cr \mu_2 \cr \vdots \cr \mu_n \end{pmatrix}.
+\]
+\end{mydef}
+
+\begin{myresult}
+If $\bm{g}(\bm{y})$ is a linear function from $\R^n$ to $\R^m$, then $E(\bm{g}(\bm{y})) = \bm{g}(E(\bm{y}))$.
+\end{myresult}
+
+For example, if $\bm{A}: p\times n$, $\bm{b}:r \times 1$, and $\bm{C}: p \times r$ are matrices of constants, then 
+\[
+E(\bm{Ayb'+C}) = \bm{A}E(\bm{y})\bm{b}' + \bm{C} = \bm{A}\bs{\mu}\bm{b}' + \bm{C}.
+\]
+
+# Variance and covariance of random vectors
+
+Let $\bm{x}$ be an $n \times 1$ random vector, and let $\bm{y}$ be an $r \times 1$ random vector.
+
+\begin{mydef}
+The \textbf{covariance of $\bm{x}$ and $\bm{y}$} is
+\[
+Cov(\bm{x},\bm{y}) = E\left[ (\bm{x} - E(\bm{x}))(\bm{y} - E(\bm{y}))'\right].
+\]
+\end{mydef}
+Note that this matrix has dimension $n \times r$, and the $(i,j)^{th}$ element of $Cov(\bm{x},\bm{y})$ is $Cov(x_i, y_j)$.
+
+\begin{mydef}
+The \textbf{variance of $\bm{x}$} is the $n \times n$ matrix
+\[
+Var(\bm{x}) = Cov(\bm{x},\bm{x}) = E\left[ (\bm{x} - E(\bm{x}))(\bm{x} - E(\bm{x}))'\right].
+\]
+\end{mydef}
+
+The following results follow from the definitions of expectation and covariance of random vectors, and from properties of matrices.
+
+\begin{myresult}
+$Cov(\bm{x}, \bm{y}) = E(\bm{x}\bm{y}') - E(\bm{x})E(\bm{y})'$.
+\end{myresult}
+
+\begin{myresult}
+$Var(\bm{x}) = E(\bm{x}\bm{x}') - E(\bm{x})E(\bm{x})'$.
+\end{myresult}
+
+\begin{myresult}
+For any constant matrices $\bm{A}:m \times n$ and $\bm{B}:p \times r$, 
+\[
+Cov(\bm{A}\bm{x}, \bm{B}\bm{y}) = \bm{A} Cov(\bm{x},\bm{y}) \bm{B}'.
+\]
+\end{myresult}
+
+\begin{myresult}
+For any constant matrix $\bm{A}:m \times n$, 
+\[
+Var(\bm{A}\bm{x}) = Cov(\bm{A}\bm{x}, \bm{A}\bm{x}) = \bm{A} Var(\bm{x}) \bm{A}'.
+\]
+\end{myresult}
+
+\begin{myresult}
+$Var(\bm{x})$ is a symmetric non-negative definite matrix.
+\end{myresult}
+
+
+# Multivariate normal (MVN) distribution
+
+\begin{mydef}
+Suppose that random vector $\bm{y}: n \times 1$ with support $\R^n$ has joint probability density function,
+\[
+f(\bm{y}) = \frac{\exp\left\{-\frac{1}{2}(\bm{y} - \bs{\mu})'\bs{\Sigma}^{-1}(\bm{y} - \bs{\mu})\right\}}{|\bs{\Sigma}|^{\frac{1}{2}}(2\pi)^{\frac{n}{2}}},
+\]
+for $\bs{\mu}:n \times 1 \in \R^n$ and positive definite matrix $\bs{\Sigma}: n \times n$. Then $\bm{y}$ is said to have a \textbf{multivariate normal distribution} with mean $\bs{\mu}$ and variance $\bs{\Sigma}$, denoted by $\bm{y} \sim N_n(\bs{\mu}, \bs{\Sigma})$.
+\end{mydef}
+
+If $\bs{\Sigma} = \sigma^2 \bm{I}_n$, where $\sigma^2 > 0$ and $\bm{I}_n$ is an $n \times n$ identity matrix, then the pdf simplifies to
+\[
+f(\bm{y}) = \frac{\exp\left\{-\frac{1}{2\sigma^2}(\bm{y} - \bs{\mu})'(\bm{y} - \bs{\mu})\right\}}{(2\pi\sigma^2)^{\frac{n}{2}}} =
+\frac{\exp\left\{-\frac{1}{2\sigma^2}\sum_{i = 1}^n (y_i - \mu_i)^2\right\}}{(2\pi\sigma^2)^{\frac{n}{2}}}.
+\]
+
+## Properties of the MVN distribution
+
+The following properties hold for the multivariate normal distribution. 
+
+\begin{myresult}
+Suppose $\bm{y} \sim N_n(\bs{\mu}, \bs{\Sigma})$, where $\bs{\Sigma}$ is positive definite. Then the following results can be established.  
+\end{myresult}
+
+a. Moment generating function:
+\[
+M_{\bm{y}}(t) = E[\exp(\bm{t}'\bm{y})] = \exp\left\{\bm{t}'\bs{\mu} + \frac{1}{2}\bm{t}'\bs{\Sigma}\bm{t}\right\}.
+\]
+
+b. $E(\bm{y}) = \bs{\mu}$.
+
+c. $Var(\bm{y}) = \bs{\Sigma}$.
+
+d. If $\bm{A}$ is an $r \times n$ matrix of constants, then
+\[
+\bm{A}\bm{y} \sim N_r(\bm{A}\bs{\mu}, \bm{A}\bs{\Sigma}\bm{A}').
+\]
+
+e. Suppose that $\bm{y}$ is a $(p + q) \times 1$ random vector with distribution $\bm{y} \sim N_{p+q}(\bs{\mu}, \bs{\Sigma})$, where
+\[
+\bs{\Sigma} = \begin{pmatrix} \bs{\Sigma}_1 & \bm{0} \cr \bm{0} &\bs{\Sigma}_2 \end{pmatrix} = \bs{\Sigma}_1 \otimes \bs{\Sigma}_2,
+\]
+where $\bs{\Sigma}_1$ is $p\times p$ and $\bs{\Sigma}_2$ is $q \times q$. If we partition $\bm{y}$ as
+\[
+\bm{y} = \begin{pmatrix} \bm{y}_1 \cr \bm{y}_2 \end{pmatrix}
+\]
+with $\bm{y}_1: p\times 1$ and $\bm{y}_2: q \times 1$, then $\bm{y}_1$ is independent of $\bm{y}_2$. This result says that if two random vectors $\bm{y}_1$ and $\bm{y}_2$ are uncorrelated and have a joint multivariate normal distribution, then the random vectors are independent.
+
+f. Let $\bm{y}$ be an $n\times 1$ random vector with distribution $\bm{y} \sim N_n(\bs{\mu}, \bs{\Sigma})$. The MVN density function is constant for all $\bm{y}$ that satisfy
+\[
+(\bm{y} - \bs{\mu})'\bs{\Sigma}^{-1}(\bm{y}-\bs{\mu}) = c.
+\]
+The above equation is the equation of an $n$-dimensional ellipsoid.
+
+## Conditional MVN distributions
+
+Let $\bm{y}$ be a $(p + q) \times 1$ random vector and denote a realization of the random vector by $\bm{\ddot{y}}$. Suppose that $\bm{y}$ is distributed as $\bm{y} \sim N_{p+q}(\bs{\mu}, \bs{\Sigma})$. Partition $\bm{y}$ as 
+\[
+\bm{y} = \begin{pmatrix} \bm{y}_1 \cr \bm{y}_2 \end{pmatrix}
+\]
+with $\bm{y}_1: p\times 1$ and $\bm{y}_2: q \times 1$. Partition $\bs{\mu}$ and $\bs{\Sigma}$ conformably, as 
+\[
+\bs{\mu} = \begin{pmatrix} \bs{\mu}_1 \cr \bs{\mu}_2 \end{pmatrix},
+\]
+and
+\[
+\bs{\Sigma} = \begin{pmatrix} \bs{\Sigma}_{11} & \bs{\Sigma}_{12} \cr \bs{\Sigma}_{21} & \bs{\Sigma}_{22} \end{pmatrix}.
+\]
+
+We often may be interested in the conditional distribution of $\bm{y}_1$ given a particular value of $\bm{y}_2$. This is expressed in the following result.
+\begin{myresult}
+If $\bs{\Sigma}_{22}$ is positive definite, then conditional on $\bm{y}_2 = \bm{\ddot{y}}$, $\bm{y}_1$ has the multivariate normal distribution
+\[
+\bm{y}_1 | \bm{y}_2 = \bm{\ddot{y}} \sim N_p(\bs{\mu}_{1\cdot 2}, \bs{\Sigma}_{11\cdot 2}),
+\]
+where
+\[
+\bs{\mu}_{1\cdot 2} := \bs{\mu}_1 + \bs{\Sigma}_{12}\bs{\Sigma}_{22}^{-1}(\bm{\ddot{y}}_2 - \bs{\mu}_2),
+\]
+and
+\[
+\bs{\Sigma}_{11\cdot 2} := \bs{\Sigma}_{11} - \bs{\Sigma}_{12}\bs{\Sigma}_{22}^{-1}\bs{\Sigma}_{21}.
+\]
+\end{myresult}
+
+The previous result took a multivariate random vector, partitioned it into two vectors, and gave the conditional distribution of one of these vectors given the other. But what if we are given the conditional distribution and want to go back to the joint distribution?
+
+\begin{myresult}
+Suppose $\mathbf{v}_1 \sim N_r(\boldsymbol{\mu}_1, \boldsymbol{\Sigma}_{11})$ and $\mathbf{v}_2 | \mathbf{v}_1 \sim N_{p-r}(\mathbf{A}\mathbf{v}_1 + \mathbf{b}, \boldsymbol{\Omega})$, where $\bm{\Omega}$ does not depend on $\mathbf{v}_1$. Then 
+$$
+\mathbf{v} = \begin{pmatrix} \mathbf{v}_1 \\ \mathbf{v}_2 \end{pmatrix} \sim N_p(\boldsymbol{\mu}, \bs{\Sigma}),
+$$
+where
+$$
+\mu = \begin{pmatrix} \bs{\mu}_1 \\ A \bs{\mu}_1 + \bm{b} \end{pmatrix} \hspace{1mm}\text{ and }\hspace{1mm}
+\bs{\Sigma} = \begin{pmatrix} \bs{\Sigma}_{11} &  \bs{\Sigma}_{11}\bm{A}'\\ \bm{A}\bs{\Sigma} & \bs{\Omega} + \bm{A}\bs{\Sigma} \bm{A}' \end{pmatrix}.
+$$ 
+\end{myresult}
+
+\newpage
+## MVN distribution's relation to the chi-squared distribution
+
+Given an $n \times 1$ random vector $\bm{x}$ and $n\times n$ constant matrix $\bm{A}$, the random variable $Q = \bm{x}'\bm{A}\bm{x}$ is called a **quadratic form in $\bm{x}$**. We will further examine distributions of quadratic forms in Stat 502^[It turns out that the sample variance can be expressed as a quadratic form.], but for now, we discuss one specific example.
+
+\begin{mydef}
+Suppose $\bm{x} \sim N_n(\bs{\mu}, \bm{I}_n)$. Define the random variable $Q = \bm{x}'\bm{x}$. Then $Q$ is said to have a \textbf{noncentral chi-squared distribution} with $n$ degrees of freedom and noncentrality parameter $\lambda = \bs{\mu}'\bs{\mu}/2$. This is denoted by $Q \sim \chi^2(n, \lambda)$. 
+\end{mydef}
+
+If $\bs{\mu} = \bs{0}$, then $\lambda = 0$, and $Q$ is said to have a \textbf{central chi-squared distribution} with $n$ degrees of freedom, denoted by $Q \sim \chi^2(n)$.
+
+The following results summarize some basic properties of noncentral chi-squared distributions.
+
+\begin{myresult}
+Let $Q \sim \chi^2_{n, \lambda}$. Then the following properties hold.
+\end{myresult}
+
+a. Probability density function:
+\[
+f_Q(q) = \sum_{j=0}^{\infty} \frac{e^{\lambda}\lambda^j}{j!}f_{n+2j}(q),
+\]
+where $f_{n+2j}(q)$ is the density function for a central chi-squared random variable having $n + 2j$ degrees of freedom. That is,
+\[
+f_{i}(q) = \frac{e^{q/2}q^{i/2 - 1}}{2^{i/2}\Gamma(i/2)}.
+\]
+b. Moment generating function:
+\[
+M_Q(t) = (1-2t)^{-n/2}\exp[2t\lambda/(1-2t)].
+\]
+
+c. $E(Q) = n + 2\lambda$.
+
+d. $Var(Q) = 2n + 8\lambda$.
+
+e. If $Q_i \overset{ind}{\sim} \chi^2(\nu_i, \lambda_i)$ for $i = 1,\ldots, k$, then
+\[
+\sum_{i=1}^k Q_i \sim \chi^2\left(\sum_{i=1}^k\nu_i, \sum_{i=1}^k \lambda_i\right).
+\]
+
+\newpage
+
+# Application: Linear models
+
+Consider a response vector $\mathbf{y} = (y_1, \ldots, y_n)'$, where each $y_i$ is a variable of interest measured on observational unit $i$ in a sample of size $n$. We would like to predict the response for future observations using a set of predictor variables. If $\textbf{y}$ follows a **linear model**, we can write it in the form
+$$
+\mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon},
+$$
+where $\mathbf{X}$ is an $n\times p$ matrix of known constants (information from the predictor variables), $\boldsymbol{\beta}$ is a $p \times 1$ vector of unknown parameters that we would like to estimate, and $\boldsymbol{\epsilon}$ is a random error vector with expectation $\boldsymbol{0}$ (an $n\times 1$ vector of zeroes) and variance-covariance matrix $\boldsymbol{\Sigma}$ (an $n \times n$ matrix).
+
+#### Example: Multiple linear regression
+
+An investigator obtained a random sample of $n$ incoming MSU undergraduates. On each case, the investigator observed the undergraduate's high school (HS) GPA and the number of math courses taken in HS. After their first year, the investigator also obtained their college GPA. The investigator believes that college GPA can be predicted from HS GPA as well as the number of HS math courses. Denote the college GPA for the $i$th case as $y_i$, the HS GPA for the $i$th case as $g_i$, and the number of HS math courses as $m_i$. Then a multiple linear regression model for this scenario is
+$$
+y_i = \beta_0 + \beta_1 g_i + \beta_2 m_i + \epsilon_i,
+$$
+where $\beta_0$ is the intercept term, $\beta_1$ is the regression coefficient for HS GPA, and $\beta_2$ is the regression coefficient for number of HS math courses. We also assume that
+$$
+\epsilon_i \overset{iid}{\sim} N(0, \sigma^2),
+$$
+which implies that
+$$
+y_i \overset{ind}{\sim} N(\beta_0 + \beta_1 g_i + \beta_2 m_i, \sigma^2).
+$$
+Express this model in matrix terms.
+
+\newpage
+
+#### Example: One mean
+
+Consider the linear model $y_i \overset{iid}{\sim} N(\mu, \sigma^2)$, and define $\bm{y} = (y_1,\ldots, y_n)'$. Two statistics of primary interest are the sample mean and sample variance, respectively:
+$$
+\bar{y} = \frac{\sum_{i=1}^n y_i}{n} \hspace{1mm}\text{ and }\hspace{1mm}
+S^2 = \frac{\sum_{i=1}^n (y_i - \bar{y})^2}{n-1}.
+$$
+Express $\bar{y}$ and $S^2$ as linear and quadratic functions of $\bm{y}$.
+
+
+
+\vspace{4in}
+
+The previous example can be extended to the **general linear model**,
+$$
+\bm{y} \sim N_n(\bm{X}\bs{\beta}, \sigma^2 \bs{\Omega}),
+$$
+where $\bm{X}$ is an $n\times p$ design matrix, $\bs{\beta}$ is a $p\times 1$ parameter vector, $\sigma^2$ is a scalar, and $\bs{\Omega}$ is a $n\times n$ positive definite matrix.
+The **generalized least squares (and maximum likelihood) estimator** of $\bs{\beta}$ is the minimizer of the **sum of squared errors**,
+$$
+SSE(\bs{\beta}) = (\bm{y}-\bm{X}\bs{\beta})'\bs{\Omega}^{-1}(\bm{y}-\bm{X}\bs{\beta}).
+$$
+
+It turns out that this minimizer is a linear function of $\bm{y}$,
+$$
+\bs{\hat\beta} = (\bm{X}'\bs{\Omega}^{-1}\bm{X})^{-1}\bm{X}'\bs{\Omega}^{-1}\bm{y},
+$$
+which also implies that the predicted values are a linear function of $\bm{y}$,
+$$
+\bs{\bm{\hat{y}}} = \bm{X}\bs{\hat{\beta}} = \bm{X}(\bm{X}'\bs{\Omega}^{-1}\bm{X})^{-1}\bm{X}'\bs{\Omega}^{-1}\bm{y}.
+$$
+The matrix $\bm{P} = \bm{X}(\bm{X}'\bs{\Omega}^{-1}\bm{X})^{-1}\bm{X}'\bs{\Omega}^{-1}$ is called a **projection operator**---it projects the response vector onto the column space of $\bm{X}$ (all vectors in $\mathbb{R}^n$ that can be expressed in the form $\bm{X}\bm{b}$ for some $\bm{b}\in \mathbb{R}^p$).
+
+Additionally, an unbiased estimator of $\sigma^2$ is $SSE(\bs{\hat{\beta}})/(n-p)$, which can be expressed as a quadratic function of $\bm{y}$:
+$$
+\hat{\sigma^2} = \frac{SSE(\bs{\hat{\beta}})}{n-p} = (\bm{y}-\bm{X}\bs{\hat{\beta}})'\bs{\Omega}^{-1}(\bm{y}-\bm{X}\bs{\hat{\beta}}) = \frac{\bm{e}'\bs{\Omega}^{-1}\bm{e}}{n-p} = \frac{\bm{y}'\bs{\Omega}^{-1}(\bm{I}_n-\bm{P})\bm{y}}{n-p},
+$$
+where $\bm{e}$ is the $n\times 1$ vector of residuals.
+
+# References
+
+Much of this material was taken directly from Dr.\ Robert Boik's Stat 505 Lecture Notes, _A Pair of Primers: Primer on Matrix Analysis and Primer on Linear Statistical Models_, Fall 2007 edition.

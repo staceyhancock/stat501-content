@@ -1,0 +1,154 @@
+---
+title: 'Example:  Log transformations in regression'
+date: "10/13/2025"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+Data source: Albyn Jones [http://people.reed.edu/~jones/141/Guns.html](http://people.reed.edu/~jones/141/Guns.html).
+
+Variables: Socioeconomic data from 1990/1991 -
+
+* pop = population of state (in 1000s of people)
+* area = area of state (in 1000 square miles)
+* urban = percent urban population
+* poverty = percent below poverty line
+* gunreg = whether there are gun registration laws or not
+* homicides = number of homicides in the past year
+
+
+**Research question**: Are gun registration laws associated with the rate of homicides in a state?
+
+## Data import
+
+```{r data-import}
+"GunReg" <- 
+structure(.Data = list(
+"pop" = c(4089, 2372, 30380, 3291, 598, 13277, 1135, 2795, 11543, 5996, 
+   4860, 9368, 4432, 5158, 6737, 635, 7760, 18058, 10939, 11961, 1004,
+   3560, 4953, 17349, 1770, 5018, 570, 3750, 3377, 680, 6623,
+   1039, 5610, 2495, 3713, 4252, 1235, 2592, 808, 1593, 1105,
+   1548, 1284, 3175, 2922, 703, 6286, 567, 4955, 1801, 460.), 
+"area" = c(52.4, 53.2, 163.7, 5.5, 0.1, 65.8, 10.9, 56.3, 57.9, 10.6, 
+   12.4, 96.8, 86.9, 69.7, 53.8, 70.7, 8.7, 54.5, 44.8, 46.1, 1.5, 32, 
+   42.1, 268.6, 84.9, 71.3, 656.4, 114, 104.1, 2.5, 59.4, 83.6, 36.4, 
+   82.3, 40.4, 51.8, 35.4, 48.4, 147, 77.4, 9.4, 121.6, 110.6, 69.9, 
+   98.4, 77.1, 42.8, 9.6, 65.5, 24.2, 97.8), 
+"urban" = c(60, 54, 93, 79, 100, 85, 89, 61, 85, 84, 81, 70, 71, 53, 
+   50, 53, 89, 84, 74, 69, 86, 55, 61, 80, 87, 76, 68, 88, 82,
+   73, 63, 57, 65, 69, 52, 68, 45, 47, 53, 66, 51, 73, 88,
+   68, 71, 50, 69, 32, 66, 36, 65.), 
+"poverty" = c(19, 18.4, 14.2, 5.8, 19.2, 14.1, 10, 10.1, 13.3, 10.2, 
+   9.3, 13.9, 12, 13.6, 13.2, 13.5, 9, 14.1, 11.8, 10.8, 8.2, 16.5, 
+   16.9, 16.8, 9.8, 26.2, 11.2, 14.2, 12.1, 8.1, 16, 13.7, 14.1, 11.1, 
+   17.4, 22, 12.5, 23.8, 15.8, 10.9, 7.1, 20.9, 10.7, 15.8, 11.3, 13.5, 
+   10.6, 7.1, 9.2, 17.2, 10.6), 
+"gunreg" = c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+   1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.), 
+"homicides" = c(410, 240, 3710, 170, 489, 1300, 44, 62, 1270, 200, 540, 
+   1020, 100, 550, 730, 11, 350, 2550, 760, 740, 38, 350, 470, 2660,
+   43, 220, 56, 290, 155, 32, 720, 21, 380, 150, 260, 760,
+   23, 370, 29, 43, 32, 160, 135, 220, 120, 9, 550, 24, 240,
+   135, 20.)), 
+names = c("pop", "area", "urban", "poverty", "gunreg", "homicides"), 
+row.names = c("AL", "AR", "CA", "CT", "DC", "FL", "HI", "IA", "IL", "MA", 
+   "MD", "MI", "MN", "MO", "NC", "ND", "NJ", "NY", "OH", "PA", "RI", "SC", 
+   "TN", "TX", "UT", "WA", "AK", "AZ", "CO", "DE", "GA", "ID", "IN", "KS", 
+   "KY", "LA", "ME", "MS", "MT", "NE", "NH", "NM", "NV", "OK", "OR", "SD", 
+   "VA", "VT", "WI", "WV", "WY"), class = "data.frame")
+```
+
+## Exploratory data analysis
+
+### Examine data set
+```{r examine-data}
+names(GunReg)
+dim(GunReg)
+summary(GunReg)
+str(GunReg)
+glimpse(GunReg)
+
+# Top 10 population
+GunReg %>% arrange(desc(pop)) %>% slice_head(n = 10)
+
+# Top 10 number of homicides
+GunReg %>% arrange(desc(homicides)) %>% slice_head(n = 10)
+
+# Bottom 10 number of homicides
+GunReg %>% arrange(desc(homicides)) %>% slice_tail(n = 10)
+
+```
+
+### Create new variables
+```{r data-wrangle}
+# Gun registration character vector
+# Homicide rates (per 1,000 person-years):
+GunReg <- GunReg %>% mutate(
+  gunreg_ind = gunreg,
+  gunreg = case_when(
+    gunreg_ind == 0 ~ "No",
+    gunreg_ind == 1 ~ "Yes"
+  ),
+  rate = homicides/pop
+  )
+
+# Top 10 homicide rates
+GunReg %>% arrange(desc(rate)) %>% slice_head(n = 10)
+
+# Homicide rate by gun registration law status
+GunReg %>% group_by(gunreg) %>%
+  summarize(
+    tot_pop = sum(pop),
+    tot_hom = sum(homicides),
+    overall_rate = sum(homicides)/sum(pop)
+    )
+```
+### Data visualization
+
+```{r data-vis, out.width="50%"}
+# Distribution of homicide rates
+GunReg %>% ggplot(aes(x = rate)) +
+  geom_histogram(bins = 30) +
+  labs(x = "Homicide Rate (per 1000 person-years",
+       y = "Frequency",
+       title = "Histogram of Homicide Rates")
+
+# Homicide rates by gun registration status
+GunReg %>% ggplot(aes(x = gunreg, y = rate)) +
+  geom_boxplot() +
+  labs(x = "Gun Registration Laws",
+       y = "Homicide Rate (per 1000 person-years",
+       title = "Boxplots of Homicide Rates by Gun Registration")
+
+GunReg %>% ggplot(aes(x = rate, fill = gunreg)) +
+  geom_density() + facet_wrap(vars(gunreg), nrow = 2) +
+  labs(x = "Homicide Rate (per 1000 person-years",
+       y = "Density",
+       title = "Density Plots of Homicide Rates by Gun Registration")
+```
+
+### Regression Modeling
+
+Model without the DC outlier:
+
+```{r lm-rate, out.width="50%"}
+mod1 <- lm(rate ~ gunreg, data = GunReg, subset = GunReg$rate < 0.2)
+summary(mod1)
+plot(mod1, c(1,2))
+hist(resid(mod1))
+```
+
+```{r lm-lograte, out.width="50%"}
+# Create log-transformed rate variable
+GunReg <- GunReg %>% mutate(log_rate = log(rate))
+
+mod2 <- lm(log_rate ~ gunreg, data = GunReg, subset = GunReg$rate < 0.2)
+summary(mod2)
+plot(mod2, c(1,2))
+hist(resid(mod2))
+```
