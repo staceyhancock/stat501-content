@@ -17,7 +17,8 @@ year period. Students provided ratings from 1 (worst) to 5 (best).
 These data are built into R in the `alr4` library.
 
 ```{r, message = FALSE, warning=FALSE}
-library(alr4)
+library(pracma) # eye function
+library(alr4) # data set
 data(Rateprof)
 ```
 
@@ -34,20 +35,22 @@ Do in class:
 1. Assume $E(Y_{ij} | X) = \beta_0 + \beta_1 x_{1ij} + \beta_2 x_{2ij}$ and
 $Var(Y_{ij} | X) = \sigma^2$. Derive the expression for $E(\bar{Y}_{i} | X)$
 and $Var(\bar{Y}_i | X)$.  
-\begin{eqnarray*}
-E(\bar{Y}_{i} | X) &=& \frac{1}{n_i}\sum_{j=1}^{n_i} E(Y_{ij}|X)\\
-&=& \frac{1}{n_i}\sum_{j=1}^{n_i}(\beta_0 + \beta_1x_{1ij} + \beta_2 x_{2ij}) \\
-&=& \beta_0 + \beta_1 \bar{x}_{1i} + \beta_2 \bar{x}_{2i}
-\end{eqnarray*}
-
-2. If we fit a linear model to $E(\bar{Y}_{i} | X)$, would it meet
-the constant variance assumption? Explain why or why not.
-
-    _No. The variance of $Y_i$ depends on $n_i$. Assuming $Y_{ij}$ is independent of $Y_{ik}$ for $j \neq k$_,
+    \begin{eqnarray*}
+    E(\bar{Y}_{i} | X) &=& \frac{1}{n_i}\sum_{j=1}^{n_i} E(Y_{ij}|X)\\
+    &=& \frac{1}{n_i}\sum_{j=1}^{n_i}(\beta_0 + \beta_1x_{1ij} + \beta_2 x_{2ij}) \\
+    &=& \beta_0 + \beta_1 \bar{x}_{1i} + \beta_2 \bar{x}_{2i}
+    \end{eqnarray*}
+    _Assuming $Y_{ij}$ is independent of $Y_{ik}$ for $j \neq k$_,
     $$
     Var(\bar{Y}_i | X) = \frac{1}{n_i^2} \sum_{j=1}^{n_i} Var(Y_{ij} | X) = \frac{\sigma^2}{n_i}.
     $$
 
+
+2. If we fit a linear model to $E(\bar{Y}_{i} | X)$, would it meet
+the constant variance assumption? Explain why or why not.
+
+    _No. The variance of $Y_i$ depends on $n_i$ (see previous derivation)._ 
+    
 3. Let $\mathbf{Y} = \begin{pmatrix} \bar{Y}_1 & \bar{Y}_2 & \cdots & \bar{Y}_{366} \end{pmatrix}'$
 be the response vector for this data set with variance-covariance matrix
 Var$(\mathbf{Y}) = \sigma^2 \boldsymbol{\Omega}$. Write out the elements in the first four
@@ -86,6 +89,17 @@ in context of the problem.
     ```{r}
     mod <- lm(quality ~ easiness + helpfulness, weights = numRaters, data = Rateprof)
     summary(mod)
+    
+    # Check with matrix algebra
+    y <- Rateprof$quality
+    n <- length(y)
+    X <- matrix(cbind(rep(1, n), Rateprof$easiness, Rateprof$helpfulness), nrow = n, ncol = 3)
+    Omega <- diag(1/Rateprof$numRaters)
+    P <- X %*% solve(t(X) %*% solve(Omega) %*% X) %*% t(X) %*% solve(Omega)
+    beta_hat <- P %*% y
+    res <- (eye(n) - P) %*% y
+    SSE <- (1/(n-3))*t(y) %*% solve(Omega) %*% (eye(n) - P) %*% y
+    res_SE <- sqrt(SSE)
     ```
 
 6. Fit the ordinary least squares fit to these data. How do the coefficients

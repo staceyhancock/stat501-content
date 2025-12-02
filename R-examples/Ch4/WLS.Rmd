@@ -16,7 +16,8 @@ year period. Students provided ratings from 1 (worst) to 5 (best).
 These data are built into R in the `alr4` library.
 
 ```{r, message = FALSE, warning=FALSE}
-library(alr4)
+library(pracma) # eye function
+library(alr4) # data set
 data(Rateprof)
 ```
 
