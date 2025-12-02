@@ -589,7 +589,7 @@ What are the major differences between cdfs for discrete and continuous RVs?
 #### Identically Distributed
 
 \begin{mdframed}
-\textbf{DEF 1.5.8} The random variables $X$ and $Y$ are identically distributed if, for every set $A \in \mathcal{B}$, $P_X(x \in A) = P_Y(y \in A)$.    
+\textbf{DEF 1.5.8} The random variables $X$ and $Y$ are identically distributed if, for every set $A \in \mathcal{B}$, $P_X(X \in A) = P_Y(y \in A)$.    
 \end{mdframed}
 
 \vspace{.1in}
