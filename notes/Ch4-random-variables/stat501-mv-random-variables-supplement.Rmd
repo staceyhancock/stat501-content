@@ -27,6 +27,7 @@ Let $y_1, y_2,\ldots, y_n$ be a set of random variables, and define the random v
 \]
 Note that Casella and Berger leave random vectors in vector notation, $\bm{y} = (y_1, y_2, \ldots, y_n)$, rather than matrix notation, but matrix notation will be more clear for our purposes.
 
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
 \begin{mydef}
 Suppose that $E(y_i) = \mu_i$ for $i = 1,\ldots, n$, and define the $n \times 1$ vector $\bs{\mu} = \{\mu_i\}$, where the set notation denotes the elements of the vector, i.e.,
 \[
@@ -37,36 +38,53 @@ Then the \textbf{expected value of $\bm{y}$} is defined as the vector of expecte
 E(\bm{y}) = \bs{\mu} = \begin{pmatrix} \mu_1 \cr \mu_2 \cr \vdots \cr \mu_n \end{pmatrix}.
 \]
 \end{mydef}
+\end{mdframed}
 
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
 \begin{myresult}
 If $\bm{g}(\bm{y})$ is a linear function from $\R^n$ to $\R^m$, then $E(\bm{g}(\bm{y})) = \bm{g}(E(\bm{y}))$.
 \end{myresult}
-
+\end{mdframed}
 For example, if $\bm{A}: p\times n$, $\bm{b}:r \times 1$, and $\bm{C}: p \times r$ are matrices of constants, then 
 \[
 E(\bm{Ayb'+C}) = \bm{A}E(\bm{y})\bm{b}' + \bm{C} = \bm{A}\bs{\mu}\bm{b}' + \bm{C}.
 \]
 
+\newpage
+
 # Variance and covariance of random vectors
 
 Let $\bm{x}$ be an $n \times 1$ random vector, and let $\bm{y}$ be an $r \times 1$ random vector.
 
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
 \begin{mydef}
 The \textbf{covariance of $\bm{x}$ and $\bm{y}$} is
 \[
 Cov(\bm{x},\bm{y}) = E\left[ (\bm{x} - E(\bm{x}))(\bm{y} - E(\bm{y}))'\right].
 \]
 \end{mydef}
-Note that this matrix has dimension $n \times r$, and the $(i,j)^{th}$ element of $Cov(\bm{x},\bm{y})$ is $Cov(x_i, y_j)$.
+\end{mdframed}
 
+Note that the matrix $Cov(\bm{x},\bm{y})$ has dimension $n \times r$, and the $(i,j)^{th}$ element is $Cov(x_i, y_j)$.
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
 \begin{mydef}
 The \textbf{variance of $\bm{x}$} is the $n \times n$ matrix
 \[
 Var(\bm{x}) = Cov(\bm{x},\bm{x}) = E\left[ (\bm{x} - E(\bm{x}))(\bm{x} - E(\bm{x}))'\right].
 \]
 \end{mydef}
+\end{mdframed}
 
-The following results follow from the definitions of expectation and covariance of random vectors, and from properties of matrices.
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\begin{myresult}
+$Var(\bm{x})$ is a symmetric non-negative definite matrix.
+\end{myresult}
+\end{mdframed}
+
+As with the variance and covariance of random variables, there are "shortcut" formulas to finding the variance and covariance of random vectors.
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
 
 \begin{myresult}
 $Cov(\bm{x}, \bm{y}) = E(\bm{x}\bm{y}') - E(\bm{x})E(\bm{y})'$.
@@ -75,28 +93,24 @@ $Cov(\bm{x}, \bm{y}) = E(\bm{x}\bm{y}') - E(\bm{x})E(\bm{y})'$.
 \begin{myresult}
 $Var(\bm{x}) = E(\bm{x}\bm{x}') - E(\bm{x})E(\bm{x})'$.
 \end{myresult}
+\end{mdframed}
 
+The following properties follow from the definitions of expectation and covariance of random vectors, and from properties of matrices.
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
 \begin{myresult}
 For any constant matrices $\bm{A}:m \times n$ and $\bm{B}:p \times r$, 
-\[
-Cov(\bm{A}\bm{x}, \bm{B}\bm{y}) = \bm{A} Cov(\bm{x},\bm{y}) \bm{B}'.
-\]
-\end{myresult}
 
-\begin{myresult}
-For any constant matrix $\bm{A}:m \times n$, 
-\[
-Var(\bm{A}\bm{x}) = Cov(\bm{A}\bm{x}, \bm{A}\bm{x}) = \bm{A} Var(\bm{x}) \bm{A}'.
-\]
-\end{myresult}
+a. $Cov(\bm{A}\bm{x}, \bm{B}\bm{y}) = \bm{A} Cov(\bm{x},\bm{y}) \bm{B}'$
 
-\begin{myresult}
-$Var(\bm{x})$ is a symmetric non-negative definite matrix.
+b. $Var(\bm{A}\bm{x}) = Cov(\bm{A}\bm{x}, \bm{A}\bm{x}) = \bm{A} Var(\bm{x}) \bm{A}'$
 \end{myresult}
+\end{mdframed}
 
 
 # Multivariate normal (MVN) distribution
 
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
 \begin{mydef}
 Suppose that random vector $\bm{y}: n \times 1$ with support $\R^n$ has joint probability density function,
 \[
@@ -104,6 +118,7 @@ f(\bm{y}) = \frac{\exp\left\{-\frac{1}{2}(\bm{y} - \bs{\mu})'\bs{\Sigma}^{-1}(\b
 \]
 for $\bs{\mu}:n \times 1 \in \R^n$ and positive definite matrix $\bs{\Sigma}: n \times n$. Then $\bm{y}$ is said to have a \textbf{multivariate normal distribution} with mean $\bs{\mu}$ and variance $\bs{\Sigma}$, denoted by $\bm{y} \sim N_n(\bs{\mu}, \bs{\Sigma})$.
 \end{mydef}
+\end{mdframed}
 
 If $\bs{\Sigma} = \sigma^2 \bm{I}_n$, where $\sigma^2 > 0$ and $\bm{I}_n$ is an $n \times n$ identity matrix, then the pdf simplifies to
 \[
@@ -115,9 +130,9 @@ f(\bm{y}) = \frac{\exp\left\{-\frac{1}{2\sigma^2}(\bm{y} - \bs{\mu})'(\bm{y} - \
 
 The following properties hold for the multivariate normal distribution. 
 
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
 \begin{myresult}
 Suppose $\bm{y} \sim N_n(\bs{\mu}, \bs{\Sigma})$, where $\bs{\Sigma}$ is positive definite. Then the following results can be established.  
-\end{myresult}
 
 a. Moment generating function:
 \[
@@ -133,21 +148,45 @@ d. If $\bm{A}$ is an $r \times n$ matrix of constants, then
 \bm{A}\bm{y} \sim N_r(\bm{A}\bs{\mu}, \bm{A}\bs{\Sigma}\bm{A}').
 \]
 
-e. Suppose that $\bm{y}$ is a $(p + q) \times 1$ random vector with distribution $\bm{y} \sim N_{p+q}(\bs{\mu}, \bs{\Sigma})$, where
+e. Let $\bm{y}$ be an $n\times 1$ random vector with distribution $\bm{y} \sim N_n(\bs{\mu}, \bs{\Sigma})$. The MVN density function is constant for all $\bm{y}$ that satisfy
 \[
-\bs{\Sigma} = \begin{pmatrix} \bs{\Sigma}_1 & \bm{0} \cr \bm{0} &\bs{\Sigma}_2 \end{pmatrix} = \bs{\Sigma}_1 \otimes \bs{\Sigma}_2,
+(\bm{y} - \bs{\mu})'\bs{\Sigma}^{-1}(\bm{y}-\bs{\mu}) = c.
+\]
+The above equation is the equation of an $n$-dimensional ellipsoid.
+\end{myresult}
+\end{mdframed}
+
+## The MVN distribution and independence
+
+In general, if two random vectors $\bm{x}$ and $\bm{y}$ are uncorrelated (i.e., $Cov(\bm{x}, \bm{y}) = 0$), we _cannot_ assume that they are independent (though the reverse always holds). However, if the two vectors form a multivariate normal distribution, zero covariance will imply independence, as stated by the following result.
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\begin{myresult}
+Suppose that $\bm{y}$ is a $(p + q) \times 1$ random vector with distribution $\bm{y} \sim N_{p+q}(\bs{\mu}, \bs{\Sigma})$, where
+\[
+\bs{\Sigma} = \begin{pmatrix} \bs{\Sigma}_1 & \bm{0} \cr \bm{0} &\bs{\Sigma}_2 \end{pmatrix} = \bs{\Sigma}_1 \oplus \bs{\Sigma}_2,
 \]
 where $\bs{\Sigma}_1$ is $p\times p$ and $\bs{\Sigma}_2$ is $q \times q$. If we partition $\bm{y}$ as
 \[
 \bm{y} = \begin{pmatrix} \bm{y}_1 \cr \bm{y}_2 \end{pmatrix}
 \]
 with $\bm{y}_1: p\times 1$ and $\bm{y}_2: q \times 1$, then $\bm{y}_1$ is independent of $\bm{y}_2$. This result says that if two random vectors $\bm{y}_1$ and $\bm{y}_2$ are uncorrelated and have a joint multivariate normal distribution, then the random vectors are independent.
+\end{myresult}
+\end{mdframed}
 
-f. Let $\bm{y}$ be an $n\times 1$ random vector with distribution $\bm{y} \sim N_n(\bs{\mu}, \bs{\Sigma})$. The MVN density function is constant for all $\bm{y}$ that satisfy
-\[
-(\bm{y} - \bs{\mu})'\bs{\Sigma}^{-1}(\bm{y}-\bs{\mu}) = c.
-\]
-The above equation is the equation of an $n$-dimensional ellipsoid.
+The _joint_ multivariate distribution is crucial to this result, however. Maybe people mistakenly think that if $\bm{x} \sim N_{n}(\bs{\mu}_x, \bs{\Sigma}_x)$ and $\bm{y} \sim N_{n}(\bs{\mu}_y, \bs{\Sigma}_y)$ with $Cov(\bm{x}, \bm{y}) = 0$, then the two random vectors are independent, but _that is not necessarily the case_! (See, for example, Rosenthal's "\href{https://probability.ca/jeff/teaching/uncornor.html}{Rant About Uncorrelated Normal Random Variables}"\footnote{https://probability.ca/jeff/teaching/uncornor.html}.)
+
+On the other hand, if two normal random vectors are _independent_, then their joint distribution is multivariate normal.
+
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
+\begin{myresult}
+Let $\bm{y}_1 \sim N_{p}(\bs{\mu}_1, \bs{\Sigma}_1)$ and $\bm{y}_2 \sim N_{q}(\bs{\mu}_2, \bs{\Sigma}_2)$ where $\bm{y}_1$ and $\bm{y}_2$ are independent. Then
+$$
+\bm{y} = \begin{pmatrix} \bm{y}_1 \cr \bm{y}_2\end{pmatrix} \sim N_{p+q}\left(\begin{pmatrix} \bs{\mu}_1 \cr \bs{\mu}_2 \end{pmatrix}, \begin{pmatrix} \bs{\Sigma}_1 & \bm{0} \cr \bm{0} &\bs{\Sigma}_2 \end{pmatrix} \right).
+$$
+\end{myresult}
+\end{mdframed}
 
 ## Conditional MVN distributions
 
@@ -165,6 +204,8 @@ and
 \]
 
 We often may be interested in the conditional distribution of $\bm{y}_1$ given a particular value of $\bm{y}_2$. This is expressed in the following result.
+
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
 \begin{myresult}
 If $\bs{\Sigma}_{22}$ is positive definite, then conditional on $\bm{y}_2 = \bm{\ddot{y}}$, $\bm{y}_1$ has the multivariate normal distribution
 \[
@@ -179,9 +220,11 @@ and
 \bs{\Sigma}_{11\cdot 2} := \bs{\Sigma}_{11} - \bs{\Sigma}_{12}\bs{\Sigma}_{22}^{-1}\bs{\Sigma}_{21}.
 \]
 \end{myresult}
+\end{mdframed}
 
 The previous result took a multivariate random vector, partitioned it into two vectors, and gave the conditional distribution of one of these vectors given the other. But what if we are given the conditional distribution and want to go back to the joint distribution?
 
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
 \begin{myresult}
 Suppose $\mathbf{v}_1 \sim N_r(\boldsymbol{\mu}_1, \boldsymbol{\Sigma}_{11})$ and $\mathbf{v}_2 | \mathbf{v}_1 \sim N_{p-r}(\mathbf{A}\mathbf{v}_1 + \mathbf{b}, \boldsymbol{\Omega})$, where $\bm{\Omega}$ does not depend on $\mathbf{v}_1$. Then 
 $$
@@ -193,23 +236,28 @@ $$
 \bs{\Sigma} = \begin{pmatrix} \bs{\Sigma}_{11} &  \bs{\Sigma}_{11}\bm{A}'\\ \bm{A}\bs{\Sigma} & \bs{\Omega} + \bm{A}\bs{\Sigma} \bm{A}' \end{pmatrix}.
 $$ 
 \end{myresult}
+\end{mdframed}
 
-\newpage
+
 ## MVN distribution's relation to the chi-squared distribution
 
 Given an $n \times 1$ random vector $\bm{x}$ and $n\times n$ constant matrix $\bm{A}$, the random variable $Q = \bm{x}'\bm{A}\bm{x}$ is called a **quadratic form in $\bm{x}$**. We will further examine distributions of quadratic forms in Stat 502^[It turns out that the sample variance can be expressed as a quadratic form.], but for now, we discuss one specific example.
 
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
 \begin{mydef}
 Suppose $\bm{x} \sim N_n(\bs{\mu}, \bm{I}_n)$. Define the random variable $Q = \bm{x}'\bm{x}$. Then $Q$ is said to have a \textbf{noncentral chi-squared distribution} with $n$ degrees of freedom and noncentrality parameter $\lambda = \bs{\mu}'\bs{\mu}/2$. This is denoted by $Q \sim \chi^2(n, \lambda)$. 
-\end{mydef}
 
 If $\bs{\mu} = \bs{0}$, then $\lambda = 0$, and $Q$ is said to have a \textbf{central chi-squared distribution} with $n$ degrees of freedom, denoted by $Q \sim \chi^2(n)$.
 
+\end{mydef}
+\end{mdframed}
+
+
 The following results summarize some basic properties of noncentral chi-squared distributions.
 
+\begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
 \begin{myresult}
 Let $Q \sim \chi^2_{n, \lambda}$. Then the following properties hold.
-\end{myresult}
 
 a. Probability density function:
 \[
@@ -232,8 +280,8 @@ e. If $Q_i \overset{ind}{\sim} \chi^2(\nu_i, \lambda_i)$ for $i = 1,\ldots, k$, 
 \[
 \sum_{i=1}^k Q_i \sim \chi^2\left(\sum_{i=1}^k\nu_i, \sum_{i=1}^k \lambda_i\right).
 \]
-
-\newpage
+\end{myresult}
+\end{mdframed}
 
 # Application: Linear models
 
@@ -302,4 +350,4 @@ where $\bm{e}$ is the $n\times 1$ vector of residuals.
 
 # References
 
-Much of this material was taken directly from Dr.\ Robert Boik's Stat 505 Lecture Notes, _A Pair of Primers: Primer on Matrix Analysis and Primer on Linear Statistical Models_, Fall 2007 edition.
+Much of this material was taken directly from Dr. Robert Boik's Stat 505 Lecture Notes, _A Pair of Primers: Primer on Matrix Analysis and Primer on Linear Statistical Models_, Fall 2007 edition. Also referenced was the book _Matrix Algebra from a Statistician's Perspective_ by David A. Harville, Springer, 1997.
