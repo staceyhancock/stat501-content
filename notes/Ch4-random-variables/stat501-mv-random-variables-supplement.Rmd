@@ -207,7 +207,7 @@ We often may be interested in the conditional distribution of $\bm{y}_1$ given a
 
 \begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
 \begin{myresult}
-If $\bs{\Sigma}_{22}$ is positive definite, then conditional on $\bm{y}_2 = \bm{\ddot{y}}$, $\bm{y}_1$ has the multivariate normal distribution
+If $\bs{\Sigma}_{22}$ is positive definite, then conditional on $\bm{y}_2 = \bm{\ddot{y}}_2$, $\bm{y}_1$ has the multivariate normal distribution
 \[
 \bm{y}_1 | \bm{y}_2 = \bm{\ddot{y}} \sim N_p(\bs{\mu}_{1\cdot 2}, \bs{\Sigma}_{11\cdot 2}),
 \]
@@ -232,8 +232,8 @@ $$
 $$
 where
 $$
-\mu = \begin{pmatrix} \bs{\mu}_1 \\ A \bs{\mu}_1 + \bm{b} \end{pmatrix} \hspace{1mm}\text{ and }\hspace{1mm}
-\bs{\Sigma} = \begin{pmatrix} \bs{\Sigma}_{11} &  \bs{\Sigma}_{11}\bm{A}'\\ \bm{A}\bs{\Sigma} & \bs{\Omega} + \bm{A}\bs{\Sigma} \bm{A}' \end{pmatrix}.
+\bs\mu = \begin{pmatrix} \bs{\mu}_1 \\ \bm{A} \bs{\mu}_1 + \bm{b} \end{pmatrix} \hspace{1mm}\text{ and }\hspace{1mm}
+\bs{\Sigma} = \begin{pmatrix} \bs{\Sigma}_{11} &  \bs{\Sigma}_{11}\bm{A}'\\ \bm{A}\bs{\Sigma}_{11} & \bs{\Omega} + \bm{A}\bs{\Sigma}_{11} \bm{A}' \end{pmatrix}.
 $$ 
 \end{myresult}
 \end{mdframed}
