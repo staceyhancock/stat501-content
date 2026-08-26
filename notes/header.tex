@@ -1,0 +1,49 @@
+\usepackage{graphicx, verbatim}
+\setlength{\topmargin}{-1 in}
+\setlength{\textheight}{9.6 in}
+\setlength{\oddsidemargin}{-.15in}
+\setlength{\evensidemargin}{-.15in}
+\setlength{\textwidth}{6.8in}
+\usepackage{wrapfig}
+\usepackage{amsmath}
+\usepackage{multicol}
+\usepackage{xcolor}
+\usepackage{enumerate}
+%\pagenumbering{gobble}
+\usepackage{hyperref}
+\usepackage[bottom]{footmisc}
+\hypersetup{
+    colorlinks=true,
+    linkcolor= blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+\def\Xb{\overline X}
+\def\xb{\overline x}
+\def\Yb{\overline Y}
+\def\yb{\overline y}
+\def\fs{\footnotesize}
+\def\sig2{\sigma^2}
+\def\rs{X_1, X_2, \hdots, X_n}
+\def\bs{\boldsymbol}
+\newcounter{alistctr}
+\newenvironment{alist}{\begin{list}{\Alph{alistctr}.\ }
+      {\usecounter{alistctr}}} {\end{list}}
+\usepackage[utf8]{inputenc}
+
+\usepackage[linewidth=1pt]{mdframed} 
+\usepackage{tikz} 
+\usetikzlibrary{trees} 
+\newcommand\mybox[2][]{\tikz[overlay]\node[fill=blue!20,inner sep=2pt, anchor=text, rectangle, rounded corners=1mm,#1] {#2};\phantom{#2}}
+
+\usepackage{fancyhdr}
+\renewcommand{\headrulewidth}{0pt}
+\pagestyle{fancy}
+\fancyhf{}
+\rfoot{\thepage}
+\lfoot{\color{gray}{\tiny{Notes created by Green, Hancock, and Banner}}}
+\rhead{}
+\lhead{}
