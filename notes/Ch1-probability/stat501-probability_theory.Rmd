@@ -89,14 +89,14 @@ Based on these properties, we also know the following:
 - $\displaystyle \cap_{i = 1}^{\infty} A_i \in \mathcal{B}$ \vspace{0.65in} 
 
 \begin{mdframed}
-\textbf{DEF 1.2.4 (Probability Function)} Given a sample space $S$ and an associated \emph{sigma algebra} $\mathcal{B}$, a probability function is a function $P$ with domain $\mathcal{B}$ that satisfies, 
+\textbf{DEF 1.2.4 (Probability Function)} Given a sample space $S$ and an associated sigma algebra $\mathcal{B}$, a \emph{probability function} is a function $P$ with domain $\mathcal{B}$ that satisfies, 
 \vspace{-0.5in}
 \begin{enumerate}	
 \item \vspace{0.6in}
 \item \vspace{0.6in}
 \item \vspace{0.6in}
 \end{enumerate}
-\vspace{0.2in}
+\vspace{0.6in}
 
 \end{mdframed}
 
@@ -105,10 +105,8 @@ Based on these properties, we also know the following:
 
 __Example:__ Suppose we have a three-sided die with numbers 1, 2, 3.
 
-- Sample Space:   
-\vspace{0.25in}
-
-- Borel field: \vspace{0.25in}
+- Sample space: \vspace{0.25in}
+- Borel field: \vspace{0.5in}
 -	Function, $P$ is defined as: \vfill
 
 Is $P$ a probability function? 
@@ -222,7 +220,7 @@ __Proof by tree diagram:__
 
 __Examples__ 
 
-1. Dr. Hancock’s six-year-old daughter, Adeline, has five summer shirts, three pairs of shorts, and two pairs of sandals. How many possible summer outfits can Adeline wear?
+1. Dr. Hancock has five summer shirts, three pairs of shorts, and two pairs of sandals. How many possible summer outfits can she wear?
 
 \vspace{1.2 in}
 
