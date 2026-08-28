@@ -1,0 +1,382 @@
+---
+title: "Getting Started with R"
+output: pdf_document
+urlcolor: blue
+linestretch: 1.15
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE, collapse = TRUE)
+```
+
+# Introduction
+
+We are going to use R as a tool to explore ideas we've discussed in class.
+Through a series of questions, you will get the opportunity to use R to explore
+various statistical ideas and concepts. While R is a coding intense language,
+the assignments will be structured so that they encourage the exploration
+and understanding of statistical concepts and they don't merely turn into coding exercises. 
+
+However, it is important that you have a basic understanding of this software
+and its language. Exposure to a programming language (whether it's R, SAS, etc.)
+is valuable in many ways, in that it provides a good skill set for the job market
+and encourages the development and sophistication of logical thinking and expression.
+With that in mind, the main purpose for these assignments is to
+1) introduce you all to a software package that you might encounter again (or at least benefit from knowing), and to
+2) explore ideas (and extensions to those ideas) we've discussed in class.
+
+# Downloading Introduction Document(s)
+
+Given that we have different levels of experience using R, this handout---in
+conjunction with "A (Very) Short Introduction to R" (Torfs & Brauer, 2014)---is
+meant to give a general introduction to the software and functions we'll be
+using in this class.
+To get started, download the Torfs & Brauer introduction:
+
+1.	Go to  <http://www.r-project.org/>.
+2.	Click on the "Other" link under "Documentation" on the left side. (The links under "Documentation" provide valuable resources that are free to access and use!)
+3.  Click on the "contributed documentation" link in the third bullet point.
+3.	In the "Short Documents and Reference Cards" section, click on the pdf link for "A (very) short Introduction to R." (This section of contributed documents also has various reference cards. These are handy when you just can’t remember the name of the function you want to use!)
+
+Now you're ready to get started! While there are various introductory documents,
+this one is (very) short and has "ToDo" tasks that let you practice what they are talking about. 
+(For a more comprehensive introduction, please see the document "An Introduction to R" (Venables, Smith & R Core Team, 2019) located under the Manuals link under "Documentation" on R home page.) 
+
+# Directions
+
+As you read the Torfs & Brauer introduction, try to complete the "ToDo" tasks in R by yourself. 
+Use the information provided below as needed for extra support, comparisons, extra tidbits, etc. 
+This assignment is not graded for accuracy, but it will be beneficial for future assignments that are graded.
+
+## Section 2.1: Install R
+
+The site located at <http://www.r-project.org/> provides links
+for downloads as well as documentation of manuals, FAQs and many other resources.
+
+1.	Go to <http://www.r-project.org/>.
+2.	Click on the CRAN link under "Download” on the left side and choose a CRAN mirror to download. (The 0-Cloud mirror or any mirror from the United States should suffice.)
+3.	In the box labeled Download and Install R, click on the link appropriate for the type of operating system you use.
+
+## Section 2.2: Install RStudio
+
+Although this program is not necessary to use R, it provides a better user interface.
+Note that in recent years, RStudio expanded its offerings under the wider
+company name "Posit". Thus, the old <http://www.rstudio.com/> link listed
+in the Torfs & Brauer article will redirect to the link below.
+
+1.	Go to <https://posit.co/>.
+2.	Click on the "Free & Open Source" tab and choose "RStudio IDE".
+3.  Scroll down to find the download link for Free Open Source Edition of RStudio IDE,
+then click "[Download RStudio](https://posit.co/download/rstudio-desktop/)".
+
+A short video with installation instructions for R and RStudio can be found here: <https://rconnect.math.montana.edu/InstallDemo/>.
+
+## Section 2.4: Working Directory
+
+```{r sect2.4}
+# Comments, reminders, etc. can be typed after the pound sign
+
+# Specify the location where you want everything saved, etc.
+# For example...
+setwd("/Users/staceyhancock/Documents/Repos/staceyhancock/stat501")
+```
+
+## Section 2.5: Libraries
+
+Install the `BHH2` package using the command:
+
+```{r sect2.5}
+install.packages("BHH2")
+```
+
+This can also be accomplished by going to the Packages tab, clicking "Install",
+and searching for the package name, or by navigating to "Tools" -> "Install Packages...".
+
+Once the package is installed, we can load it into our R session:
+
+```{r sect2.5b}
+library("BHH2")
+```
+
+You only need to install a package once, but you need to load it into your
+session each time you start a new session.
+
+## Bonus: Import a CSV Data File
+
+```{r bonus1, eval=TRUE, error=TRUE}
+test <- read.csv(file = Survey_Data.csv)
+```
+
+Oh no! I forgot to put quotation marks around the file name.
+
+```{r bonus2}
+test <- read.csv(file = "Survey_Data.csv")
+```
+
+If your file is in a different location than the working directory, you will need to specify where R needs to go to find your data file by either using a full pathname,
+or a relative pathname to direct R where to find the data file from the current
+working directory.
+
+**Double Bonus**: There are two options for using the drop-down menu
+in RStudio to browse your directory and select a file: 
+
+1. Go to "File" -> "Import Dataset" -> "From Text (base)".
+2. Click on the spreadsheet icon under the "Environment" tab and click "From Text (base)".
+
+_Notes:_
+
+* Using the drop-down menu is an easier way to read external data files into R,
+and the code is provided in the "Code Preview" box.
+Saving the code used to import the file is critical for reproducing what you did! 
+* Though .csv files sometimes open in Excel by default, they are not classified as
+"Excel" files in R (.xls or .xlsx).
+* Note that `test` can be changed to any name you want to assign your dataset.
+
+## Section 3.1: Calculator
+
+```{r sect3.1, eval = TRUE}
+(2014 - 2013) / (2014 - 1982) * 100
+```
+
+## Section 3.2: Workspace
+
+```{r sect3.2, eval = TRUE}
+startdiff <- (2014 - 2013)
+borndiff <- (2014 - 1982)
+prop <- startdiff / borndiff
+percent <- prop * 100
+
+percent
+
+rm(list = ls())
+```
+
+## Section 3.3: Scalars, vectors and matrices
+
+_CAUTION!_ Their footnote about `=` vs. `<-` is accurate for some but not all 
+situations. In general, I recommend using `<-` to make assignments in R to 
+avoid having an unanticipated error.
+
+## Section 3.4: Functions
+
+```{r sect3.4, eval = TRUE}
+a <- c(4, 5, 8, 11)
+
+sum(a)
+```
+
+## Section 3.5: Plots
+
+```{r sect3.5, eval = TRUE}
+x <- rnorm(30)
+
+x
+
+plot(x)
+```
+
+## Section 4: Help and Documentation
+
+Get help with the `sqrt` function by typing one of the lines below:
+```{r sect4}
+help(sqrt)
+?sqrt
+```
+
+## Section 5: Scripts
+
+Type the following code into new script file (File -> New File -> R Script):
+
+```{r sect5}
+x <- rnorm(100)
+x
+plot(x)
+```
+
+Ready to run it? Highlight code and press "Run" or "CTRL/Enter" (PC) or "Command/Enter" (Mac).
+
+## Section 6.2: Matrices
+
+```{r sect6.2, eval = TRUE, error = TRUE}
+P <- seq(from = 31, to = 60, by = 1)
+
+# Do we get the same matrix if we specify ncol instead of nrow?
+Q <- matrix(P, nrow = 6)
+Z <- matrix(P, ncol = 5)
+
+Q
+z
+```
+
+Oh no! I forgot R is case sensitive.
+
+```{r sect6.2b, eval = TRUE}
+Z
+
+Q[4, 5]
+
+sum(Q)
+
+mean(Q)
+```
+
+
+## Section 6.3: Data Frames
+
+```{r setseed, echo = FALSE, eval = TRUE}
+set.seed(2022)
+```
+
+```{r sect6.3, eval = TRUE, error = TRUE, out.width='70%'}
+x1 <- rnorm(100)
+x2 <- rnorm(100)
+x3 <- rnorm(100)
+t <- data.frame(a = x1, b = x1 + x2, c = x1 + x2 + x3)
+plot(t)
+
+sd(t)
+
+sd(t$a)
+```
+
+Hmm... what is the difference between `sd(t)` and `sd(t$a)`?
+
+## Section 7: Graphics
+
+This tutorial explores graphics functions in base R. It is a VERY brief intro to graphics---R can do so much more! We will also explore creating data visualizations through the `ggplot2` package (contained in the `tidyverse` package).
+
+Try running the code below in your R session:
+
+```{r sect7}
+plot(t$a, type = "l", ylim = range(t))
+lines(t$b, type = "s", lwd = 2, col = rgb(.3, .5, .3, .9))
+points(t$c, pch = 20, cex = 4, col = rgb(0, 0, 1, .3))
+
+?pch
+example(pch)
+
+# Wait a second! What does example() do?
+
+??lwd
+
+# Hmm…why did we use “??” instead of “?”
+
+??cex
+?rgb
+?par
+```
+
+## Section 8: Reading and Writing Data Files
+
+```{r sect8, eval = TRUE, error = TRUE}
+a <- c(1, 2, 4, 8, 16, 32)
+
+# Let's take a shortcut so we don’t have to type all the numbers.
+new <- data.frame(a, g = 2 * a, x = 3 * a)
+
+new
+
+write.table(new, file = "tst1.txt", rownames = FALSE)
+```
+
+Oops! I forgot the period in `row.names`.
+
+Check out where this goes:
+
+```{r sect8b, eval = TRUE}
+write.table(new, file = "tst1.txt", row.names = FALSE)
+```
+
+Let's read it back in:
+
+```{r sect8c, eval = TRUE}
+new2 <- read.table(file = "tst1.txt", header = TRUE)
+
+# Version 1 of new2
+new2
+
+# Let's modify the variable g
+new2$g <- new2$g * 5
+
+# Version 2 of new2
+new2$g
+
+new2
+```
+
+Check out where this goes:
+
+```{r sect8d, eval = TRUE}
+write.table(new2, "tst2.txt", row.names = FALSE)
+```
+
+## Section 9: Not Available Data
+
+```{r setseed2, echo = FALSE, eval = TRUE}
+set.seed(1234)
+```
+
+```{r sect9, eval = TRUE, error = TRUE, warning = TRUE}
+sqrt(mean(rnorm(100)))
+```
+
+Why did this error occur? Explore to find out! 
+
+## Section 10.2: Dates
+
+This is a boring plot! Can you make it more interesting?
+
+```{r sect10.2, eval = TRUE, out.width="70%"}
+Dates <- data.frame(date = strptime(c("20190820", "20121225", "20200719"),
+                                    format = "%Y%m%d"),
+                    presents = c(0, 10, 5))
+
+Dates
+
+plot(Dates$date, Dates$presents)
+```
+
+## Section 11.2: For-Loop
+
+```{r sect11.2, eval = TRUE}
+vec <- seq(from = 1, to = 100, by = 1)
+s <- c()
+for (i in 1:100) {
+  if (vec[i] < 5 | vec[i] > 90) {
+    s[i] <- vec[i] * 10
+  } else {
+    s[i] <- vec[i] * .10
+  }
+}
+
+s
+```
+
+## Section 11.3: Writing Your Own Functions
+
+```{r sect11.3, eval = TRUE}
+ToDo <- function(low, high) {
+  vec <- seq(from = low, to = high, by = 1)
+  s <- c()
+  for (i in low:length(vec))
+  {
+    if (vec[i] < low + 4 | vec[i] > high - 10)
+
+    # What is (low+4) & (high–10) doing?
+
+      {
+        s[i] <- vec[i] * 10
+      } else {
+      s[i] <- vec[i] * .10
+    }
+  }
+  s
+}
+
+ToDo(1, 100)
+```
+
+
+# Acknowledgements
+
+This handout is adapted from Dr. Jennifer Green's "Getting Started with R" activity (M/STAT 501, Fall 2019).
