@@ -210,7 +210,7 @@ When we can define a sample space as a set of equally likely outcomes, methods o
 
 \begin{mdframed}
 \textbf{THM 1.2.14}
-If a job of k separate tasks, the $i^{th}$ of which can be done in $n_i$ ways, $i = 1,\hdots, k$, then the entire job can be done in \vspace{.1in}
+If a job of $k$ separate tasks, the $i^{th}$ of which can be done in $n_i$ ways, $i = 1,\hdots, k$, then the entire job can be done in \vspace{.1in}
 
 \end{mdframed}
 
@@ -329,7 +329,7 @@ __Properties of Conditional Probability__
 
     1. $P(A|B) \geq 0$ for all $A,B\in \mathcal{B}$ \vspace{.2in}
     2. $P(S|B) = 1$ \vspace{.2in}
-    3. if $A_1,A_2,... \in \mathcal{B}$ and $A_i \cap A_j = \emptyset$ for all $i \neq j$, then $\displaystyle P\left(\cup_{i = 1}^\infty A_i |B\right) = \sum_{i = 1}^\infty P(A_i|B)$ \vspace{.1in}
+    3. If $A_1,A_2,... \in \mathcal{B}$ and $A_i \cap A_j = \emptyset$ for all $i \neq j$, then $\displaystyle P\left(\cup_{i = 1}^\infty A_i |B\right) = \sum_{i = 1}^\infty P(A_i|B)$ \vspace{.1in}
 
 - Other properties of conditional probability: 
 
