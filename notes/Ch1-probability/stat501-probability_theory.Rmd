@@ -296,7 +296,7 @@ __Example:__ There are eight Statistics faculty in the Department of Mathematica
 
 \vspace{1in}
 
-What if, additionally, each committee was required to have at least one female Statistics faculty?
+What if, additionally, each committee was required to have at least one male Statistics faculty?
 
 \vspace{1in}
 
