@@ -387,7 +387,7 @@ $P(A_i|B) = $
 
 3. At a psychiatric clinic, the social workers are so busy that, on the average, only 60% of potential new patients that telephone are able to talk immediately with a social worker when they call. The other 40% are asked to leave their phone number. About 75% of the time a social worker is able to return the call on the same day, and the other 25% of the time the caller is contacted the following day. Experience at the clinic indicates that the probability a caller will actually visit the clinic for consultation is 0.8 if the call was immediately able to speak with a social worker, whereas it is 0.6 and 0.4, respectively, if the patient’s call was returned the same day or the following day.
     a. What percentage of people that telephone visit the clinic for consultation?
-    b. What percentage of patients that visit the clinic did not have to have their telephone calls answered immediately?
+    b. What percentage of patients that visit the clinic did not have their telephone calls answered immediately?
 
 \newpage 
 
