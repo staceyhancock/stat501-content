@@ -1,17 +1,11 @@
 \usepackage{graphicx, verbatim}
-\setlength{\topmargin}{-1 in}
-\setlength{\textheight}{9.6 in}
-\setlength{\oddsidemargin}{-.15in}
-\setlength{\evensidemargin}{-.15in}
-\setlength{\textwidth}{6.8in}
+\usepackage{amssymb,amsmath,amsthm}
 \usepackage{wrapfig}
-\usepackage{amsmath}
 \usepackage{multicol}
 \usepackage{xcolor}
 \usepackage{enumerate}
 %\pagenumbering{gobble}
 \usepackage{hyperref}
-\usepackage[bottom]{footmisc}
 \hypersetup{
     colorlinks=true,
     linkcolor= blue,
@@ -19,6 +13,12 @@
     urlcolor=cyan,
     pdftitle={Overleaf Example}
     }
+
+\setlength{\topmargin}{-1 in}
+\setlength{\textheight}{9.6 in}
+\setlength{\oddsidemargin}{-.15in}
+\setlength{\evensidemargin}{-.15in}
+\setlength{\textwidth}{6.8in}
 
 \def\Xb{\overline X}
 \def\xb{\overline x}
@@ -43,6 +43,19 @@
 \pagestyle{fancy}
 \fancyhf{}
 \rfoot{\thepage}
-\lfoot{\color{gray}{\tiny{Notes created by Green, Hancock, and Banner}}}
+\lfoot{\color{gray}{\tiny{Notes created by S. Hancock for STAT 501: Fall 2022}}}
 \rhead{}
 \lhead{}
+
+\newcommand{\vs}{\vspace{2mm}}
+
+\newcommand{\floor}[1]{{\left\lfloor #1 \right\rfloor}}
+\newcommand{\ceil}[1]{{\left\lceil #1 \right\rceil}}
+
+\newcommand{\bm}{\mathbf}
+\newcommand{\R}{\mathbb{R}}
+
+\theoremstyle{definition}
+\newtheorem{mydef}{Definition}
+\newtheorem{myresult}{Result}
+
