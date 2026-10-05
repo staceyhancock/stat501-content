@@ -237,10 +237,10 @@ __Examples__
 \textbf{THM 2.2.5 (Properties of Expected Values)} Let $X$ be a random variable and let $a$, $b$, and $c$ be constants. Then, for any functions $g_1(x)$ and $g_2(x)$ whose expectations exist, 
 
 \begin{enumerate} 
-  \item $E(ag_1(X) + bg_2(X) + c) = aE(g_1(x)) + bE(g_2(x)) + c$. \vspace{.05in}
-  \item If $g_1(x) \geq 0$ for all $x$, then $E(g_1(x)) \geq 0$. \vspace{0.05in}
-  \item If $g_1(x) \geq g_2(x)$ for all $x$, then $E(g_1(x)) \geq E(g_2(x))$ \vspace{0.05in}
-  \item If $a \leq g_1(x) \leq b$ for all $x$, then $a \leq E(g_1(x)) \leq b$ \vspace{0.05in}
+  \item $E(ag_1(X) + bg_2(X) + c) = aE(g_1(X)) + bE(g_2(X)) + c$. \vspace{.05in}
+  \item If $g_1(x) \geq 0$ for all $x$, then $E(g_1(X)) \geq 0$. \vspace{0.05in}
+  \item If $g_1(x) \geq g_2(x)$ for all $x$, then $E(g_1(X)) \geq E(g_2(X))$ \vspace{0.05in}
+  \item If $a \leq g_1(x) \leq b$ for all $x$, then $a \leq E(g_1(X)) \leq b$ \vspace{0.05in}
 \end{enumerate}
 \end{mdframed}
 
