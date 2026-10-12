@@ -1,5 +1,5 @@
 ---
-title: 'STAT 501 Fall 2025 Course Notes'
+title: 'STAT 501 Fall 2026 Course Notes'
 date: "Chapter 3: Common Families of Distributions"
 output: 
   pdf_document: 
