@@ -27,8 +27,8 @@ For certain sequences, we can find a closed form of $G(t)$, and often that close
 
 **Examples**.
 
-* Let $a_j = 1$ for all $j = 0, 1, 2, \ldots$, then for $|t|<1$, $G(t) = 1 + t + t^2 + \cdots$ is a geometric series that converges to $G(t) = \frac{1}{1-t}$.
-* The generating function of the sequence $\{0, 0, 1, 1, 1,\ldots\}$ is $G(t) = \frac{t^2}{1-t}$.
+* Let $a_j = 1$ for all $j = 0, 1, 2, \ldots$, then for $|t|<1$, $G(t) = 1 + t + t^2 + \cdots$ is a geometric series that converges to $G(t) = \dfrac{1}{1-t}$.
+* The generating function of the sequence $\{0, 0, 1, 1, 1,\ldots\}$ is $G(t) = \dfrac{t^2}{1-t}$.
 * For fixed $n \in \mathbb{Z}^+$, the sequence $a_j = {n \choose j}$ for $j = 1,\ldots, n$ has the generating function
 $$
 G(t) = \sum_{j = 0}^{n}{n \choose j}t^{j} = \sum_{j = 0}^{n}{n \choose j}t^{j}1^{n-j} = (1+t)^n
@@ -164,7 +164,7 @@ M'_X(t) =\begin{cases}\begin{array}{ll}
 $$
 and, by the definition of a derivative, 
 $$
-E(X) = M'_X(0) = \lim_{t\rightarrow 0}\frac{1}{t}\left[M_X'(t)-M_X(0)\right] = \frac{a+b}{2}.
+E(X) = M'_X(0) = \lim_{t\rightarrow 0}\frac{1}{t}\left[M_X(t)-M_X(0)\right] = \frac{a+b}{2}.
 $$
 Similarly, the $k$th moment of $X$ for $k \in \mathbb{Z}^+$ is given by
 $$
