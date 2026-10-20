@@ -424,7 +424,7 @@ When a random variable represents the number of items with a certain characteris
 A random variable $X$ has a \textbf{Hypergeometric($N$, $M$, $n$)} distribution if
 $$
 f_X(x | N, M, n) = \begin{cases}
-\dfrac{ {M \choose x} {N-M \choose n-x} }{ {N \choose m} } & x = a, a+1,\ldots, b; ~~N, M, n \geq 0\\
+\dfrac{ {M \choose x} {N-M \choose n-x} }{ {N \choose n} } & x = a, a+1,\ldots, b; ~~N, M, n \geq 0\\
 \\
 0 & \text{else}
 \end{cases}
