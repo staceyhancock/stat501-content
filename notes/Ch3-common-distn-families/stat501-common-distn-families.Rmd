@@ -8,6 +8,7 @@ output:
 fontsize: 12 pt
 ---
 
+<!-- Add pictures of distributions? -->
 <!-- Maybe rework ordering of Sec 3.5 again - seemed weird to cover location-scale first and then location and scale separately -->
 
 ```{r setup, include=FALSE}
