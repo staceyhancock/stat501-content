@@ -8,8 +8,10 @@ output:
 fontsize: 12 pt
 ---
 
+<!-- Maybe rework ordering of Sec 3.5 again - seemed weird to cover location-scale first and then location and scale separately -->
+
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, height = 5, width = 5, out.width="0.5\\linewidth", fig.align="center")
+knitr::opts_chunk$set(echo = TRUE, height = 5, width = 5, out.width="0.5\\linewidth", fig.align="center", warning = FALSE)
 ```
 
 **** 
