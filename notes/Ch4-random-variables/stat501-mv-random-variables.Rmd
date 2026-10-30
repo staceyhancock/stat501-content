@@ -215,7 +215,8 @@ Let $X$ and $Y$ have a joint density function given by $\displaystyle f_{XY}(x,y
 __Example (cont)__
 
 - Find the joint cdf of $X$ and $Y$. Use this cdf to obtain $f_{XY}(x,y)$ given above. 
-\vfill
+
+\newpage
 
 
 
@@ -246,25 +247,26 @@ $f_Y(y) =$
 
 \vspace{.2in}
 \end{mdframed}
-\newpage
 
 __Notes:__
 
 - If we sum/integrate one of the RVs out of the bivariate joint \emph{pmf/pdf}, we are left with the \emph{pmf/pdf} of the other variable. Visually, we could "smash down onto a single axis or margin," which is where the term \textbf{marginal probability density function} comes from.
 
-\vspace{1in}
+\vspace{0.8in}
 
 - The marginal pmf/pdf of $X$ or $Y$ can be used to compute probabilities or expectations that involve only $X$ or $Y$. However, to compute a probability or an expectation that simultaneously involves both $X$ and $Y$, we must use the joint pmf/pdf of $X$ and $Y$. In general, a joint distribution often tells us additional information about the distribution of $X$ and $Y$ that is not found in the marginal distributions. Therefore, we can find a marginal distribution from a joint distribution, but the converse may not be true! 
 
 
 \begin{mdframed}[skipabove = 8pt, skipbelow = 8pt]
-\textbf{DEF (Bivariate Expectations)} Suppose $g(x,y)$ is a real-valued function. If $X$ and $Y$ are random variables with joint pmf/pdf $f_{XY}(x,y)$, \vspace{.8in}
+\textbf{DEF (Bivariate Expectations)} Suppose $g(x,y)$ is a real-valued function. If $X$ and $Y$ are random variables with joint pmf/pdf $f_{XY}(x,y)$, \vspace{.7in}
 
 $E[g(X,Y)] =$
 
-\vspace{.8in}
+\vspace{.7in}
 
 \end{mdframed}
+
+\newpage
 
 ### Example (cont)
 
@@ -272,14 +274,14 @@ Let $X$ and $Y$ have a joint density function given by $\displaystyle f_{XY}(x,y
 
 - Find the marginal density functions (pdfs) of $X$ and $Y$. 
 
-\newpage
+\vspace{4in}
 
-__Example (cont)__
 
 - Find $E(X^2)$ using both $f_{XY}(x,y)$ and $f_X(x)$ to verify you get the same result! 
 
 \vspace{2in}
 
+\newpage
 
 ### Example
 
